@@ -1,0 +1,388 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>{% block title %}GS1 Ireland Barcode Manager{% endblock %}</title>
+
+    <meta name="copyright" content="(c) 2009-2015 Copyright BarcodeRobot"/>
+    <meta name="keywords"
+          content="GS1 Ireland Barcode Manager"/>
+
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en-us"/>
+
+    <link rel="shortcut icon"
+          href="{% static 'gs1ie/site/img/favicon.png' %}"/>
+    <link rel="icon" href="{% static 'gs1ie/site/img/favicon.png' %}"/>
+
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,700"
+          rel="stylesheet" type="text/css">
+
+
+    <link href="{% static 'bootstrap-3/css/bootstrap.min.css' %}?v=20180107"
+          rel="stylesheet" media="screen">
+
+    <link href="{% static 'gs1ie/site/css/master.css' %}?v=20180107"
+          rel="stylesheet"
+          media="screen">
+
+    <link href="{% static 'gs1ie/site/css/style.css' %}?v=20180107" rel="stylesheet"
+          media="screen">
+
+    <link href="{% static 'gs1ie/site/css/profile_strength.css' %}" rel="stylesheet">
+
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" media="screen"
+          href="{% static 'gs1ie/site/css/ie.css' %}?v=201501"/>
+    <![endif]-->
+
+    <!--[if lt IE 9]>
+    <script src="{% static 'site/js/html5shiv/html5shiv.js' %}?v=201312181"></script>
+    <script src="{% static 'site/js/respond/respond.min.js' %}?v=201312181"></script>
+    <![endif]-->
+
+    {% block base_css %}{% endblock %}
+    {% block head_scripts %}{% endblock %}
+
+    {% if not config.LOCAL %}
+        <!-- start Mixpanel -->
+        <script type="text/javascript">(function (e, b) {
+            if (!b.__SV) {
+                var a, f, i, g;
+                window.mixpanel = b;
+                a = e.createElement("script");
+                a.type = "text/javascript";
+                a.async = !0;
+                a.src = ("https:" === e.location.protocol ? "https:" : "http:") + '//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';
+                f = e.getElementsByTagName("script")[0];
+                f.parentNode.insertBefore(a, f);
+                b._i = [];
+                b.init = function (a, e, d) {
+                    function f(b, h) {
+                        var a = h.split(".");
+                        2 == a.length && (b = b[a[0]], h = a[1]);
+                        b[h] = function () {
+                            b.push([h].concat(Array.prototype.slice.call(arguments, 0)))
+                        }
+                    }
+
+                    var c = b;
+                    "undefined" !== typeof d ? c = b[d] = [] : d = "mixpanel";
+                    c.people = c.people || [];
+                    c.toString = function (b) {
+                        var a = "mixpanel";
+                        "mixpanel" !== d && (a += "." + d);
+                        b || (a += " (stub)");
+                        return a
+                    };
+                    c.people.toString = function () {
+                        return c.toString(1) + ".people (stub)"
+                    };
+                    i = "disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
+                    for (g = 0; g < i.length; g++) f(c, i[g]);
+                    b._i.push([a, e, d])
+                };
+                b.__SV = 1.2
+            }
+        })(document, window.mixpanel || []);
+        mixpanel.init("a26daae6d62351f704708c62e5cfc8c9");</script>
+        <!-- end Mixpanel -->
+
+        <!-- RUM -->
+        <script>
+            var _prum = [
+                ['id', '52ada0e7abe53dba5c000000'],
+                ['mark', 'firstbyte', (new Date()).getTime()]
+            ];
+            (function () {
+                var s = document.getElementsByTagName('script')[0]
+                    , p = document.createElement('script');
+                p.async = 'async';
+                p.src = '//rum-static.pingdom.net/prum.min.js';
+                s.parentNode.insertBefore(p, s);
+            })();
+        </script>
+        <!-- End RUM -->
+    {% endif %}
+</head>
+
+<body class="site">
+{# set profile_strength = current_user.profile_strength #}
+<header class="site-header">
+    <div class="container">
+        <nav class="navbar" role="navigation">
+
+            <div class="navbar-header">
+                <h1><a href="/">GS1 Ireland Barcode Manager</a></h1>
+            </div>
+
+            <div>
+
+                <ul class="nav navbar-nav navbar-right" style="padding-top: 30px">
+                    <li><a href="/">{{ _("Home") }}</a></li>
+                    <li>
+                        <a href="http://gs1ie-help.barcoderobot.com/">{{ _("Support") }}</a>
+                    </li>
+
+                    {% if not current_user.is_authenticated %}
+                        <li><a href="http://www.gs1ie.org/Login/">{{ _("Sign In") }}</a></li>
+                    {% else %}
+                        <li class="dropdown" style="text">
+                            <a href="http://www.gs1ie.org/Members-Area/My-Dashboard">
+                                {{ _("Return to GS1 Ireland Dashboard") }}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+    </div>
+</header>
+
+<div class="container breadcrumbs">
+    <div class="site-breadcrumbs">
+        {% block breadcrumb %}
+            <ol class="breadcrumb">
+                <li><a href="/">{{ _("Home") }}</a></li>
+            </ol>
+        {% endblock %}
+    </div>
+</div>
+
+{% with get_flashed_messages as messages %}
+    {% if messages %}
+        <div class="container" id="messages">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ message|safe }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+<div class="container">
+    <div class="site-main">
+
+        {% block site_nav %}
+
+
+            {# set activePage = request.path #}
+
+
+            <nav class="site-nav">
+                {% if current_user.is_authenticated and current_user.active %}
+
+                    <ul>
+                        <li>
+                            {{ _("My Account") }}
+                            <ul>
+                                <li {% if activePage == "url 'auth_profile'" %}
+                                    class="active"
+                                {% endif %}>
+                                    <a href="{% url 'auth_profile' %}">
+                                        {{ _("Dashboard") }}
+                                    </a>
+                                </li>
+                                <li {% if activePage == "url 'prefixes.prefixes_list'" %}
+                                    class="active"
+                                {% endif %}>
+                                    <a href="{% url 'prefixes.prefixes_list' %}">
+                                        {{ _("Prefix management") }}
+                                    </a>
+                                </li>
+                                <li><a href="https://attendee.gotowebinar.com/recording/7198145658454918404">
+                                    {{ _("Training and Resources") }}
+                                </a></li>
+                            </ul>
+
+                        </li>
+                        <li>
+                            {{ _("Product Manager") }}
+                            <ul>
+                                <li {% if activePage == "url 'products.products_list'" %}
+                                    class="active"
+                                {% endif %}>
+                                    <a href="{% url 'products.products_list' %}">
+                                        {{ _("My Products") }}
+                                    </a>
+                                </li>
+                                <li {% if activePage == "url 'excel.export_select'" %}
+                                    class="active"
+                                {% endif %}>
+                                    <a href="{% url 'excel.export_select' %}">
+                                        {{ _("Export products") }}
+                                    </a>
+                                </li>
+                                <li {% if activePage == "url 'excel.import_file'" %}
+                                    class="active"
+                                {% endif %}>
+                                    <a href="{% url 'excel.import_file' %}">
+                                        {{ _("Import products") }}
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        {% if config.GS1_GLN_CAPABILITY %}
+
+                            <li>
+                                {{ _("Location Manager") }}
+                                <ul>
+                                    <li {% if activePage == "url 'locations.locations_list'" %}
+                                        class="active"
+                                    {% endif %}>
+                                        <a href="{% url 'locations.locations_list' %}">
+                                            {{ _("My Locations") }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        {% endif %}
+
+                    </ul>
+
+                    <div id="prefix-info" class="well well-sm"
+                         style="margin-top: 20px; background-color: #F26334; ">
+                        <h4>{{ _("Active Prefix") }}</h4>
+                        <ul class="list-unstyled">{% with get_range_data as range_data %}
+                            <li>GCP: <b>{{ range_data.0 }}</b></li>
+                            <li><b>Products:</b></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;{{ _("Allocated:") }} <b>{{ range_data.1 }}</b></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;{{ _("Available:") }} <b>{{ range_data.2 }}</b></li>
+                            <li><b>Locations:</b></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;{{ _("Allocated:") }} <b>{{ range_data.3 }}</b></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;{{ _("Available:") }} <b>{{ range_data.4 }}</b></li>
+                        {% endwith %}
+                        </ul>
+                    </div>
+
+                    {% block legend %}
+                    {% endblock %}
+
+                    {% block completeness %}
+                    {% endblock %}
+
+                    <div class="clearfix"></div>
+
+                {% endif %}
+            </nav>
+        {% endblock %}
+
+
+        {% block site_content %}
+
+            <div class="site-content">
+                <div>
+                    <h2>
+                        {% block page_title %}{{ _("Create GS1 Barcodes") }}{% endblock %}
+                    </h2>
+                    <div style="position: absolute; right: 10px; top: 10px; text-align: right;">
+                        <a href="https://attendee.gotowebinar.com/recording/7198145658454918404">
+                            <img src="{% static 'site/img/training_button_2.png' %}" alt="Training"
+                                 style="width: auto;height: 30px;">
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="site-content-padder">
+                    {% block page_content %}
+                        {% include "gs1ie/landing_page_content.html" %}
+                    {% endblock %}
+                </div>
+                <div class='clearfix'></div>
+            </div>
+
+        {% endblock %}
+    </div>
+
+</div>
+</div>
+
+<footer class="site-footer">
+    <div class="container">
+        <span class="footer-disclaimer">Copyright &copy; GS1 Ireland 2016 &dash; 2018</span>
+        <br/>
+        <span class="footer-disclaimer">
+            <a href="/terms" style="color:lightgrey; text-decoration: underline;">Terms and Conditions</a>
+        </span>
+        <span class="footer-terms">
+    <!--
+Version Placeholder
+-->
+</span>
+
+        <div class="clearfix"></div>
+    </div>
+    {% if not config.LOCAL %}
+        <!-- Mixpanel -->
+        <a href="https://mixpanel.com/f/partner"><img
+                src="//cdn.mxpnl.com/site_media/images/partner/badge_light.png"
+                alt="Mobile Analytics"/></a>
+        <!-- Mixpanel End-->
+    {% endif %}
+</footer>
+
+{% block modal %}{% endblock %}
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="{% static 'bootstrap-3/js/bootstrap.min.js' %}"></script>
+
+<link src="{% static 'site/css/bootstrap-editable.css' %}" rel="stylesheet">
+<script src="{% static 'site/js/bootstrap-editable.js' %}"></script>
+
+{#<link href="bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">#}
+{#<script src="bootstrap-editable/js/bootstrap-editable.js"></script>#}
+
+{% if not config.LOCAL %}
+    <!-- clicky -->
+    {% if current_user.is_authenticated %}
+        <script type="text/javascript">
+            var clicky_custom = clicky_custom || {};
+            clicky_custom.visitor = {
+                username: '{{ current_user.email }}',
+                email: '{{ current_user.email }}'
+            };
+        </script>
+    {% endif %}
+    <script src="//static.getclicky.com/js" type="text/javascript"></script>
+    <script type="text/javascript">try {
+        clicky.init(100716659);
+    } catch (e) {
+    }</script>
+    <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100716659ns.gif"/></p></noscript>
+    <!-- end clicky -->
+{% endif %}
+
+{% block base_scripts %}{% endblock %}
+
+{% block page_scripts %}{% endblock %}
+{% if not config.LOCAL %}
+    <!-- GA -->
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-335494-7']);
+        _gaq.push(['_trackPageview']);
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    <!-- end GA -->
+{% endif %}
+
+</body>
+</html>

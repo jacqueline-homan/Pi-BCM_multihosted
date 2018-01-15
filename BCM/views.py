@@ -23,9 +23,13 @@ def index_redirect(request):
 
 def index(request, country):
     langs = models.LanguageByCountry.objects.filter(country__slug=country)
+    selected_lang = models.LanguageByCountry.objects.filter(
+        country__slug=country, default=True).first()
+    if selected_lang is None:
+        selected_lang = request.META.get('HTTP_ACCEPT_LANGUAGE','en')
+    else:
+        selected_lang = selected_lang.language.slug
     if request.method == "POST":
-        default_lang = models.LanguageByCountry.objects.filter(
-            country__slug=country, default=True).first()
-        selected_lang = request.POST.get("language", default_lang.language.slug)
-        set_language(selected_lang, request)
+        selected_lang = request.POST.get("language", selected_lang)
+    set_language(selected_lang, request)
     return render(request, 'index.html', {"languages": langs})

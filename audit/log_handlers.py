@@ -18,12 +18,10 @@ class audit_handler(logging.Handler):
         msg        = record.__dict__.get('msg', '')
         ip_address = record.__dict__.get('ip_address', None)
 
-        from audit.models import Log
-        log_record = Log( logger = logger,
-                           level = level,
-                           trace = trace,
-                             msg = msg,
-                        username = username,
-                      ip_address = ip_address )
-        log_record.save()
-
+        from services import logs_service
+        logs_service.create( logger = logger,
+                              level = level,
+                              trace = trace,
+                                msg = msg,
+                           username = username,
+                         ip_address = ip_address )

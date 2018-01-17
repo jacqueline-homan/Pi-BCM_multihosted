@@ -1,5 +1,5 @@
 from django.test import TestCase
-from services import organisation_service, users_service, prefix_service
+from services import organisation_service, users_service, prefix_service, logs_service
 
 
 class Gs1IeTestCase(TestCase):
@@ -51,3 +51,12 @@ class Gs1IeTestCase(TestCase):
         assert prefixes[0].organisation.company == 'GS1 Ireland'
         assert prefixes[1].prefix == '53900012'
         assert prefixes[1].organisation.company == 'GS1 Ireland'
+
+    def test_audit_data(self):
+        self.client.post(self.url, self.post_data)
+        audit = logs_service.all()
+        assert len(audit) == 1
+        assert audit[0].logger == 'audit'
+        assert audit[0].level == 'INFO'
+        assert audit[0].msg == 'logging in: 53900011@test.com::GS1 Ireland'
+        assert audit[0].username == '53900011@test.com'

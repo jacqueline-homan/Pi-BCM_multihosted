@@ -94,3 +94,8 @@ class Service(object):
         :param **kwargs: filter parameters
         """
         return self.model.objects.filter(**kwargs)
+
+    def all(self):
+        """Returns a generator containing all instances of the service's model.
+        """
+        return self.model.objects.all()

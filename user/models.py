@@ -1,5 +1,4 @@
 from django.db import models
-from service import Service
 from uam.models import Organisation
 
 
@@ -62,6 +61,3 @@ class User(models.Model):
     # Enable leading digit?
     enable_leading = db.Column(db.Boolean, default=False)
     '''
-
-
-users_service = Service(User)

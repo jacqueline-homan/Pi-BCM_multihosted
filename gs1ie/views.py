@@ -4,12 +4,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import transaction, IntegrityError
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from .forms import AccountCreateOrUpdateForm
-from uam.models import organisation_service
-from user.models import users_service
-from prefixes.models import prefix_service
+from services import organisation_service, users_service, prefix_service
 from django.conf import settings
 from barcoding.utilities import normalize
+from .forms import AccountCreateOrUpdateForm
 
 
 class User:

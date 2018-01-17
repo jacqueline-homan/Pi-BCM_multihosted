@@ -1,5 +1,4 @@
 from django.db import models
-from service import Service
 
 
 class Organisation(models.Model):
@@ -29,6 +28,3 @@ class Organisation(models.Model):
 
     def __str__(self):
         return self.company or ''
-
-
-organisation_service = Service(Organisation)

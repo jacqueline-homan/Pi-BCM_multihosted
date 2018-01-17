@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from uam.models import Organisation
-from service import Service
 
 
 class Prefix(models.Model):
@@ -28,6 +27,3 @@ class Prefix(models.Model):
 
     def __str__(self):
         return self.prefix
-
-
-prefix_service = Service(Prefix)

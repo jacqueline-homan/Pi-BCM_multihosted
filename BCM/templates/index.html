@@ -1,6 +1,6 @@
+{% extends 'base.html' %}
 {% load i18n %}
-<html>
-<body>
+{% block content %}
 	{% get_current_language as LANGUAGE_CODE %}
 	<!-- Current language: {{ LANGUAGE_CODE }} -->
 	<h1>{% trans "Choose your language" %}</h1>
@@ -13,5 +13,4 @@
 	</select>
 	<input type="submit" name="Submit">
 </form>
-</body>
-</html>
+{% endblock %}

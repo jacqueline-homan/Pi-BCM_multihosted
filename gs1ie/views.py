@@ -1,5 +1,6 @@
 import re
 import json
+import logging
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db import transaction, IntegrityError
@@ -48,6 +49,13 @@ def account_create_or_update(request):
                                                                  })
             except Exception as e:
                 return jsonify(success=False, message=e.message)
+
+            log_message = 'logging in: ' + str(user.email) + '::' + str(user.organisation.company)
+            log_extra = { 'user': user.email,
+                       'company': user.organisation.company,
+                    'ip_address': request.environ.get('REMOTE_ADDR') }
+            logging.getLogger().info(log_message, extra=log_extra)
+            logging.getLogger('audit').info(log_message, extra=log_extra)
 
             # if user's organisation has prefix override, use it
             # if not use prefixes provided by the form

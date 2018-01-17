@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'uam.apps.UamConfig',
     'user.apps.UserConfig',
     'prefixes.apps.PrefixesConfig',
+    'audit.apps.AuditConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -103,6 +104,29 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'default': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(module)s:%(lineno)d - %(message)s'
+        },
+    },
+    'handlers': {
+        'audit_db': {
+            'level': 'NOTSET',
+            'class': 'audit.log_handlers.audit_handler',
+            'formatter': 'default',
+        }
+    },
+    'loggers': {
+        'audit': {
+            'handlers': ['audit_db'],
+            'level': 'INFO',
+            'propagate': False
+        },
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/

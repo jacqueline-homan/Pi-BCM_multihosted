@@ -28,6 +28,15 @@ class Service(object):
         record.save()
         return record
 
+    def save(self, model):
+        """Commits the model to the database and returns the model
+
+        :param model: the model to save
+        """
+        self._isinstance(model)
+        model.save()
+        return model
+
     def _isinstance(self, model, raise_error=True):
         """Checks if the specified model instance matches the service's model.
         By default this method will raise a `ValueError` if the model is not the
@@ -77,3 +86,11 @@ class Service(object):
             if defaults is not None:
                 kwargs.update(defaults)
             return self.create(**kwargs), True
+
+    def find(self, **kwargs):
+        """Returns a list of instances of the service's model filtered by the
+        specified key word arguments.
+
+        :param **kwargs: filter parameters
+        """
+        return self.model.objects.filter(**kwargs)

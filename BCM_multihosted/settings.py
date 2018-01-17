@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'gs1ie.apps.Gs1IeConfig',
     'uam.apps.UamConfig',
     'user.apps.UserConfig',
+    'prefixes.apps.PrefixesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,3 +123,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'assets'), )
+
+GS1_PREFIX_START_REGEX = "^539|^501|^509|^0\d\d"

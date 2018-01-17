@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
 
@@ -107,6 +108,7 @@ class RegisterUser(CreateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.country = kwargs.get("country")
+        self.request = request
         set_language_by_country(request, self.country)
         return super().dispatch(request, *args, **kwargs)
 
@@ -120,4 +122,5 @@ class RegisterUser(CreateView):
 
     def get_success_url(self):
         self.username = self.object.username
+        login(self.request, self.object)
         return reverse("profile", args=(self.country, self.object.username))

@@ -2,20 +2,6 @@ import logging
 import hashlib
 import os
 
-import stripe
-
-#from services import carts_service
-from flask import current_app
-from flask.ext.security import current_user
-
-
-# def charges(gtin13, kind):
-#     added_in_cart = carts_service.find_item(gtin='0' + gtin13, kind=kind)
-#     charge = current_app.config['PRICING']['USD'][kind][0] + \
-#              current_app.config['PRICING']['USD'][kind][1]
-#
-#     return added_in_cart, charge
-
 
 def isValid(nums):
     ''' Returns boolean indicating if check digit is correctly calculated using mod 10 algorithm.
@@ -74,17 +60,17 @@ def normalize(kind,value):
     '9781230000008'
     '''
     if kind == "UPCA":
-        value1 = filter(lambda x: x.isdigit(), value)
+        value1 = ''.join(list(filter(lambda x: x.isdigit(), value)))
         value2 = '{0:0<12}'.format(value1)[0:12]
         value3 = getValid(value2)
         return value3
     if kind == "EAN13":
-        value1 = filter(lambda x: x.isdigit(), value)
+        value1 = ''.join(list(filter(lambda x: x.isdigit(), value)))
         value2 = '{0:0<13}'.format(value1)[0:13]
         value3 = getValid(value2)
         return value3
     if kind == "ISBN13":
-        value1 = filter(lambda x: x.isdigit(), value)
+        value1 = ''.join(list(filter(lambda x: x.isdigit(), value)))
         if value1.find('978') == 0:
             value2 = value1
         else:
@@ -93,7 +79,7 @@ def normalize(kind,value):
         value4 = getValid(value3)
         return value4
     if kind == "GTIN14":
-        value1 = filter(lambda x: x.isdigit(), value)
+        value1 = ''.join(list(filter(lambda x: x.isdigit(), value)))
         value2 = '{0:0<14}'.format(value1)[0:14]
         value3 = getValid(value2)
         return value3
@@ -170,8 +156,8 @@ class Storage(dict):
     def __getattr__(self, key):
         try:
             return self[key]
-        except KeyError, k:
-            raise AttributeError, k
+        except KeyError as k:
+            raise AttributeError(k)
 
     def __setattr__(self, key, value):
         self[key] = value
@@ -179,8 +165,8 @@ class Storage(dict):
     def __delattr__(self, key):
         try:
             del self[key]
-        except KeyError, k:
-            raise AttributeError, k
+        except KeyError as k:
+            raise AttributeError(k)
 
     def __repr__(self):
         return '<Storage ' + dict.__repr__(self) + '>'

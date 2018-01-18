@@ -5,16 +5,15 @@ from uam.models import Organisation
 class User(models.Model):
     db_name = 'users'
 
-    email         = models.CharField(max_length=255, default='', unique=True)
-    username      = models.CharField(max_length=50,  default='', unique=True)
-    password      = models.CharField(max_length=255, default='')
-    first_name    = models.CharField(max_length=30,  default='')
-    last_name     = models.CharField(max_length=30,  default='')
-    active        = models.BooleanField(default=True)
+    email = models.CharField(max_length=255, default='', unique=True)
+    username = models.CharField(max_length=50,  default='', unique=True)
+    password = models.CharField(max_length=255, default='')
+    first_name = models.CharField(max_length=30,  default='')
+    last_name = models.CharField(max_length=30,  default='')
+    active = models.BooleanField(default=True)
 
     organisation  = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)
     customer_role = models.CharField(max_length=20,  default='')
-
 
     '''
     confirmed_at = models.DateTimeField()

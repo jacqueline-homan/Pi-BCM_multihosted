@@ -1,0 +1,8 @@
+.login {padding:5px;}
+.form-security {padding: 20px 18px 20px 12px;width:400px;margin:20px 180px;}
+.form-security-row {font-family:"Helvetica"}
+.form-security-inline {display:inline-block;font-family:"Helvetica";padding:10px}
+.label-vetical{display:table-cell}
+label[for=email], label[for=password] {
+}
+.right{float:right}

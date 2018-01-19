@@ -32,6 +32,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'gs1ie.apps.Gs1IeConfig',
+    'uam.apps.UamConfig',
+    'user.apps.UserConfig',
+    'prefixes.apps.PrefixesConfig',
+    'audit.apps.AuditConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -104,6 +109,29 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'default': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(module)s:%(lineno)d - %(message)s'
+        },
+    },
+    'handlers': {
+        'audit_db': {
+            'level': 'NOTSET',
+            'class': 'audit.log_handlers.audit_handler',
+            'formatter': 'default',
+        }
+    },
+    'loggers': {
+        'audit': {
+            'handlers': ['audit_db'],
+            'level': 'INFO',
+            'propagate': False
+        },
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
@@ -127,8 +155,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'assets'), )
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
+GS1_PREFIX_START_REGEX = "^539|^501|^509|^0\d\d"
 
 try:
     from .local_settings import *

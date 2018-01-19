@@ -1,0 +1,42 @@
+.fill {
+    position: absolute;
+    top: 90px;
+    left: 0;
+    height: 0;
+    width: 90px;
+    background-color: #F26334;
+    overflow: hidden;
+}
+
+.mask {
+    display: block;
+    height: 90px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 90px;
+    overflow: hidden;
+    z-index: 99;
+}
+
+.line {
+    position: absolute;
+    width: 57px;
+    left: 90px;
+    height: 2px;
+    background-color: black;
+    z-index: 98;
+}
+
+.line div {
+    color: black;
+    position: relative;
+    top: -20px;
+    text-align: end;
+}
+
+.profile_strength_txt {
+    color: #888B8D !important;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+}

@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{# from theme("prefixes/range_macros.html") import render_range, render_starting_number #}
+{# import 'admin/_macros.html' as lib with context #}
+{% block title %}
+    GS1 Ireland Barcode Manager: {{ _('Dashboard') }}
+{% endblock %}
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li>{{ _("Home") }}</li>
+    </ol>
+{% endblock %}
+
+{% block page_title %}
+    {{ _('Dashboard') }}
+{% endblock %}
+
+{% block base_css %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css"
+          rel="stylesheet"/>
+{% endblock %}
+
+{% block page_content %}
+
+    {% if  current_user.active and current_user.organisation.active %}
+
+        {% if alerts %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                            Alerts
+                        </div>
+                        <div class="panel-body">
+                            {% if terms_alert %}
+                                <p>You must agree to our <a href="{% url 'static_views.terms' %}"
+                                                            style="text-decoration: underline;">Terms and Conditions</a>
+                                    in order to be able to download barcode images.</p>
+
+                                <form method="post">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="agree">
+                                                    I agree to the Terms and Conditions:<br/>
+                                                    (version {{ terms_version }}).
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="submit" name="submit" value="Submit"
+                                                   class="btn btn-primary pull-right"/>
+                                        </div>
+                                    </div>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{ _("Account Summary") }}
+                    </div>
+                    <div class="panel-body">
+                        <h4>{{ _("Symbol Credits") }}</h4>
+
+                        <p>{{ _("Points balance:") }}
+                            <strong>{{ current_user.organisation.credit_points_balance }}</strong>
+                        </p>
+
+                        <p>
+                            <a href="http://www.gs1ie.org/Members-Area/My-Dashboard/Apply-for-Licences/">{{ _("Purchase barcode image credits now") }}</a>
+                        </p>
+                        {% if uuid %} {# This is for debug purposes #}
+                            <p>{{ _("User ID:") }} {{ uuid }}</p>
+                        {% endif %}
+                        {% if company_name %}
+                            {% if  not config.LOCAL %}
+                                <p>{{ _("Company Name:") }} {{ company_name }}</p>
+                            {% else %}
+                                <p>{{ _("Company Name:") }} <a
+                                        href="{% url 'organisation.edit' %}">{{ company_name }}</a>
+                                </p>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row"><a href="{% url 'products.add_product' %}" class="btn btn-primary">Add
+                    product</a>
+                </div>
+                <div class="row"><p style="margin-top: 10px;">Allocate a new barcode from the Active
+                    Prefix</p></div>
+                <br>
+                <div class="row"><a href="{% url 'products.products_list' %}"
+                                    class="btn btn-gs1ie-orange">View
+                    Products</a></div>
+                <div class="row"><p style="margin-top: 10px;">View allocated numbers from Active Prefix</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Global Company Prefixes and GTIN Ranges
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                            <tr>
+                                <th>Prefix Description</th>
+                                <th>Range</th>
+                                <th>Next number</th>
+                                <th>Products</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for prefix in prefixes %}
+                                <tr>
+                                    <td>
+                                        <a href="#" class="prefix-editable" data-type="text"
+                                           data-pk="{{ prefix.id }}"
+                                           data-url="/prefixes/ajax/"
+                                           data-title="Prefix Description"
+                                        >{% if prefix.description %}{{ prefix.description }}{% else %}
+                                            Block of
+                                            {{ prefix.get_capacity }} GTINs{% endif %}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'prefixes.prefixes_list'?prefix={{ prefix.id }}">{# render_range(prefix) #}</a>
+                                    </td>
+                                    <td>{# render_starting_number(prefix) #}</td>
+                                    <td>{% if not prefix.products %}
+                                        No products
+                                    {% else %}
+                                        <a href="{% url 'products.products_list' %}?prefix={{ prefix.prefix }}">{{ prefix.products }}
+                                            Product{{ prefix.products|pluralize }}</a>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        Account disabled
+                    </div>
+                    <div class="panel-body">
+                        <p>Please contact GS1 Ireland Helpdesk to enable your account.</p>
+                        {% if config.LOCAL %}
+                            <hr/>
+                            <ul>
+                                <li>Org. account active?
+                                    [{{ current_user.organisation.active }}] &xrarr;
+                                    <a href="{% url 'organisation.edit' %}">Organisation
+                                    Admin</a>
+                                </li>
+                                <li>User account active? [{{ current_user.active }}] &xrarr;
+                                    <a href="{% url 'user.edit' %}">User Admin</a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block  base_scripts %}
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            $.fn.editable.defaults.mode = 'popup';
+        })
+        $(document).ready(function () {
+            $('.prefix-editable').editable();
+        });
+    </script>
+{% endblock base_scripts %}

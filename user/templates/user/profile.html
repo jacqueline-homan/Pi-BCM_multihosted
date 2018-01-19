@@ -32,7 +32,7 @@
                         </div>
                         <div class="panel-body">
                             {% if terms_alert %}
-                                <p>You must agree to our <a href="{% url 'static_views.terms' %}"
+                                <p>You must agree to our <a href="{% url 'user:static_views.terms' %}"
                                                             style="text-decoration: underline;">Terms and Conditions</a>
                                     in order to be able to download barcode images.</p>
 
@@ -92,13 +92,13 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="row"><a href="{% url 'products.add_product' %}" class="btn btn-primary">Add
+                <div class="row"><a href="{% url 'user:products.add_product' %}" class="btn btn-primary">Add
                     product</a>
                 </div>
                 <div class="row"><p style="margin-top: 10px;">Allocate a new barcode from the Active
                     Prefix</p></div>
                 <br>
-                <div class="row"><a href="{% url 'products.products_list' %}"
+                <div class="row"><a href="{% url 'user:products.products_list' %}"
                                     class="btn btn-gs1ie-orange">View
                     Products</a></div>
                 <div class="row"><p style="margin-top: 10px;">View allocated numbers from Active Prefix</p>
@@ -135,9 +135,9 @@
                                             {{ prefix.get_capacity }} GTINs{% endif %}</a>
                                     </td>
                                     <td>
-                                        <a href="{% url 'prefixes.prefixes_list'?prefix={{ prefix.id }}">{# render_range(prefix) #}</a>
+                                        <a href="{% url 'user:prefixes.prefixes_list' %}?prefix={{ prefix.id }}">{% include 'prefixes/range_macros.html' with func='render_range' prefix=prefix only %}</a>
                                     </td>
-                                    <td>{# render_starting_number(prefix) #}</td>
+                                    <td>{% include 'prefixes/range_macros.html' with func='render_starting_number' prefix=prefix only %}</td>
                                     <td>{% if not prefix.products %}
                                         No products
                                     {% else %}

@@ -23,5 +23,6 @@ urlpatterns = [
     path('API/v1/AccountCreateOrUpdate/', account_create_or_update),
     path('profile/', profile),
     path('gs1ie/', include('gs1ie.urls')),
+    path('user/', include('user.urls')),
     path('admin/', admin.site.urls),
 ]

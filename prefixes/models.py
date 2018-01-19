@@ -31,3 +31,6 @@ class Prefix(models.Model):
 
     def __str__(self):
         return self.prefix
+
+    def get_capacity(self):
+        return 10 ** (12 - len(self.prefix))

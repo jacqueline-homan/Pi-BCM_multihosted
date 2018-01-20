@@ -54,7 +54,7 @@ def index_redirect(request):
         return redirect(reverse('index', args=[country]))
     else:
         countries = models.Country.objects.all()
-    return render(request, "bcm/generic.html", {"countries": countries, "country": country })
+    return render(request, "bcm/generic.html", {"countries": countries, "country": country})
 
 
 def index(request, country):
@@ -70,6 +70,7 @@ def after_login(request, country):
 
 
 class CountryLogin(auth_views.LoginView):
+    template_name = 'bcm/registration/login.html'
 
     def dispatch(self, request, *args, **kwargs):
         self.country = kwargs.get("country")

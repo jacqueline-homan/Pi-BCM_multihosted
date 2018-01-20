@@ -4,5 +4,5 @@ from . import views
 
 app_name = 'gs1ie'
 urlpatterns = [
-    path('AccountCreateOrUpdate/', views.account_create_or_update),
+    path('AccountCreateOrUpdate/', views.account_create_or_update, name='account_create_or_update'),
 ]

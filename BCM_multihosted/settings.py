@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'e69rtzyg^fj!uzso%n0py&knx@sdcj%!xh(j_sp$8@wi8&gch&'
+SECRET_KEY = 'jz^f*433lrcicup$^91#k*&fqcmu@j%i-m(+s(f)5jekoo4^0$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -64,7 +64,9 @@ ROOT_URLCONF = 'BCM_multihosted.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -158,6 +160,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'assets'), )
 
 GS1_PREFIX_START_REGEX = "^539|^501|^509|^0\d\d"
+TERMS_VERSION = '2017/11/04'
 
 try:
     from .local_settings import *

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'bcm/base.html' %}
 {% load i18n %}
 {% block content %}
 {% if form.errors %}
@@ -13,10 +13,21 @@
     {% endif %}
 {% endif %}
 
-<form method="post" action="">
+<form method="post" action="{% url 'login' country='CH' %}">
 {% csrf_token %}
-{{form.as_p}}
-<input type="submit" value="{% trans 'Add user'%}" />
+<table>
+<tr>
+    <td>{{ form.username.label_tag }}</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>{{ form.password.label_tag }}</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="{% trans 'Login'%}" />
+<input type="hidden" name="next" value="{{ next }}" />
 </form>
 
 

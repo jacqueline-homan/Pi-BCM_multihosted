@@ -54,13 +54,13 @@ def index_redirect(request):
         return redirect(reverse('index', args=[country]))
     else:
         countries = models.Country.objects.all()
-    return render(request, "generic.html", {"countries": countries, "country": country })
+    return render(request, "bcm/generic.html", {"countries": countries, "country": country })
 
 
 def index(request, country):
     langs = models.LanguageByCountry.objects.filter(country__slug=country)
     set_language_by_country(request, country)
-    return render(request, 'index.html', {"languages": langs, "country": country})
+    return render(request, 'bcm/index.html', {"languages": langs, "country": country})
 
 
 @login_required
@@ -84,7 +84,7 @@ class CountryLogin(auth_views.LoginView):
 
 class ProfileView(LoginRequiredMixin, UpdateView):
     model = models.Profile
-    template_name = "profile.html"
+    template_name = "bcm/profile.html"
     fields = ["country", "language"]
     success_url = "profile"
 
@@ -102,7 +102,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
 class RegisterUser(CreateView):
     model = User
-    template_name = "registration/registration.html"
+    template_name = "bcm/registration/registration.html"
     form = UserCreationForm
     fields = "__all__"
 

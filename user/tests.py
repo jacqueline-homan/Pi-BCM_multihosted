@@ -42,3 +42,17 @@ class UserTestCase(TestCase):
         assert response.status_code == 200
         self.assertContains(response, '<b>53900011</b><span style="color:#F26334">0002</span>7')
 
+    def _test_terms_not_agreed(self):
+        response = self.client.post(self.url, {'submit': 'Submit'})
+        assert response.status_code == 200
+        response = self.client.get(self.url)
+        assert response.status_code == 200
+        self.assertContains(response, 'I agree to the Terms and Conditions')
+
+    def test_terms_agreed(self):
+        response = self.client.post(self.url, {'submit': 'Submit', 'agree': 'on'})
+        assert response.status_code == 200
+        response = self.client.get(self.url)
+        assert response.status_code == 200
+        self.assertNotContains(response, 'I agree to the Terms and Conditions')
+

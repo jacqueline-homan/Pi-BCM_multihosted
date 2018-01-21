@@ -1,11 +1,13 @@
+import datetime
 from django.http import HttpResponse
 from django.shortcuts import render
-from services import prefix_service
+from services import prefix_service, users_service
 from django.conf import settings
 
 
 def profile(request):
     current_user = {
+        'id': 1,
         'active': True,
         'is_authenticated': True,
         'agreed': True,
@@ -46,22 +48,19 @@ def profile(request):
                 setattr(prefix, 'locations', row[1])
     '''
 
-    if request.method == 'POST':
-        if request.form.get('agree'):
-            pass
-            '''
-            current_user.agreed = True
-            current_user.agreed_date = datetime.datetime.utcnow()
-            current_user.agreed_version = current_app.config['TERMS_VERSION']
-            db.session.add(current_user)
-            db.session.commit()
-            '''
-
     alerts = False
     terms_alert = False
     terms_version = settings.TERMS_VERSION
 
-    if not current_user['agreed']:
+    user = users_service.get(current_user['id'])
+    if request.method == 'POST':
+        if request.POST.get('agree'):
+            user.agreed = True
+            user.agreed_date = datetime.datetime.utcnow()
+            user.agreed_version = terms_version
+            user.save()
+
+    if not user.agreed:
         alerts = True
         terms_alert = True
 

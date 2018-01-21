@@ -1,5 +1,6 @@
 from django.db import models
 from uam.models import Organisation
+from django.utils import timezone
 
 
 class User(models.Model):
@@ -14,6 +15,11 @@ class User(models.Model):
 
     organisation  = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)
     customer_role = models.CharField(max_length=20,  default='')
+
+    # Terms and conditions agreement
+    agreed = models.BooleanField(default=False)
+    agreed_date = models.DateTimeField(default=timezone.now)
+    agreed_version = models.CharField(max_length=30, null=True, default='')
 
     '''
     confirmed_at = models.DateTimeField()
@@ -49,11 +55,6 @@ class User(models.Model):
     last_login_ip = db.Column(db.String(100))
     current_login_ip = db.Column(db.String(100))
     login_count = db.Column(db.Integer)
-
-    # Terms and conditions agreement
-    agreed = db.Column(db.Boolean, default=False)
-    agreed_date = db.Column(db.DateTime, nullable=True)
-    agreed_version = db.Column(db.String(30), default='')
 
     # Show advanced tab?
     advanced_tab = db.Column(db.Boolean, default=False)

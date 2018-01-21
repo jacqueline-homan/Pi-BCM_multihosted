@@ -1,3 +1,4 @@
+import math
 from django.db import models
 from django.utils import timezone
 
@@ -54,3 +55,51 @@ class Prefix(models.Model):
 
     def is_upc(self):
         return self.prefix.startswith("0")
+
+    def get_available_gtins(self, products, len_only=False):
+        avail_gtins = []
+        last_digits = int(math.log10(self.get_capacity()))
+        if len(products) > 0:
+            gtins = set([int(p.gtin[:-1][-last_digits:]) for p in products])
+            avail = set(range(self.get_capacity()))
+            try:
+                if len_only:
+                    _avail_gtins = avail.difference(gtins)
+                else:
+                    _avail_gtins = sorted(avail.difference(gtins))
+            except:
+                raise Exception(
+                    "There are no available numbers left in this range. All numbers have now been allocated. To licence an additional company prefix please "
+                    "go to the <a href='http://www.gs1ie.org/Members-Area'>Members Area</a> of the GS1 Ireland website.")
+        else:
+            _avail_gtins = set(range(self.get_capacity()))
+        if len_only:
+            return len(_avail_gtins)
+        for gtin in _avail_gtins:
+            f = '{0:0%d}' % (12 - len(self.prefix))
+            avail_gtins.append("0" + self._getValid(self.prefix + f.format(gtin) + "0"))
+        return avail_gtins
+
+    def get_available_glns(self, locations, len_only=False):
+        avail_glns = []
+        last_digits = int(math.log10(self.get_capacity()))
+        if len(locations) > 0:
+            glns = set([int(p.gln[:-1][-last_digits:]) for p in locations])
+            avail = set(range(self.get_capacity()))
+            try:
+                if len_only:
+                    _avail_glns = avail.difference(glns)
+                else:
+                    _avail_glns = sorted(avail.difference(glns))
+            except:
+                raise Exception(
+                    "There are no available numbers left in this range. All numbers have now been allocated. To licence an additional company prefix please "
+                    "go to the <a href='http://www.gs1ie.org/Members-Area'>Members Area</a> of the GS1 Ireland website.")
+        else:
+            _avail_glns = set(range(self.get_capacity()))
+        if len_only:
+            return len(_avail_glns)
+        for gln in _avail_glns:
+            f = '{0:0%d}' % (12 - len(self.prefix))
+            avail_glns.append("0" + self._getValid(self.prefix + f.format(gln) + "0"))
+        return avail_glns

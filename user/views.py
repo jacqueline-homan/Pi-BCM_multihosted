@@ -7,6 +7,7 @@ from django.conf import settings
 def profile(request):
     current_user = {
         'active': True,
+        'is_authenticated': True,
         'agreed': True,
         'organisation': {
             'active': True,
@@ -64,14 +65,17 @@ def profile(request):
         alerts = True
         terms_alert = True
 
+    config = { 'GS1_GLN_CAPABILITY': settings.GS1_GLN_CAPABILITY }
+
     context = {
         'current_user': current_user,
+        'config': config,
         'alerts': alerts,
         'terms_alert': terms_alert,
         'terms_version': terms_version,
         'uuid': '53900011',
         'company_name': current_user['organisation']['company'],
-        'prefixes': prefixes
+        'prefixes': prefixes,
     }
     if settings.DEBUG:
         context.update({ 'uuid': current_user['organisation']['uuid'] })  # For debug purposes
@@ -93,3 +97,19 @@ def static_views_terms(request):
 
 def prefixes_prefixes_list(request):
     return HttpResponse('prefixes.prefixes_list page')
+
+
+def auth_profile(request):
+    return HttpResponse('auth_profile page')
+
+
+def excel_export_select(request):
+    return HttpResponse('excel.export_select page')
+
+
+def excel_import_file(request):
+    return HttpResponse('excel.import_file page')
+
+
+def locations_locations_list(request):
+    return HttpResponse('locations.locations_list')

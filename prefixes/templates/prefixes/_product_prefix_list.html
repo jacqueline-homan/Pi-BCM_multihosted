@@ -5,7 +5,8 @@
                 Your prefixes
             </div>
             <div class="panel-body">
-                <form method="POST">{{ form.csrf_token }}
+                <form method="POST">
+                    {% csrf_token %}
                     <p>Select a number bank from the list below, select the desired action and press the
                         Continue
                         button.</p>

@@ -154,18 +154,16 @@
     </div>
 </div>
 
-{% with get_flashed_messages as messages %}
-    {% if messages %}
-        <div class="container" id="messages">
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ message|safe }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-{% endwith %}
+{% if flashed_messages %}
+    <div class="container" id="messages">
+        {% for message,category in flashed_messages %}
+            <div class="alert alert-{{ category }}">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 
 <div class="container">
     <div class="site-main">

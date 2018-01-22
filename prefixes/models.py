@@ -2,6 +2,7 @@ import math
 from django.db import models
 from django.utils import timezone
 
+from service import Service
 from uam.models import Organisation
 
 
@@ -103,3 +104,6 @@ class Prefix(models.Model):
             f = '{0:0%d}' % (12 - len(self.prefix))
             avail_glns.append("0" + self._getValid(self.prefix + f.format(gln) + "0"))
         return avail_glns
+
+class PrefixService(Service):
+    model =Prefix

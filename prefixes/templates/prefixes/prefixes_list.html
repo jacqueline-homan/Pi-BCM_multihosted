@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}
+    GS1 Ireland Barcode Manager: {{ _('Prefix management') }}
+{% endblock %}
+
+{% block base_css %}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css"
+          rel="stylesheet"/>
+{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li><a href="{% url 'user:auth_profile' %}">{{ _("Home") }}</a></li>
+        <li>Prefixes</li>
+    </ol>
+{% endblock %}
+{% block page_title %}
+    {{ _('Prefix management') }}
+{% endblock %}
+
+{% block page_content %}
+
+    {% if config.GS1_GLN_CAPABILITY %}
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#product_prefixes">Products</a></li>
+            <li><a data-toggle="tab" href="#location_prefixes">Locations</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="product_prefixes" class="tab-pane fade in active">
+                {% include "prefixes/_product_prefix_list.html" %}
+
+            </div>
+            <div id="location_prefixes" class="tab-pane tab-pane fade">
+                {% include "prefixes/_location_prefix_list.html" %}
+            </div>
+        </div>
+
+    {% else %}
+        <div id="product_prefixes" class="tab-pane fade in active">
+            {% include "prefixes/_product_prefix_list.html" %}
+        </div>
+    {% endif %}
+
+    {% if susp_prefixes %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Suspended prefixes
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                            <th>Range</th>
+                            <th>Status</th>
+                            </thead>
+                            <tbody>
+                            {% for sp in susp_prefixes %}
+                                <tr>
+                                    <td>{{ sp.prefix }}</td>
+                                    <td>Suspended
+                                        {% if sp.is_special == 'READ-ONLY' %}
+                                            - Read only prefix
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="well">
+                            Contact GS1IE for information about activating again these prefixes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block  base_scripts %}
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            $.fn.editable.defaults.mode = 'popup';
+        })
+        $(document).ready(function () {
+            $('.prefix-editable').editable();
+        });
+    </script>
+{% endblock base_scripts %}

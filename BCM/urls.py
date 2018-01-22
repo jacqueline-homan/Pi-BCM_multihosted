@@ -24,5 +24,6 @@ urlpatterns = [
     path("<slug:country>/<slug:pk>/profile",views.ProfileView.as_view(), name="profile"),
     path("<slug:country>/", views.index, name="index"),
     path("<slug:country>/after_login", views.after_login, name="after_login"),
+    path("accounts/login/", views.index_redirect),
     path("", views.index_redirect, name="index_redirect"),
 ]

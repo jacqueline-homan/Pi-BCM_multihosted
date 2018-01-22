@@ -21,7 +21,6 @@ def prefixes(request):
 
     prefixes = prefix_service.all()
     susp_prefixes = prefix_service.find(organisation=current_user['organisation'], is_suspended=True).all()
-    #susp_prefixes = prefix_service.find(is_suspended=True).all()
 
     '''
     susp_prefixes = prefix_service.find(organisation=current_user.organisation, is_suspended=True).all()

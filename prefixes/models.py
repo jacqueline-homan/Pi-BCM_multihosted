@@ -105,7 +105,17 @@ class Prefix(models.Model):
             avail_glns.append("0" + self._getValid(self.prefix + f.format(gln) + "0"))
         return avail_glns
 
+
 class PrefixService(Service):
     def __init__(self):
         super().__init__(Prefix)
-    pass
+
+    def make_active(self, prefix_id):
+        prefixes = self.all()
+        for prefix in prefixes:
+            if prefix.id == prefix_id:
+                prefix.is_active = True
+            else:
+                prefix.is_active = False
+            prefix.save()
+

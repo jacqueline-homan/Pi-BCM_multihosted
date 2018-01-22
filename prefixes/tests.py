@@ -61,3 +61,27 @@ class PrefixesTestCase(TestCase):
         assert response.status_code == 200
         self.assertContains(response, 'Suspended prefixes')
         self.assertContains(response, '<td>53900011</td>')
+
+    def test_make_active(self):
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        assert not prefix.is_active
+        id1 = prefix.id
+        prefix = prefix_service.find(prefix='53900012').first()
+        assert prefix.prefix == '53900012'
+        assert not prefix.is_active
+        id2 = prefix.id
+        prefix_service.make_active(id1)
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        assert prefix.is_active
+        prefix = prefix_service.find(prefix='53900012').first()
+        assert prefix.prefix == '53900012'
+        assert not prefix.is_active
+        prefix_service.make_active(id2)
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        assert not prefix.is_active
+        prefix = prefix_service.find(prefix='53900012').first()
+        assert prefix.prefix == '53900012'
+        assert prefix.is_active

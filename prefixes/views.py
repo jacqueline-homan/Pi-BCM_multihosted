@@ -70,7 +70,7 @@ def prefixes(request):
                 if prefix.is_special == 'READ-ONLY' and form.data['prefix_action'] != 'set_this':
                     flashed_messages.append(('Read-only prefix, please contact GS1 helpdesk.', 'danger'),)
                 else:
-                    # prefix_service.make_active(prefix.id)
+                    prefix_service.make_active(prefix.id)
 
                     if form.data['prefix_action'] == 'set_this':
                         pass

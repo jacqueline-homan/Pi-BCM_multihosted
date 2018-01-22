@@ -1,5 +1,5 @@
 from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
 from django.conf import settings
 from services import prefix_service, users_service
 from .forms import PrefixActionForm
@@ -72,11 +72,20 @@ def prefixes(request):
                 else:
                     prefix_service.make_active(prefix.id)
 
-                    if form.data['prefix_action'] == 'set_this':
-                        pass
-                        # return redirect(url_for('products.products_list'))
+                    prefix_action = form.data['prefix_action']
+                    # Enter a new product in selected range
+                    if prefix_action == 'new_product':
+                        return redirect(reverse('user:products.add_product') + '?prefix=' + str(prefix.prefix))
 
-                    elif form.data['prefix_action'] == 'first_available':
+                    # Set selected range as active and go to My Products
+                    elif prefix_action == 'set_this':
+                        return redirect(reverse('user:products.products_list'))
+
+                    # Set starting GTIN in selected range manually
+                    elif prefix_action == 'starting_gtin':
+                        return redirect(reverse('user:prefixes_set_starting', args=(prefix.id,)))
+
+                    elif prefix_action == 'first_available':
                         pass
                         '''
                         try:
@@ -87,7 +96,11 @@ def prefixes(request):
                         return redirect(url_for('.prefixes_list'))
                         '''
 
-                    elif form.data['prefix_action'] == 'first_available_gln':
+                    # new location
+                    elif prefix_action == 'new_gln':
+                        return redirect(reverse('user:locations.add_location') + '?prefix=' + str(prefix.prefix))
+
+                    elif prefix_action == 'first_available_gln':
                         pass
                         '''
                         try:
@@ -98,21 +111,7 @@ def prefixes(request):
                         return redirect(url_for('.prefixes_list'))
                         '''
 
-                    elif form.data['prefix_action'] == 'starting_gtin':
-                        pass
-                        #return redirect(url_for('.prefixes_set_starting', prefix_id=str(prefix.id)))
-
-                    # new product
-                    elif form.data['prefix_action'] == 'new_product':
-                        pass
-                        #return redirect(url_for('products.add_product') + '?prefix=' + str(prefix.prefix))
-
-                    # new location
-                    elif form.data['prefix_action'] == 'new_gln':
-                        pass
-                        #return redirect(url_for('locations.add_location') + '?prefix=' + str(prefix.prefix))
-
-                    elif form.data['prefix_action'] == 'export_available':
+                    elif prefix_action == 'export_available':
                         pass
                         '''
                         try:

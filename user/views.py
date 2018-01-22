@@ -112,3 +112,6 @@ def excel_import_file(request):
 
 def locations_locations_list(request):
     return HttpResponse('locations.locations_list')
+
+def prefixes_set_starting(request, prefix_id):
+    return HttpResponse('prefixes_set_starting: %s' % prefix_id)

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.conf import settings
-from services import prefix_service
+from services import prefix_service, users_service
 
 
 def prefixes(request):
@@ -9,15 +9,19 @@ def prefixes(request):
         'active': True,
         'is_authenticated': True,
         'agreed': True,
-        'organisation': {
-            'active': True,
-            'credit_points_balance': 16,
-            'company': 'GS1 Ireland',
-            'uuid': '53900011'
-        }
+        #'organisation': {
+        #    'active': True,
+        #    'credit_points_balance': 16,
+        #    'company': 'GS1 Ireland',
+        #    'uuid': '53900011'
+        #}
     }
 
+    current_user['organisation'] = users_service.get(current_user['id']).organisation
+
     prefixes = prefix_service.all()
+    susp_prefixes = prefix_service.find(organisation=current_user['organisation'], is_suspended=True).all()
+    #susp_prefixes = prefix_service.find(is_suspended=True).all()
 
     '''
     susp_prefixes = prefix_service.find(organisation=current_user.organisation, is_suspended=True).all()
@@ -56,5 +60,6 @@ def prefixes(request):
         'current_user': current_user,
         'config': config,
         'prefixes': prefixes,
+        'susp_prefixes': susp_prefixes
     }
     return render(request, 'prefixes/prefixes_list.html', context)

@@ -1,10 +1,10 @@
 from service import Service
 from uam.models import Organisation
-from prefixes.models import PrefixService
+from prefixes.models import PrefixService, Prefix
 from user.models import User
 from audit.models import Log
 
 organisation_service = Service(Organisation)
-prefix_service = PrefixService
+prefix_service = PrefixService()
 users_service = Service(User)
 logs_service = Service(Log)

@@ -106,4 +106,6 @@ class Prefix(models.Model):
         return avail_glns
 
 class PrefixService(Service):
-    model =Prefix
+    def __init__(self):
+        super().__init__(Prefix)
+    pass

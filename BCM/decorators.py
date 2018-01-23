@@ -1,3 +1,5 @@
+# Deprecated. Language switch came from middleware.
+
 import django.utils.translation as trans
 from BCM.models import LanguageByCountry, Language
 

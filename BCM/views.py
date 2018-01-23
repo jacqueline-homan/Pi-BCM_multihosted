@@ -1,20 +1,20 @@
 # we use 100 characters line length, isn't it?
 from django.shortcuts import render, redirect, reverse
 
-from BCM.decorators import set_language_by_country, set_language_by_user, set_language_by_auto
+# from BCM.decorators import set_language_by_country, set_language_by_user, set_language_by_auto
 from . import models
-import django.utils.translation as trans
+# import django.utils.translation as trans
 from django.contrib.auth import views as auth_views
 from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
-from django.utils.decorators import method_decorator
+# from django.contrib.auth import authenticate, login
+# from django.utils.decorators import method_decorator
 
 
-@set_language_by_auto
+# @set_language_by_auto
 def index_redirect(request):
     # country = "__"
     # if request.method == "POST":
@@ -30,7 +30,7 @@ def index_redirect(request):
     return render(request, "bcm/generic.html", {"countries": countries})
 
 
-@set_language_by_auto
+# @set_language_by_auto
 def index(request, country):
     # langs = models.LanguageByCountry.objects.filter(country__slug=country)
     # set_language_by_country(request, country)
@@ -39,7 +39,7 @@ def index(request, country):
 
 
 @login_required
-@set_language_by_auto
+# @set_language_by_auto
 def after_login(request, country):
     # set_language_by_user(request, country)
     return redirect("profile", pk=request.user.username, country=country)
@@ -48,7 +48,7 @@ def after_login(request, country):
 class CountryLogin(auth_views.LoginView):
     template_name = 'bcm/registration/login.html'
 
-    @method_decorator(set_language_by_auto)
+    # @method_decorator(set_language_by_auto)
     def dispatch(self, request, *args, **kwargs):
         self.country = kwargs.get("country")
         return super(CountryLogin, self).dispatch(request, *args, **kwargs)
@@ -66,7 +66,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
     fields = ["country", "language"]
     success_url = "profile"
 
-    @method_decorator(set_language_by_auto)
+    # @method_decorator(set_language_by_auto)
     def dispatch(self, request, *args, **kwargs):
         # self.country = kwargs.get("country")
         self.username = request.user.username
@@ -85,7 +85,7 @@ class RegisterUser(CreateView):
     form = UserCreationForm
     fields = "__all__"
 
-    @method_decorator(set_language_by_country)
+    # @method_decorator(set_language_by_country)
     def dispatch(self, request, *args, **kwargs):
         self.country = kwargs.get("country")
         # self.request = request

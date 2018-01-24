@@ -5,7 +5,7 @@ from services import prefix_service, users_service
 from .forms import PrefixActionForm
 
 
-def prefixes(request):
+def prefixes_list(request):
     flashed_messages = []
     current_user = {
         'id': 1,
@@ -85,18 +85,15 @@ def prefixes(request):
                     elif prefix_action == 'starting_gtin':
                         return redirect(reverse('prefixes:prefixes_set_starting', args=(prefix.id,)))
 
+                    # Set starting GTIN to first available number
                     elif prefix_action == 'first_available':
-                        return render(request, 'prefixes/prefix_exhausted.html',
-                                               {'current_user': current_user, 'prefix': prefix })
-                        pass
-                        '''
                         try:
                             prefix.make_starting_from()
-                        except:
-                            return render_template('prefixes/prefix_exhausted.html', prefix=prefix)
+                        except Exception as e:
+                            return render(request, 'prefixes/prefix_exhausted.html',
+                                                   {'current_user': current_user, 'prefix': prefix })
                         prefix_service.save(prefix)
-                        return redirect(url_for('.prefixes_list'))
-                        '''
+                        return redirect(reverse('prefixes:prefixes_list'))
 
                     # new location
                     elif prefix_action == 'new_gln':

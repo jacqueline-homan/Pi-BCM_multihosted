@@ -4,7 +4,7 @@ from django.utils import timezone
 
 from service import Service
 from uam.models import Organisation
-
+from products.models import Product
 
 class Prefix(models.Model):
     class Meta:
@@ -45,6 +45,21 @@ class Prefix(models.Model):
         evns = sum(map(lambda i: int(i), list(meat[1::2])))
         cd2 = str(10 - ((odds + evns) % 10))[-1]  # 0 if 10 or reminder
         return nums[0:-1] + cd2
+
+    def _get_first_avail_serial(self, products, capacity):
+        last_serial = 0
+        last_digits = int(math.log10(capacity))
+        if products.count():
+            gtins = set([int(p.gtin[:-1][-last_digits:]) for p in products])
+            avail = set(range(capacity))
+            try:
+                last_serial = sorted(avail.difference(gtins))[0]
+            except Exception as e:
+                print('_get_first_avail_serial', e)
+                raise Exception(
+                    "There are no available numbers left in this range. All numbers have now been allocated. To licence an additional company prefix please "
+                    "go to the <a href='http://www.gs1ie.org/Members-Area'>Members Area</a> of the GS1 Ireland website.")
+        return last_serial
 
     def get_range(self):
         start = self._getValid('{0:0<13}'.format(self.prefix))
@@ -104,6 +119,14 @@ class Prefix(models.Model):
             f = '{0:0%d}' % (12 - len(self.prefix))
             avail_glns.append("0" + self._getValid(self.prefix + f.format(gln) + "0"))
         return avail_glns
+
+    def make_starting_from(self):
+        # products = db.session.query(Product).filter(Product.gs1_company_prefix == self.prefix)
+        products = Product.objects.filter(gs1_company_prefix=self.prefix)
+        fas = self._get_first_avail_serial(products, self.get_capacity())
+        f = '{0:0%d}' % (12 - len(self.prefix))
+        starting_from = self._getValid(self.prefix + f.format(fas) + '0')
+        self.starting_from = starting_from
 
 
 class PrefixService(Service):

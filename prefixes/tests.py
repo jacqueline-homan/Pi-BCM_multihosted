@@ -85,3 +85,9 @@ class PrefixesTestCase(TestCase):
         prefix = prefix_service.find(prefix='53900012').first()
         assert prefix.prefix == '53900012'
         assert prefix.is_active
+
+    def test_models_make_starting_from(self):
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        prefix.make_starting_from()
+        assert prefix.starting_from == '5390001100003'

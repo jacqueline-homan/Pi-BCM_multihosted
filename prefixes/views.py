@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect, reverse
 from django.conf import settings
 from services import prefix_service, users_service
@@ -83,9 +83,11 @@ def prefixes(request):
 
                     # Set starting GTIN in selected range manually
                     elif prefix_action == 'starting_gtin':
-                        return redirect(reverse('user:prefixes_set_starting', args=(prefix.id,)))
+                        return redirect(reverse('prefixes:prefixes_set_starting', args=(prefix.id,)))
 
                     elif prefix_action == 'first_available':
+                        return render(request, 'prefixes/prefix_exhausted.html',
+                                               {'current_user': current_user, 'prefix': prefix })
                         pass
                         '''
                         try:
@@ -150,3 +152,7 @@ def prefixes(request):
         'flashed_messages': flashed_messages
     }
     return render(request, 'prefixes/prefixes_list.html', context)
+
+
+def prefixes_set_starting(request, prefix_id):
+    return HttpResponse('prefixes_set_starting: %s' % prefix_id)

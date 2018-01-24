@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+    GS1 Ireland Barcode Manager: {{ _('Prefix management') }}
+{% endblock %}
+{% block breadcrumb %}
+            <ol class="breadcrumb">
+                <li><a href="{% url 'user:auth_profile' %}">{{ _("Home") }}</a></li>
+                <li>Prefixes</li>
+            </ol>
+{% endblock %}
+{% block page_title %}
+    {{ _('Prefix management') }}
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Prefix exhausted</h3>
+
+            <p class="danger">
+                This prefix <b>{{ prefix.prefix }}</b> is exhausted.
+            </p>
+
+            <p>
+                You cannot use this prefix to allocate further numbers.
+                Please select another of your prefixes to be the active prefix
+                or licence an additional prefix from the <a href="http://www.gs1ie.org/Members-Area">Members Portal</a>
+                on the GS1 Ireland website.
+            </p>
+
+
+        </div>
+    </div>
+
+{% endblock %}

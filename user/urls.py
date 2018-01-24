@@ -13,5 +13,4 @@ urlpatterns = [
     path('excel_export_select', views.excel_export_select, name='excel.export_select'),
     path('excel_import_file', views.excel_import_file, name='excel.import_file'),
     path('locations_locations_list', views.locations_locations_list, name='locations.locations_list'),
-    path('prefixes_set_starting/<int:prefix_id>', views.prefixes_set_starting, name='prefixes_set_starting'),
 ]

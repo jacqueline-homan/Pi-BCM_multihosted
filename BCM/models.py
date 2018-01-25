@@ -39,6 +39,7 @@ class Country(models.Model):
     slug = models.SlugField(max_length=2)
 
     class Meta:
+        ordering = ('name', )
         verbose_name_plural = _("Countries")
 
     def __str__(self):

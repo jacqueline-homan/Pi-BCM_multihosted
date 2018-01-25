@@ -34,7 +34,10 @@ def account_create_or_update(request):
                 company = form.data.get('company_name')
 
                 # get company
-                organisation, organisation_created = organisation_service.get_or_create(uuid=form.data.get('uuid'))
+                organisation, organisation_created = organisation_service.get_or_create(
+                    uuid=form.data.get('uuid'),
+                    country=form.data.get('country')
+                )
 
                 # update company name if any
                 if company:

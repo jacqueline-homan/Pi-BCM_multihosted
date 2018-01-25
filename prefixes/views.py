@@ -1,4 +1,5 @@
 import tempfile
+import json
 from zipfile import ZipFile
 from openpyxl import load_workbook
 from django.http import HttpResponse, Http404
@@ -157,3 +158,25 @@ def prefixes_list(request):
 
 def prefixes_set_starting(request, prefix_id):
     return HttpResponse('prefixes_set_starting: %s' % prefix_id)
+
+
+def jsonify(**kwargs):
+    content = json.dumps(kwargs)
+    response = HttpResponse(content, content_type='application/json')
+    response['Content-Length'] = len(content)
+    return response
+
+
+def prefixes_ajax(request):
+    if request.method != 'POST':
+        return Http404()
+    current_user = users_service.get(1)
+    prefix_id = request.POST.get('pk', None)
+    if not prefix_id:
+        return Http404()
+    prefix = prefix_service.find_item(organisation=current_user.organisation, id=prefix_id)
+    if not prefix:
+        return Http404()
+    prefix.description = request.POST.get('value', None)
+    prefix_service.save(prefix)
+    return jsonify(success=True)

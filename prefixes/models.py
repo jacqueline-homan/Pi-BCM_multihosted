@@ -133,6 +133,13 @@ class PrefixService(Service):
     def __init__(self):
         super().__init__(Prefix)
 
+    def find_item(self, **filter_query):
+        try:
+            res = self.model.objects.filter(**filter_query).first()
+        except Exception as e:
+            return None
+        return res
+
     def make_active(self, prefix_id):
         prefixes = self.all()
         for prefix in prefixes:

@@ -93,7 +93,8 @@ def prefixes_list(request):
                             return render(request, 'prefixes/prefix_exhausted.html',
                                                    {'current_user': current_user, 'prefix': prefix })
                         prefix_service.save(prefix)
-                        return redirect(reverse('prefixes:prefixes_list'))
+                        url=reverse('prefixes:prefixes_list')
+                        return redirect(url)
 
                     # new location
                     elif prefix_action == 'new_gln':
@@ -139,6 +140,14 @@ def prefixes_list(request):
         else:
             flashed_messages.append(('You must choose a prefix and an action!', 'danger'),)
 
+    form = PrefixActionForm()
+    form.fields['select_prefix'].choices = [(str(p.id), p.prefix) for p in prefixes]
+    try:
+        selected_prefix = int(request.POST['select_prefix'])
+        prefix_service.make_active(selected_prefix)
+    except:
+        selected_prefix = prefix_service.get_active(current_user['organisation'])
+
     config = {'GS1_GLN_CAPABILITY': settings.GS1_GLN_CAPABILITY}
 
     context = {
@@ -146,7 +155,8 @@ def prefixes_list(request):
         'config': config,
         'prefixes': prefixes,
         'susp_prefixes': susp_prefixes,
-        'flashed_messages': flashed_messages
+        'flashed_messages': flashed_messages,
+        'selected_prefix': selected_prefix
     }
     return render(request, 'prefixes/prefixes_list.html', context)
 

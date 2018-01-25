@@ -18,12 +18,10 @@ from django.urls import include, path
 
 from gs1ie.views import account_create_or_update
 from user.views import profile
-from prefixes.views import prefixes_list
 
 urlpatterns = [
     path('API/v1/AccountCreateOrUpdate/', account_create_or_update),
     path('profile/', profile),
-    path('prefixes/', prefixes_list),
     path('gs1ie/', include('gs1ie.urls')),
     path('prefixes/', include('prefixes.urls')),
     path('user/', include('user.urls')),

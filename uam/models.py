@@ -1,11 +1,13 @@
 from django.db import models
 
+from BCM.models import Country
+
 
 class Organisation(models.Model):
     db_name = "organisations"
 
     uuid    = models.CharField(max_length=50, unique=True)
-    country = models.CharField(max_length=100, default='')
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, default=None, null=True)
     company = models.CharField(max_length=100, default='')
 
     street1 = models.CharField(max_length=100, default='')

@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'prefixes.apps.template_context_processor'
             ],
         },
     },
@@ -162,6 +163,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'assets'), )
 
 GS1_PREFIX_START_REGEX = "^539|^501|^509|^0\d\d"
 TERMS_VERSION = '2017/11/04'
+GS1_GLN_CAPABILITY = False
 
 try:
     from .local_settings import *

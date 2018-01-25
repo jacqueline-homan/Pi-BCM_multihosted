@@ -154,18 +154,16 @@
     </div>
 </div>
 
-{% with get_flashed_messages as messages %}
-    {% if messages %}
-        <div class="container" id="messages">
-            {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ message|safe }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-{% endwith %}
+{% if flashed_messages %}
+    <div class="container" id="messages">
+        {% for message,category in flashed_messages %}
+            <div class="alert alert-{{ category }}">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 
 <div class="container">
     <div class="site-main">
@@ -183,17 +181,17 @@
                         <li>
                             {{ _("My Account") }}
                             <ul>
-                                <li {% if activePage == "url 'auth_profile'" %}
+                                <li {% if activePage == "url 'user:auth_profile'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'auth_profile' %}">
+                                    <a href="{% url 'user:auth_profile' %}">
                                         {{ _("Dashboard") }}
                                     </a>
                                 </li>
-                                <li {% if activePage == "url 'prefixes.prefixes_list'" %}
+                                <li {% if activePage == "url 'user:prefixes.prefixes_list'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'prefixes.prefixes_list' %}">
+                                    <a href="{% url 'user:prefixes.prefixes_list' %}">
                                         {{ _("Prefix management") }}
                                     </a>
                                 </li>
@@ -206,24 +204,24 @@
                         <li>
                             {{ _("Product Manager") }}
                             <ul>
-                                <li {% if activePage == "url 'products.products_list'" %}
+                                <li {% if activePage == "url 'user:products.products_list'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'products.products_list' %}">
+                                    <a href="{% url 'user:products.products_list' %}">
                                         {{ _("My Products") }}
                                     </a>
                                 </li>
-                                <li {% if activePage == "url 'excel.export_select'" %}
+                                <li {% if activePage == "url 'user:excel.export_select'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'excel.export_select' %}">
+                                    <a href="{% url 'user:excel.export_select' %}">
                                         {{ _("Export products") }}
                                     </a>
                                 </li>
-                                <li {% if activePage == "url 'excel.import_file'" %}
+                                <li {% if activePage == "url 'user:excel.import_file'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'excel.import_file' %}">
+                                    <a href="{% url 'user:excel.import_file' %}">
                                         {{ _("Import products") }}
                                     </a>
                                 </li>
@@ -236,10 +234,10 @@
                             <li>
                                 {{ _("Location Manager") }}
                                 <ul>
-                                    <li {% if activePage == "url 'locations.locations_list'" %}
+                                    <li {% if activePage == "url 'user:locations.locations_list'" %}
                                         class="active"
                                     {% endif %}>
-                                        <a href="{% url 'locations.locations_list' %}">
+                                        <a href="{% url 'user:locations.locations_list' %}">
                                             {{ _("My Locations") }}
                                         </a>
                                     </li>

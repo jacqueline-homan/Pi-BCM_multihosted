@@ -37,6 +37,7 @@
                                     in order to be able to download barcode images.</p>
 
                                 <form method="post">
+                                    {% csrf_token %}
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="checkbox">

@@ -95,6 +95,14 @@ class Service(object):
         """
         return self.model.objects.filter(**kwargs)
 
+    def get(self, id):
+        """Returns an instance of the service's model with the specified id.
+        Returns `None` if an instance with the specified id does not exist.
+
+        :param id: the instance id
+        """
+        return self.model.objects.get(id=id)
+
     def all(self):
         """Returns a generator containing all instances of the service's model.
         """

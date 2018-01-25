@@ -23,6 +23,8 @@ class User(models.Model):
     agreed_date = models.DateTimeField(default=timezone.now)
     agreed_version = models.CharField(max_length=30, null=True, default='')
 
+    login_count = models.IntegerField(null=True)
+
     '''
     confirmed_at = models.DateTimeField()
     stripe_id    = models.CharField(max_length=255, nullable=True)

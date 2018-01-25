@@ -7,7 +7,7 @@ class Product(models.Model):
     db_name = "products"
 
     # product owner info
-    user = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
+    owner = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
 
     # organisation
     organisation = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)

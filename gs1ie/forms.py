@@ -5,6 +5,9 @@ from BCM.models import Country
 
 
 def get_country_choices():
+    # choices should be specified with method!
+    # if you replace "choices" with an internal class member,
+    # ChoiceField tests will fail (choices will be empty)
     return [
         (country.slug.upper(), country.name) for country in Country.objects.all()
     ]

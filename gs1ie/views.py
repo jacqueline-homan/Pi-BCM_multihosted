@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.db import transaction, IntegrityError
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+
+from BCM.models import Country
 from services import organisation_service, users_service, prefix_service
 from django.conf import settings
 from barcoding.utilities import normalize
@@ -26,18 +28,28 @@ def jsonify(**kwargs):
 
 @transaction.atomic
 def account_create_or_update(request):
+
+    import gs1ie.forms
+    if request.META['SERVER_NAME'] == 'testserver':
+        from importlib import reload
+        reload(gs1ie.forms)
+
     if request.method == 'POST':
-        form = AccountCreateOrUpdateForm(request.POST)
+        form = gs1ie.forms.AccountCreateOrUpdateForm(request.POST)
         if form.is_valid():
             try:
                 # core data
                 email = form.data.get('email')
                 company = form.data.get('company_name')
+                try:
+                    country = Country.objects.get(slug=form.cleaned_data.get('country'))
+                except Country.DoesNotExist:
+                    country = None
 
                 # get company
                 organisation, organisation_created = organisation_service.get_or_create(
                     uuid=form.data.get('uuid'),
-                    country=form.cleaned_data.get('country')
+                    country=country
                 )
 
                 # update company name if any
@@ -130,7 +142,7 @@ def account_create_or_update(request):
             logging.getLogger().debug('Created token: %s' % token)
             return redirect('/API/v1/auth/%s/' % token)
     else:
-        form = AccountCreateOrUpdateForm()
+        form = gs1ie.forms.AccountCreateOrUpdateForm()
 
     current_user = User()
     context = { 'current_user': current_user,

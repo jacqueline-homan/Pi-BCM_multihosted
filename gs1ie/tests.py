@@ -1,4 +1,6 @@
 from django.test import TestCase
+
+from BCM.models import Country
 from services import organisation_service, users_service, prefix_service, logs_service
 
 
@@ -10,7 +12,13 @@ class Gs1IeTestCase(TestCase):
         'company_prefix': '53900011,53900012',
           'company_name': 'GS1 Ireland',
                'credits': '39:20,43:100,44:100',
-               'txn_ref': 'Test_1,Test_3,Test_2' }
+               'txn_ref': 'Test_1,Test_3,Test_2',
+               'country': 'BE', }
+
+    def setUp(self):
+        Country.objects.create(name='Belgium', slug='BE')
+        Country.objects.create(name='France', slug='FR')
+        Country.objects.create(name='Swiss', slug='CH')
 
     def test_page_exist(self):
         response = self.client.get(self.url)
@@ -22,7 +30,7 @@ class Gs1IeTestCase(TestCase):
 
     def test_page_post(self):
         response = self.client.post(self.url, self.post_data)
-        assert response.status_code == 200
+        assert response.status_code == 302
 
     def test_page_empty_post(self):
         response = self.client.post(self.url, {})

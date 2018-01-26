@@ -29,13 +29,8 @@ def jsonify(**kwargs):
 @transaction.atomic
 def account_create_or_update(request):
 
-    import gs1ie.forms
-    if request.META['SERVER_NAME'] == 'testserver':
-        from importlib import reload
-        reload(gs1ie.forms)
-
     if request.method == 'POST':
-        form = gs1ie.forms.AccountCreateOrUpdateForm(request.POST)
+        form = AccountCreateOrUpdateForm(request.POST)
         if form.is_valid():
             try:
                 # core data
@@ -142,7 +137,7 @@ def account_create_or_update(request):
             logging.getLogger().debug('Created token: %s' % token)
             return redirect('/API/v1/auth/%s/' % token)
     else:
-        form = gs1ie.forms.AccountCreateOrUpdateForm()
+        form = AccountCreateOrUpdateForm()
 
     current_user = User()
     context = { 'current_user': current_user,

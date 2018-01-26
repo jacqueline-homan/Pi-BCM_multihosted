@@ -1,7 +1,30 @@
 from django.db import models
 import random
+import datetime
+now = datetime.datetime.now()
 # from organizations.models import
 # Create your models here.
+GS1_CLOUD_INACTIVE = 1
+GS1_CLOUD_ACTIVE = 2
+GS1_STATE_3 = 3
+GS1_STATE_4 = 4
+GS1_STATE_5 = 5
+GS1_STATE_6 = 6
+GS1_STATE_7 = 7
+GS1_STATE_8 = 8
+
+GS1_CLOUD_STATES_ENUM = {
+    'ACTIVE': GS1_CLOUD_ACTIVE,
+    'INACTIVE': GS1_CLOUD_INACTIVE
+
+    # states not used
+    # 'STATE3': GS1_STATE_3,
+    # 'STATE4': GS1_STATE_4,
+    # 'STATE5': GS1_STATE_5,
+    # 'STATE6': GS1_STATE_6,
+    # 'STATE7': GS1_STATE_7,
+    # 'STATE8': GS1_STATE_8
+}
 
 
 class Country(models.Model):
@@ -58,7 +81,8 @@ class Product(db.Model):
 
         indexes = [
             models.Index(fields=['gtin']),
-            models.Index(fields=['gs1_company_prefix'])
+            models.Index(fields=['gs1_company_prefix']),
+            models.Index(fields=['gs1_cloud_last_update_ref'])
         ]
 
    
@@ -68,7 +92,7 @@ class Product(db.Model):
     
 
     # organisation
-    organisation = models.ForeignKey(db.Integer, db.ForeignKey('Organisation')
+    organisation = models.ForeignKey('Organisation')
     
 
     # Product info
@@ -132,7 +156,7 @@ class Product(db.Model):
     company_phone = models.CharField(max_length=20)
     company_email = models.CharField(max_length=75)
 
-    # Auto fill fields
+    # Auto fill fields - TODO
     bar_type = db.Column(
         db.Enum('NULL', 'UPCA', 'EAN13', 'RSS14', 'ISBN13', 'ITF14', name='gs1ie_bc_kind'), default='EAN13',
         nullable=False)
@@ -149,59 +173,56 @@ class Product(db.Model):
 
     is_bunit = models.BooleanField(default=False)
     is_cunit = models.BooleanField(default=False)
-    is_dunit = db.Column(db.Boolean, default=False)
-    is_vunit = db.Column(db.Boolean, default=False)
-    is_iunit = db.Column(db.Boolean, default=False)
-    is_ounit = db.Column(db.Boolean, default=False)
-    is_temp = db.Column(db.Boolean, default=False)
-    is_active = db.Column(db.Boolean, default=False)
-    is_public = db.Column(db.Boolean, default=False)
+    is_dunit = models.BooleanField(default=False)
+    is_vunit = db.BooleanField(default=False)
+    is_iunit = models.BooleanField(default=False)
+    is_ounit = models.BooleanField(default=False)
+    is_temp = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+    is_public = models.BooleanField(default=False)
 
-    pub_date = db.Column(db.DateTime)  # AQ
-    eff_date = db.Column(db.DateTime)  # AR
+    pub_date = models.DateTimeField(null=True)  # AQ
+    eff_date = models.DateTimeField(null=True)  # AR
 
-    created = db.Column(db.DateTime, default=datetime.datetime.now)
-    updated = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+    created = models.DateTimeField(default=timezone.now)
+    updated = models.DateTimeField(auto_now=True)
 
     #  GDSN ADDITIONS
-    name_of_information_provider = models.CharField(100))
-    target_market_id = db.Column(db.Integer, db.ForeignKey("target_market.id"), nullable=False)
-    target_market = db.relationship("TargetMarket", backref="products")
-    start_availability = db.Column(db.DateTime)
-    returnable = db.Column(db.Boolean, default=False)
-    end_availability = db.Column(db.DateTime)
-    last_change = db.Column(db.DateTime)
-    brand_owner_gln = models.CharField(13))
-    brand_owner_name = models.CharField(100))
-    discontinued_date = db.Column(db.DateTime)
+    name_of_information_provider = models.CharField(100)
+    target_market = models.ForeignKey('TargetMarket')
+    start_availability = models.DateTimeField(null=True)
+    returnable = models.BooleanField(default=False)
+    end_availability = models.DateTimeField(null=True)
+    last_change = models.DateTimeField(null=True)
+    brand_owner_gln = models.CharField(13)
+    brand_owner_name = models.CharField(100)
+    discontinued_date = models.DateTimeField(null=True)
 
     # GEPIR ADDITIONS
-    language_id = db.Column(db.Integer, db.ForeignKey("language.id"), nullable=False)
-    language = db.relationship("Language", backref="products")
-    role_of_information_provider_id = db.Column(db.Integer, db.ForeignKey("iprole.id"))
-    role_of_information_provider = db.relationship("IPRole", foreign_keys=role_of_information_provider_id)
-    additional_identification_of_ip = models.CharField(100))
-    manufacturer_gln = models.CharField(13))
-    manufacturer_name = models.CharField(75))
-    manufacturer_role_id = db.Column(db.Integer, db.ForeignKey("iprole.id"))
-    manufacturer_role = db.relationship("IPRole", foreign_keys=manufacturer_role_id)
-    manufacturer_additional_identification = models.CharField(100))
-    category_definition = models.CharField(200))
-    category_name = models.CharField(75))
-    additional_classification_code = models.CharField(75))
-    descriptive_size = models.CharField(75))
-    size_code = models.CharField(25))
-    is_price_on_pack = db.Column(db.Boolean, default=False)
+    language = models.ForeignKey('Language')
+    role_of_information_provider = models.ForeignKey('IPRole')
+    additional_identification_of_ip = models.CharField(100)
+    manufacturer_gln = models.CharField(13)
+    manufacturer_name = models.CharField(75)
+    manufacturer_role = models.ForeignKey('IPRole')
 
-    # GS1 CLoud additions
-    gs1_cloud_state = db.Column(
-        db.Enum(*GS1_CLOUD_STATES_ENUM.keys(), name='gs1_cloud_state'), default='INACTIVE', nullable=False)
-    gs1_cloud_last_rc = db.Column(db.Enum(*GS1_CLOUD_RC_ENUM.keys(), name='gs1_cloud_rc_enum'), nullable=True)
-    gs1_cloud_last_update = db.Column(db.DateTime())
-    gs1_cloud_last_update_ref = models.CharField(36), nullable=True, index=True)
+    manufacturer_additional_identification = models.CharField(100)
+    category_definition = models.CharField(200)
+    category_name = models.CharField(75)
+    additional_classification_code = models.CharField(75)
+    descriptive_size = models.CharField(75)
+    size_code = models.CharField(25)
+    is_price_on_pack = models.BooleanField(default=False)
+
+    # GS1 CLoud additions - TODO
+    gs1_cloud_state = models.IntegerField(choices=GS1_CLOUD_STATES_ENUM.values(), default=GS1_CLOUD_STATES_ENUM['INACTIVE'])
+    gs1_cloud_last_rc = models.IntegerField(choices=GS1_CLOUD_RC_ENUM.values(), null=True)    
+    
+    gs1_cloud_last_update = models.DateTimeField(null=True)
+    gs1_cloud_last_update_ref = models.CharField(max_length=36, null=True)
 
     # PLACEHOLDER FOR UI ( to be able to favorite an item )
-    mark = db.Column(db.Integer, nullable=True, default=0)
+    mark = models.IntegerField(null=True, default=0)
 
     def __unicode__(self):
         return '%s | %s | %s' % (self.gtin, self.description, self.brand)

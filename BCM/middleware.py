@@ -8,6 +8,7 @@ class LanguageSwitcher:
         """
         hierarchy:
         - GET parameter "new_language"
+        - stored in "pref_language" per user sessions
         - authenticated user preferred language
         - country default language
         - HTTP_ACCEPT_LANGUAGE
@@ -15,6 +16,11 @@ class LanguageSwitcher:
         """
 
         language_slug = request.GET.get('new_language')
+
+        if not language_slug:
+            language_slug = request.session.get("pref_language")
+        else:
+            request.session["pref_language"] = language_slug
 
         if not language_slug and request.user.is_authenticated:
             try:

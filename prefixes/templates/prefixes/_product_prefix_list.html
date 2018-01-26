@@ -29,8 +29,7 @@
                                        data-pk="{{ prefix.id }}"
                                        data-url="/prefixes/ajax/"
                                        data-title="Prefix Description"
-                                    >{% if prefix.description %}{{ prefix.description }}{% else %}Block of
-                                        {{ prefix.get_capacity }} GTINs{% endif %}</a>
+                                    >{% if prefix.description %}{{ prefix.description }}{% else %}Block of {{ prefix.get_capacity }} GTINs{% endif %}</a>
                                 </td>
                                 <td>{% include 'prefixes/range_macros.html' with func='render_range' prefix=prefix only %}</td>
                                 <td>{% include 'prefixes/range_macros.html' with func='render_starting_number' prefix=prefix only %}</td>

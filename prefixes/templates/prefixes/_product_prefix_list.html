@@ -24,7 +24,8 @@
                                 <td><input type="radio" name="select_prefix" value="{{ prefix.id }}"
                                            {% if prefix.id == selected_prefix %}checked{% endif %}></td>
                                 <td>
-                                    <a href="#" class="prefix-editable" data-type="text"
+                                    <a href="#" class="prefix-editable"
+                                       data-type="text"
                                        data-pk="{{ prefix.id }}"
                                        data-url="/prefixes/ajax/"
                                        data-title="Prefix Description"

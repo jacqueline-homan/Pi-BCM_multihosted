@@ -1,29 +1,21 @@
-from django.http import Http404
+import tempfile
+import json
+from zipfile import ZipFile
+from openpyxl import load_workbook
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect, reverse
 from django.conf import settings
 from services import prefix_service, users_service
 from .forms import PrefixActionForm
+from products.models import Product
 
 
-def prefixes(request):
+def prefixes_list(request):
     flashed_messages = []
-    current_user = {
-        'id': 1,
-        'active': True,
-        'is_authenticated': True,
-        'agreed': True,
-        #'organisation': {
-        #    'active': True,
-        #    'credit_points_balance': 16,
-        #    'company': 'GS1 Ireland',
-        #    'uuid': '53900011'
-        #}
-    }
-
-    current_user['organisation'] = users_service.get(current_user['id']).organisation
+    current_user = users_service.get(1)
 
     prefixes = prefix_service.all()
-    susp_prefixes = prefix_service.find(organisation=current_user['organisation'], is_suspended=True).all()
+    susp_prefixes = prefix_service.find(organisation=current_user.organisation, is_suspended=True).all()
 
     '''
     prefixes = prefix_service.find_all().all()
@@ -83,18 +75,17 @@ def prefixes(request):
 
                     # Set starting GTIN in selected range manually
                     elif prefix_action == 'starting_gtin':
-                        return redirect(reverse('user:prefixes_set_starting', args=(prefix.id,)))
+                        return redirect(reverse('prefixes:prefixes_set_starting', args=(prefix.id,)))
 
+                    # Set starting GTIN to first available number
                     elif prefix_action == 'first_available':
-                        pass
-                        '''
                         try:
                             prefix.make_starting_from()
-                        except:
-                            return render_template('prefixes/prefix_exhausted.html', prefix=prefix)
+                        except Exception as e:
+                            return render(request, 'prefixes/prefix_exhausted.html',
+                                                   {'current_user': current_user, 'prefix': prefix })
                         prefix_service.save(prefix)
-                        return redirect(url_for('.prefixes_list'))
-                        '''
+                        return redirect(reverse('prefixes:prefixes_list'))
 
                     # new location
                     elif prefix_action == 'new_gln':
@@ -111,34 +102,46 @@ def prefixes(request):
                         return redirect(url_for('.prefixes_list'))
                         '''
 
+                    # Export available GTINs in this range
                     elif prefix_action == 'export_available':
-                        pass
-                        '''
                         try:
-                            products = Product.query.filter(Product.owner == current_user,
-                                                            Product.gs1_company_prefix == prefix.prefix) \
-                                .order_by(Product.gtin).all()
+                            products = ( Product.objects.filter(owner = current_user)
+                                                        .filter(gs1_company_prefix = prefix.prefix)
+                                                        .order_by('gtin') )
                             prfxs = prefix.get_available_gtins(products)
                             if len(prfxs) > 0:
                                 tfile = tempfile.NamedTemporaryFile(suffix='.xlsx')
                                 zfile = tempfile.NamedTemporaryFile(suffix='.zip')
-                                file_xlsx = load_workbook(os.path.join(EXCEL_TEMPLATE_PATH, GDSN_EXCEL_TEMPLATE))
+
+                                file_xlsx = load_workbook(settings.PREFIXES_EXCEL_TEMPLATE)
                                 ws = file_xlsx.get_active_sheet()
                                 for index, prfx in enumerate(prfxs):
                                     _ = ws.cell(column=2, row=index + 5, value=prfx)
                                 file_xlsx.save(filename=tfile.name)
+
                                 with ZipFile(zfile.name, "w") as z:
                                     export_filename = "export_%s_available.xlsx" % (prefix.prefix,)
                                     attachment_filename = "export_%s_available.%s" % (prefix.prefix, 'zip')
                                     z.write(tfile.name, export_filename)
-                                return send_file(zfile, mimetype='application/zip',
-                                                 as_attachment=True,
-                                                 attachment_filename=attachment_filename)
+
+                                send_file = open(zfile.name, 'rb')
+                                response = HttpResponse(send_file, content_type='application/zip')
+                                response['Content-Disposition'] = 'attachment; filename=%s' % attachment_filename
+                                return response
                             else:
-                                flash("There are no available GTIN numbers for current active prefix", "danger")
-                        '''
+                                flashed_messages.append(('There are no available GTIN numbers for current active prefix', 'danger'),)
+                        except Exception as e:
+                            flashed_messages.append(('Error: %s' % str(e), 'danger'),)
         else:
             flashed_messages.append(('You must choose a prefix and an action!', 'danger'),)
+
+    form = PrefixActionForm()
+    form.fields['select_prefix'].choices = [(str(p.id), p.prefix) for p in prefixes]
+    try:
+        selected_prefix = int(request.POST['select_prefix'])
+        prefix_service.make_active(selected_prefix)
+    except:
+        selected_prefix = prefix_service.get_active(current_user.organisation)
 
     config = {'GS1_GLN_CAPABILITY': settings.GS1_GLN_CAPABILITY}
 
@@ -147,6 +150,33 @@ def prefixes(request):
         'config': config,
         'prefixes': prefixes,
         'susp_prefixes': susp_prefixes,
-        'flashed_messages': flashed_messages
+        'flashed_messages': flashed_messages,
+        'selected_prefix': selected_prefix
     }
     return render(request, 'prefixes/prefixes_list.html', context)
+
+
+def prefixes_set_starting(request, prefix_id):
+    return HttpResponse('prefixes_set_starting: %s' % prefix_id)
+
+
+def jsonify(**kwargs):
+    content = json.dumps(kwargs)
+    response = HttpResponse(content, content_type='application/json')
+    response['Content-Length'] = len(content)
+    return response
+
+
+def prefixes_ajax(request):
+    if request.method != 'POST':
+        return Http404()
+    current_user = users_service.get(1)
+    prefix_id = request.POST.get('pk', None)
+    if not prefix_id:
+        return Http404()
+    prefix = prefix_service.find_item(organisation=current_user.organisation, id=prefix_id)
+    if not prefix:
+        return Http404()
+    prefix.description = request.POST.get('value', None)
+    prefix_service.save(prefix)
+    return jsonify(success=True)

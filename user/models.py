@@ -6,6 +6,8 @@ from django.utils import timezone
 class User(models.Model):
     db_name = 'users'
 
+    is_authenticated = True
+
     email = models.CharField(max_length=255, default='', unique=True)
     username = models.CharField(max_length=50,  default='', unique=True)
     password = models.CharField(max_length=255, default='')
@@ -20,6 +22,8 @@ class User(models.Model):
     agreed = models.BooleanField(default=False)
     agreed_date = models.DateTimeField(default=timezone.now)
     agreed_version = models.CharField(max_length=30, null=True, default='')
+
+    login_count = models.IntegerField(null=True)
 
     '''
     confirmed_at = models.DateTimeField()

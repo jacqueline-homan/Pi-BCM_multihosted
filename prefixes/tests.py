@@ -85,3 +85,33 @@ class PrefixesTestCase(TestCase):
         prefix = prefix_service.find(prefix='53900012').first()
         assert prefix.prefix == '53900012'
         assert prefix.is_active
+
+    def test_models_make_starting_from(self):
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        prefix.make_starting_from()
+        assert prefix.starting_from == '5390001100003'
+
+    def test_models_get_active(self):
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        assert not prefix.is_active
+        prefix_id = prefix.id
+        prefix_organisation = prefix.organisation
+        active_id=prefix_service.get_active(prefix_organisation)
+        assert active_id is None
+        prefix_service.make_active(prefix_id)
+        active_id=prefix_service.get_active(prefix_organisation)
+        assert active_id == prefix_id
+
+    def test_ajax(self):
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        assert prefix.description == ''
+        prefix_id = prefix.id
+        response = self.client.post('/prefixes/ajax/', {'pk': prefix_id, 'value': 'New description'})
+        assert response.status_code == 200
+        assert response.content == b'{"success": true}'
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        assert prefix.description == 'New description'

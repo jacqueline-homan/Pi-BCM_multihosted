@@ -1,7 +1,8 @@
 import re
 import json
 import logging
-from django.shortcuts import render
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from django.db import transaction, IntegrityError
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
@@ -124,7 +125,10 @@ def account_create_or_update(request):
                 prefix.is_active = True
                 prefix_service.save(prefix)
 
-            form = AccountCreateOrUpdateForm()
+            serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
+            token = serializer.dumps([user.email, user.organisation.uuid])
+            logging.getLogger().debug('Created token: %s' % token)
+            return redirect('/API/v1/auth/%s/' % token)
     else:
         form = AccountCreateOrUpdateForm()
 
@@ -133,3 +137,22 @@ def account_create_or_update(request):
                 'active_page': '',
                 'form': form }
     return render(request, 'gs1ie/AccountCreateOrUpdate.html', context)
+
+
+def api_auth(request, token):
+    serializer = URLSafeTimedSerializer(settings.SECRET_KEY)
+    try:
+        logging.getLogger().debug('Received token: %s' % token)
+        email, uuid = serializer.loads(token, max_age=30)
+    except SignatureExpired:
+        return render(request, 'gs1ie/token_expired.html', status=403)
+    user = users_service.find(email=email, customer_role='gs1ie').first()
+    if not user:
+        return render(request, 'gs1ie/user_not_found.html', status=404)
+    if user.login_count is None:
+        login_count = 1
+    else:
+        login_count = user.login_count + 1
+    users_service.update(user, login_count=login_count)
+
+    return redirect(reverse('profile'))

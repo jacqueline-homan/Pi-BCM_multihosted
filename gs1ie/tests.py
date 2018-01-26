@@ -6,6 +6,9 @@ from services import organisation_service, users_service, prefix_service, logs_s
 
 class Gs1IeTestCase(TestCase):
     url = '/API/v1/AccountCreateOrUpdate/'
+    fixtures = [
+        'fixtures/countries.json',
+    ]
 
     post_data = { 'uuid': '53900011',
                  'email': '53900011@test.com',
@@ -14,11 +17,6 @@ class Gs1IeTestCase(TestCase):
                'credits': '39:20,43:100,44:100',
                'txn_ref': 'Test_1,Test_3,Test_2',
                'country': 'BE', }
-
-    def setUp(self):
-        Country.objects.create(name='Belgium', slug='BE')
-        Country.objects.create(name='France', slug='FR')
-        Country.objects.create(name='Swiss', slug='CH')
 
     def test_page_exist(self):
         response = self.client.get(self.url)

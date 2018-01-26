@@ -181,17 +181,17 @@
                         <li>
                             {{ _("My Account") }}
                             <ul>
-                                <li {% if activePage == "url 'user:auth_profile'" %}
+                                <li {% if activePage == "url 'profile'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'user:auth_profile' %}">
+                                    <a href="{% url 'profile' %}">
                                         {{ _("Dashboard") }}
                                     </a>
                                 </li>
-                                <li {% if activePage == "url 'user:prefixes.prefixes_list'" %}
+                                <li {% if activePage == "url 'prefixes:prefixes_list'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'user:prefixes.prefixes_list' %}">
+                                    <a href="{% url 'prefixes:prefixes_list' %}">
                                         {{ _("Prefix management") }}
                                     </a>
                                 </li>

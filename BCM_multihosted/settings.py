@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'BCM.apps.BcmConfig',
-    'organizations',
+    'member_organisations.apps.MemberOrganisationsConfig',
+    'company_organisations.apps.CompanyOrganisationsConfig'
 ]
 
 MIDDLEWARE = [

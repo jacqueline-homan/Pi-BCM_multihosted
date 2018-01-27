@@ -154,16 +154,26 @@
     </div>
 </div>
 
-{% if flashed_messages %}
-    <div class="container" id="messages">
-        {% for message,category in flashed_messages %}
-            <div class="alert alert-{{ category }}">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                {{ message|safe }}
-            </div>
-        {% endfor %}
+<div class="container" id="messages">
+    {% for message,category in flashed_messages %}
+        <div class="alert alert-{{ category }}">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ message|safe }}
+        </div>
+    {% endfor %}
+    <div class="alert alert-success" style="display:none" id="flash_message_container">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <span id="flash_message">Instant flash message</span>
     </div>
-{% endif %}
+</div>
+<script type="text/javascript">
+    function flash(message, category) {
+        $('#flash_message').text(message)
+        var cls = 'alert alert-' + category
+        $('#flash_message_container').attr('class',cls)
+        $('#flash_message_container').show()
+    }
+</script>
 
 <div class="container">
     <div class="site-main">

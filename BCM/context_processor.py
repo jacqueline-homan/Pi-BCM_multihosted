@@ -1,7 +1,14 @@
-from .models import Language
+from .models import Language, LanguageByCountry
 
 
 def add_languages(request):
     context_data = {}
-    context_data["languages"] = Language.objects.all()
+    if request.user.is_authenticated:
+        user_country = request.user.profile.country
+        language_by_country = LanguageByCountry.objects.filter(
+            country=user_country)
+        languages = [x.language for x in language_by_country]
+    else:
+        languages = Language.objects.all()
+    context_data["languages"] = languages
     return context_data

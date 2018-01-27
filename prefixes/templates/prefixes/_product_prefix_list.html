@@ -29,8 +29,7 @@
                                        data-pk="{{ prefix.id }}"
                                        data-url="/prefixes/ajax/"
                                        data-title="Prefix Description"
-                                    >{% if prefix.description %}{{ prefix.description }}{% else %}Block of
-                                        {{ prefix.get_capacity }} GTINs{% endif %}</a>
+                                    >{% if prefix.description %}{{ prefix.description }}{% else %}Block of {{ prefix.get_capacity }} GTINs{% endif %}</a>
                                 </td>
                                 <td>{% include 'prefixes/range_macros.html' with func='render_range' prefix=prefix only %}</td>
                                 <td>{% include 'prefixes/range_macros.html' with func='render_starting_number' prefix=prefix only %}</td>
@@ -64,7 +63,7 @@
                                 {{ _("Export available GTINs in this range") }}
                             </li>
                         </ul>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" onclick="flash_message(this)">
                             {{ _("Continue") }}
                         </button>
                     </div>
@@ -73,3 +72,12 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function flash_message(t) {
+        if (t.form['prefix_action'].value=='export_available') {
+            setTimeout( function() {
+                            flash('Available GTINs have been exported', 'success')
+                        }, 2000 )
+        }
+    }
+</script>

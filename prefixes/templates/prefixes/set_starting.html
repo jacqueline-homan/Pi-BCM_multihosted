@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block title %}
+    GS1 Ireland Barcode Manager: {{ _('Set Starting number') }}
+{% endblock %}
+{% block breadcrumb %}
+            <ol class="breadcrumb">
+                <li><a href="{% url 'profile' %}">{{ _("Home") }}</a></li>
+                <li><a href="{% url 'prefixes:prefixes_list' %}">Prefixes</a></li>
+            </ol>
+{% endblock %}
+{% block page_title %}
+    {{ _('Set starting number for a range') }}
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{ _('New starting number') }}
+                </div>
+                <div class="panel-body">
+                <h4>Range: {% include 'prefixes/range_macros.html' with func='render_range' prefix=prefix only %}</h4>
+                <h5>Current starting number: {% include 'prefixes/range_macros.html' with func='render_starting_number' prefix=prefix only %}</h5>
+                    <form method="POST">{% csrf_token %}
+                    <div class="form-group{% if form.errors %} has-error{% endif %}">
+                        <label class="control-label" for="starting_number" style="padding-left: 0px">New starting number</label><br/>
+                        <b><span id="prfx">{% include 'prefixes/range_macros.html' with func='render_prefix' prefix=prefix only %}</span></b> <input type="text" name="starting_number" size="{{ sn_length }}" maxlength="{{ sn_length }}" value="{{ form.starting_number.data }}" /> <span id="cd" style="color:#F26334">-</span>
+                        {% if form.errors.starting_number %}
+                            <span class="help-block">
+                                {% for error in form.errors.starting_number %}
+                                    <small>{{ error }}</small><br/>
+                                {% endfor %}
+                            </span>
+                        {% endif %}
+                    </div>
+                    <hr/>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block base_scripts %}
+<script>
+var $sn;
+function GTINCheckDigit(s){
+    var result = 0;
+    for (counter = s.length-1; counter >=0; counter--){
+        result = result + parseInt(s.charAt(counter)) * Math.pow(3, ((counter + 1) % 2));
+    }
+    return (10 - (result % 10)) % 10;
+}
+function checkdigit(){
+    var checkdigit;
+    checkdigit = GTINCheckDigit("0"+$('#prfx').html()+$sn.val());
+    $('#cd').html(checkdigit);
+}
+$(document).ready(function(){
+    $sn = $('input[name="starting_number"]');
+    checkdigit();
+    $sn.keydown(function(event){
+        if($sn.val().length > {{ sn_length }} && event.which != 8){  // greater length and no backspace
+            return false;
+        }
+        if((event.which >= 48 && event.which <= 57) || (event.which >= 96 && event.which <= 105)){  //numbers od number from numpad
+            return true;
+        } else {
+            if((event.which == 8 || event.which == 46) && $sn.val().length > 0){  //backspace and delete
+                return true;
+            } else if(event.which>=35 && event.which<=40){  //arrow keys + home + end
+                return true;
+            }
+            return false;
+        }
+    });
+    $sn.keyup(function(){
+        if($sn.val().length == {{ sn_length }}) {
+            checkdigit();
+        } else {
+            $('#cd').html('-');
+        }
+    })
+})
+</script>
+{% endblock %}

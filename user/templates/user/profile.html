@@ -132,8 +132,7 @@
                                            data-url="/prefixes/ajax/"
                                            data-title="Prefix Description"
                                         >{% if prefix.description %}{{ prefix.description }}{% else %}
-                                            Block of
-                                            {{ prefix.get_capacity }} GTINs{% endif %}</a>
+                                            Block of {{ prefix.get_capacity }} GTINs{% endif %}</a>
                                     </td>
                                     <td>
                                         <a href="{% url 'user:prefixes.prefixes_list' %}?prefix={{ prefix.id }}">{% include 'prefixes/range_macros.html' with func='render_range' prefix=prefix only %}</a>
@@ -193,7 +192,7 @@
             $.fn.editable.defaults.mode = 'popup';
         })
         $(document).ready(function () {
-            $('.prefix-editable').editable();
+            $('.prefix-editable').editable({ params : { csrfmiddlewaretoken : '{{ csrf_token }}' } });
         });
     </script>
 {% endblock base_scripts %}

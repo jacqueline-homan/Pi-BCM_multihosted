@@ -1,17 +1,21 @@
 from django.test import TestCase
 from services import prefix_service
+from BCM.models import Country
 
 
 class PrefixesTestCase(TestCase):
     url = '/prefixes/'
 
     def setUp(self):
+        country = Country(slug='FR', name='France')
+        country.save()
         post_data = {'uuid': '53900011',
                      'email': '53900011@test.com',
                      'company_prefix': '53900011,53900012',
                      'company_name': 'GS1 Ireland',
                      'credits': '39:20,43:100,44:100',
-                     'txn_ref': 'Test_1,Test_3,Test_2'}
+                     'txn_ref': 'Test_1,Test_3,Test_2',
+                     'country': 'FR'}
         self.client.post('/API/v1/AccountCreateOrUpdate/', post_data)
 
     def test_page_exist(self):

@@ -1,0 +1,448 @@
+.breadcrumb {
+    color: white;
+}
+
+.breadcrumb .active a {
+    text-decoration: none;
+    color: #888B8D;
+}
+
+.site-content {
+    min-height: 375px;
+}
+
+.active-prefix {
+    background-color: #d9edf7;
+}
+
+.inactive-prefix {
+    color: #888B8D;
+}
+
+#prefixes-ul {
+    padding-right: 25px;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+.bc_row {
+    height: 300px;
+    border: 1px rgb(0, 0, 0) solid;
+    margin: 10px 0 10px 0;
+}
+
+#prefix-actions li {
+    line-height: 2em;
+}
+
+.btn-gs1ie-orange{
+  color: #fff !important;
+  background-color: #F26334;
+  border-color: #AD572C;
+}
+
+.btn-gs1ie-orange:hover  {
+  color: #fff !important;
+  background-color: #AD572C;
+  border-color: #AD572C;
+}
+
+.field-info:hover {
+    cursor: help;
+}
+
+.field-info-icon {
+    color: #F26334;
+    font-size: 16px;
+}
+
+.input-group-checkbox .field-info {
+    background-color: transparent;
+    border: 0;
+}
+
+#prefix-info h4 {
+    color: white;
+    font-size:22px;
+}
+
+#prefix-info li {
+    color: white;
+    font-size:14px;
+}
+
+.description-label {
+    text-shadow: 2px 2px #888B8D;
+    color: #F26334;
+}
+
+.orange-well, .orange-panel-heading {
+  background-color: #F26334 !important;
+  color: white !important;
+}
+
+.grey-button {
+    background-color: #888B8D !important;
+}
+/* Fixes for square corners  */
+
+.img-rounded {
+  border-radius: 0;
+}
+
+.img-thumbnail {
+  border-radius: 0;
+}
+
+code {
+  border-radius: 0;
+}
+
+pre {
+  border-radius: 0;
+}
+
+.form-control {
+  border-radius: 0;
+}
+
+.input-sm {
+  border-radius: 0;
+}
+
+.input-lg {
+  border-radius: 0;
+}
+
+.btn {
+  border-radius: 0;
+}
+
+.btn-lg {
+  border-radius: 0;
+}
+
+.btn-sm,
+.btn-xs {
+  border-radius: 0;
+}
+
+.dropdown-menu {
+  border-radius: 0;
+}
+
+.btn-group-xs > .btn {
+  border-radius: 0;
+}
+
+.btn-group-sm > .btn {
+  border-radius: 0;
+}
+
+.btn-group-lg > .btn {
+  border-radius: 0;
+}
+
+.input-group-lg > .form-control,
+.input-group-lg > .input-group-addon,
+.input-group-lg > .input-group-btn > .btn {
+  border-radius: 0;
+}
+
+.input-group-sm > .form-control,
+.input-group-sm > .input-group-addon,
+.input-group-sm > .input-group-btn > .btn {
+  border-radius: 0;
+}
+
+.input-group-addon {
+  border-radius: 0;
+}
+
+.input-group-addon.input-sm {
+  border-radius: 0;
+}
+
+.input-group-addon.input-lg {
+  border-radius: 0;
+}
+
+.nav-tabs > li > a {
+  border-radius: 0;
+}
+
+.nav-pills > li > a {
+  border-radius: 0;
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    border-radius: 0;
+  }
+}
+
+.navbar-toggle {
+  border-radius: 0;
+}
+
+.navbar-toggle .icon-bar {
+  border-radius: 0;
+}
+
+.breadcrumb {
+  border-radius: 0;
+  padding: 4px 7px;
+  margin: 0;
+}
+
+.pagination {
+  border-radius: 0;
+}
+
+.pager li > a,
+.pager li > span {
+  border-radius: 0;
+}
+
+.label {
+  border-radius: 0;
+}
+
+.badge {
+  border-radius: 0;
+}
+
+.container .jumbotron {
+  border-radius: 0;
+}
+
+.thumbnail {
+  border-radius: 0;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 0;
+}
+
+.progress {
+  border-radius: 0;
+}
+
+.panel {
+  border-radius: 0;
+}
+
+.panel-group .panel {
+  border-radius: 0;
+}
+
+.well {
+  border-radius: 0;
+ }
+
+.well-lg {
+  border-radius: 0;
+}
+
+.well-sm {
+  border-radius: 0;
+}
+
+.modal-content {
+  border-radius: 0;
+}
+
+.tooltip-inner {
+  border-radius: 0;
+}
+
+.popover {
+  border-radius: 0;
+}
+
+.popover-title {
+  border-radius: 0;
+}
+
+.carousel-indicators li {
+  border-radius: 0;
+}
+
+.site-content {
+  border-radius: 0;
+}
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-radius: 0;
+}
+
+.btn-group > .btn:last-child:not(:first-child),
+.btn-group > .dropdown-toggle:not(:first-child) {
+  border-radius: 0;
+}
+
+.btn-group > .btn-group:first-child > .btn:last-child,
+.btn-group > .btn-group:first-child > .dropdown-toggle {
+  border-radius: 0;
+}
+
+.btn-group > .btn-group:last-child > .btn:first-child {
+  border-radius: 0;
+}
+
+.btn-group-vertical > .btn:first-child:not(:last-child) {
+  border-radius: 0;
+}
+
+.btn-group-vertical > .btn:last-child:not(:first-child) {
+  border-radius: 0;
+}
+
+.pagination > li:first-child > a,
+.pagination > li:first-child > span {
+  border-radius: 0;
+}
+
+.pagination > li:last-child > a,
+.pagination > li:last-child > span,
+.pagination-lg > li:first-child > a,
+.pagination-lg > li:first-child > span,
+.pagination-lg > li:last-child > a,
+.pagination-lg > li:last-child > span,
+.pagination-sm > li:first-child > a,
+.pagination-sm > li:first-child > span,
+.pagination-sm > li:last-child > a,
+.pagination-sm > li:last-child > span {
+  border-radius: 0;
+}
+
+.list-group-item:first-child,
+.list-group-item:last-child {
+  border-radius: 0;
+}
+
+.panel-heading,
+.panel-footer {
+  border-radius: 0;
+}
+
+.gtin13-class {
+    display: inline;
+    font-size: 1.5em;
+    padding-left: 10px;
+    vertical-align: middle;
+}
+
+.bar_placement {
+    max-width: 100%;
+}
+
+#pdt-table tbody tr td img, #legend li img {
+    width: auto;
+    height: auto;
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.icon-img {
+    width: auto;
+    height: auto;
+    max-width: 20px;
+    max-height: 20px;
+}
+
+label.disabled {
+    color: #AAAAAA;
+}
+
+#legend {
+  list-style: none;
+  padding-left: 5px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+#legend > li {
+    margin-bottom: 4px;
+    font-weight: 400;
+}
+
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+
+#gtin-radios {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+/* From here on, we are overriding bootstrap and jQuery css properties,
+   in order to obtain the desired theme color (blue, orange, grey) */
+
+.btn-primary {
+    background-color: #002C6C;
+    border-color: #002C6C;
+}
+
+.panel-primary {
+    border-color: #002C6C;
+}
+
+.panel-primary>.panel-heading {
+    background-color: #002C6C;
+    border-color: #002C6C;
+}
+
+.panel-default {
+    border-color: #888B8D;
+}
+
+.panel-default>.panel-heading {
+    color: #fff;
+    background-color: #888B8D;
+    border-color: #888B8D;
+}
+
+.form-control {
+    border: 1px solid #888B8D;
+}
+
+.fieldset > legend {
+    color: #002C6C;
+}
+
+.btn-darkened {
+    background-color:#888B8D;
+    border:none;
+    color:whitesmoke;
+}
+
+.well {
+    border: 1px solid #888B8D;
+}
+
+hr {
+    border-top: 1px solid #888B8D;
+}
+
+.nav-tabs {
+    border-bottom: 1px solid #888B8D;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #888B8D;
+    cursor: default;
+    background-color: #fff;
+    border: 1px solid #888B8D;
+    border-bottom-color: transparent;
+}

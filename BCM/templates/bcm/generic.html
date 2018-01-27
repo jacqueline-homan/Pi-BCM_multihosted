@@ -1,0 +1,46 @@
+{% extends 'bcm/new_base.html' %}
+{% load i18n %}
+{% block content %}
+    {% comment %}
+    <h1>{% trans "Choose your country" %}</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <select name="country">
+            {% for country in countries %}
+            <option value={{country.slug}}>{{country.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="Submit">
+    </form>
+    {% endcomment %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2 class="welcome-title">{% trans 'Welcome' %}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row welcome-navigation">
+        <div class="col welcome-left-column">
+            <div class="welcome-column-content">
+            {% for country in countries %}
+                <p>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'profile' country=country.slug pk=request.user.username %}">{{ country.slug }} {% trans 'Admin Profile' %}</a>
+                    {% else %}
+                        <a href="{% url 'login' country=country.slug %}">{{ country.slug }} {% trans 'Admin Login' %}</a> |
+                        <a href="{% url 'signup' country=country.slug %}">{{ country.slug }} {% trans 'Admin Register' %} </a>
+                    {% endif %}
+                </p>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="col welcome-right-column">
+            <div class="welcome-column-content">
+                <a href="{% url 'gs1ie:account_create_or_update' %}">{% trans 'API Account Create or Update' %}</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

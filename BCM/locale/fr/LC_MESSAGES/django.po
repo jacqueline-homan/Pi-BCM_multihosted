@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-15 16:22+0100\n"
+"POT-Creation-Date: 2018-01-17 20:06+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: templates/generic.html:4
+#: models.py:17
+msgid "User profiles"
+msgstr "Profil de l'utilisateur"
+
+#: models.py:42
+msgid "Countries"
+msgstr "Des pays"
+
+#: models.py:70
+msgid "Languages by countries"
+msgstr "Langues par pays"
+
+#: templates/base.html:12
+msgid "Django translations"
+msgstr "Traductions de Django"
+
+#: templates/base.html:14
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/base.html:15
+msgid "Logout"
+msgstr "Connectez - Out"
+
+#: templates/base.html:17 templates/registration/login.html:29
+msgid "Login"
+msgstr "S'identifier"
+
+#: templates/base.html:18
+msgid "Register"
+msgstr "enregistrement"
+
+#: templates/generic.html:5
 msgid "Choose your country"
 msgstr "Choisis ton pays"
 
-#: templates/index.html:4
+#: templates/index.html:6
 msgid "Choose your language"
 msgstr "Choisissez votre langue"
+
+#: templates/profile.html:4
+msgid "User profile"
+msgstr "Profil de l'utilisateur"
+
+#: templates/profile.html:8
+msgid "Submit"
+msgstr "Soumettre"
+
+#: templates/registration/login.html:5
+#: templates/registration/registration.html:5
+msgid "Your username and password didn't match. Please try again."
+msgstr ""
+"Votre nom d'utilisateur et votre mot de passe ne correspondent pas. Veuillez "
+"réessayer."
+
+#: templates/registration/login.html:10
+#: templates/registration/registration.html:10
+msgid "Your account doesn't have access to this page. To proceed, please login with an account that has access."
+msgstr "Votre compte n'a pas accès à cette page. Pour continuer, veuillez vous connecter avec un compte qui a accès."
+
+#: templates/registration/login.html:12
+#: templates/registration/registration.html:12
+msgid "Please login to see this page."
+msgstr "Merci de vous connecter pour voir cette page."
+
+#: templates/registration/registration.html:19
+msgid "Add user"
+msgstr "Ajouter un utilisateur"

@@ -28,7 +28,6 @@ def jsonify(**kwargs):
 
 @transaction.atomic
 def account_create_or_update(request):
-
     if request.method == 'POST':
         form = AccountCreateOrUpdateForm(request.POST)
         if form.is_valid():

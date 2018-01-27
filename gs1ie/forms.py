@@ -1,5 +1,5 @@
 from django import forms
-from django.core.validators import validate_email
+from django.utils.translation import gettext as _
 
 from BCM.models import Country
 
@@ -14,10 +14,12 @@ def get_country_choices():
 
 
 class AccountCreateOrUpdateForm(forms.Form):
-    uuid           = forms.CharField(label='Unique User Id', required=True)
-    email          = forms.CharField(label='User Email',     required=True, validators=[validate_email])
-    company_prefix = forms.CharField(label='Company Prefix', required=True)
-    company_name   = forms.CharField(label='Company Name',   required=False)
-    credits        = forms.CharField(label='Credit Points',  required=False)
-    txn_ref        = forms.CharField(label='Unique Transaction Reference', required=False)
-    country        = forms.ChoiceField(label='Country', choices=get_country_choices, required=True)
+    uuid = forms.CharField(label=_('Unique User Id'))
+    email = forms.EmailField(label=_('User Email'))
+    company_prefix = forms.CharField(label=_('Company Prefix'))
+    company_name = forms.CharField(label=_('Company Name'), required=False)
+    credits = forms.CharField(label=_('Credit Points'), required=False)
+    txn_ref = forms.CharField(
+        label=_('Unique Transaction Reference'), required=False)
+    country = forms.ChoiceField(
+        label=_('Country'), choices=get_country_choices)

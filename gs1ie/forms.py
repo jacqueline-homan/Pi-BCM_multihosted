@@ -1,15 +1,14 @@
 from django import forms
 from django.utils.translation import gettext as _
 
-from BCM.models import Country
+from member_organisations.models import MemberOrganisation
 
-
-def get_country_choices():
+def get_mo_choices():
     # choices should be specified with method!
     # if you replace "choices" with an internal class member,
     # ChoiceField tests will fail (choices will be empty)
     return [
-        (country.slug.upper(), country.name) for country in Country.objects.all()
+        (mo.slug.lower(), mo.name) for mo in MemberOrganisation.objects.all()
     ]
 
 
@@ -22,4 +21,4 @@ class AccountCreateOrUpdateForm(forms.Form):
     txn_ref = forms.CharField(
         label=_('Unique Transaction Reference'), required=False)
     country = forms.ChoiceField(
-        label=_('Country'), choices=get_country_choices)
+        label=_('GS1 MO'), choices=get_mo_choices)

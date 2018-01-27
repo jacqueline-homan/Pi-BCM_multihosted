@@ -36,6 +36,9 @@ class CompanyOrganisation(AbstractOrganization):
     prefix_override = models.CharField(max_length=100,
                                        default='')  # to add additional prefixes overriding anything that DK sends
 
+    def __str__(self):
+        return "{} ({})".format(self.uuid, self.company)
+
 
 class CompanyOrganisationUser(AbstractOrganizationUser):
     pass

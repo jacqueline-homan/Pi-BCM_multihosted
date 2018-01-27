@@ -63,7 +63,7 @@
                                 {{ _("Export available GTINs in this range") }}
                             </li>
                         </ul>
-                        <button type="submit" class="btn btn-primary" onclick="flash_message()">
+                        <button type="submit" class="btn btn-primary" onclick="flash_message(this)">
                             {{ _("Continue") }}
                         </button>
                     </div>
@@ -73,9 +73,11 @@
     </div>
 </div>
 <script type="text/javascript">
-    function flash_message() {
-        setTimeout( function() {
-                        flash('Available GTINs have been exported', 'success')
-                    }, 2000 )
+    function flash_message(t) {
+        if (t.form['prefix_action'].value=='export_available') {
+            setTimeout( function() {
+                            flash('Available GTINs have been exported', 'success')
+                        }, 2000 )
+        }
     }
 </script>

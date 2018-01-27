@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 
 {% block page_title %}
-    Token expired
+    {% trans 'User not found' %}
 {% endblock %}
 
 {% block page_content %}
 
     <div class="row">
         <div class="col-lg-8 col-md-8">
-            <h3 class="text-danger">User not found</h3>
+            <h3 class="text-danger">{% trans 'User not found' %}</h3>
         </div>
     </div>
 

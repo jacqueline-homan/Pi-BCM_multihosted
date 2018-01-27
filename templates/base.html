@@ -1,9 +1,10 @@
+{% load i18n %}
 {% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 
-    <title>{% block title %}GS1 Ireland Barcode Manager{% endblock %}</title>
+    <title>{% block title %}{% trans 'GS1 Ireland Barcode Manager' %}{% endblock %}</title>
 
     <meta name="copyright" content="(c) 2009-2015 Copyright BarcodeRobot"/>
     <meta name="keywords"
@@ -126,6 +127,7 @@
                         <a href="http://gs1ie-help.barcoderobot.com/">{{ _("Support") }}</a>
                     </li>
 
+
                     {% if not current_user.is_authenticated %}
                         <li><a href="http://www.gs1ie.org/Login/">{{ _("Sign In") }}</a></li>
                     {% else %}
@@ -135,6 +137,23 @@
                             </a>
                         </li>
                     {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#"
+                       id="navbar-languages" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
+                        {% trans 'Languages' %}
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbar-languages">
+                        {% for language in languages %}
+                        <li>
+                            <a href="{{ request.path }}?new_language={{ language.slug }}">
+                                {{ language }}
+                            </a></li>
+                        {% endfor %}
+                    </div>
+                </li>
+
                 </ul>
 
 

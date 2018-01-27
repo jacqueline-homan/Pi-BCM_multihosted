@@ -22,3 +22,7 @@ class PrefixActionForm(forms.Form):
         ('first_available_gln', 'Set to first available'),
         ('export_available_gln', 'Export available GTINs') )
     )
+
+
+class StartingNumberForm(forms.Form):
+    starting_number = forms.CharField(label='New Starting number', required=True)

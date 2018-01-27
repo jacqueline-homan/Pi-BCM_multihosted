@@ -22,4 +22,12 @@
             {% endif %}
         {% endwith %}
     {% endwith %}
+{% elif func == 'render_prefix' %}
+    {% with prefix.prefix|length as plength %}
+        {% if prefix.is_upc %}
+            {% for i in prefix.prefix %}{% if forloop.counter0 >= 1 %}{{ i }}{% endif %}{% endfor %}
+        {% else %}
+            {{ prefix.prefix }}
+        {% endif %}
+    {% endwith %}
 {% endif %}

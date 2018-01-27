@@ -20,5 +20,5 @@ class AccountCreateOrUpdateForm(forms.Form):
     credits = forms.CharField(label=_('Credit Points'), required=False)
     txn_ref = forms.CharField(
         label=_('Unique Transaction Reference'), required=False)
-    country = forms.ChoiceField(
+    member_organisation = forms.ChoiceField(
         label=_('GS1 MO'), choices=get_mo_choices)

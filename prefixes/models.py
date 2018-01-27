@@ -3,8 +3,10 @@ from django.db import models
 from django.utils import timezone
 
 from service import Service
-from uam.models import Organisation
+from company_organisations.models import CompanyOrganisation
+from member_organisations.models import MemberOrganisation
 from products.models import Product
+
 
 class Prefix(models.Model):
     class Meta:
@@ -16,15 +18,18 @@ class Prefix(models.Model):
     is_active = models.BooleanField(default=False)
     is_suspended = models.BooleanField(default=False)
     is_special = models.CharField(max_length=20, default='')
+
     # db.Enum('NULL', 'READ-ONLY', 'EACH-ONLY', 'PACK-ONLY', 'CASE-ONLY', 'PALLET-ONLY',
     #          name='prefix_special_status'), default='NULL')
+
     created = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(default=timezone.now)
 
     starting_from = models.CharField(max_length=13, null=True)
     starting_from_gln = models.CharField(max_length=13, null=True)
 
-    organisation = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)
+    company_organisation = models.ForeignKey(CompanyOrganisation, null=True, on_delete=models.PROTECT)
+    member_organisation = models.ForeignKey(MemberOrganisation, null=True, on_delete=models.PROTECT)
 
     description = models.CharField(max_length=100, default='')
 

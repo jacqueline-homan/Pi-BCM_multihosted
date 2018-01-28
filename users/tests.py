@@ -1,22 +1,30 @@
 from django.test import TestCase
 from services import prefix_service
 from BCM.models import Country
+from member_organisations.models import MemberOrganisation
 
 
 class UserTestCase(TestCase):
     url = '/profile/'
 
+    post_data = {       'uuid': '53900011',
+                       'email': '53900011@test.com',
+              'company_prefix': '53900011,53900012',
+                'company_name': 'GS1 Ireland',
+                     'credits': '39:20,43:100,44:100',
+                     'txn_ref': 'Test_1,Test_3,Test_2',
+         'member_organisation': 'gs1' }
+
     def setUp(self):
         country = Country(slug='BE', name='Belgium')
         country.save()
-        post_data = {'uuid': '53900011',
-                     'email': '53900011@test.com',
-                     'company_prefix': '53900011,53900012',
-                     'company_name': 'GS1 Ireland',
-                     'credits': '39:20,43:100,44:100',
-                     'txn_ref': 'Test_1,Test_3,Test_2',
-                     'country': 'BE'}
-        self.client.post('/API/v1/AccountCreateOrUpdate/', post_data)
+        member_organisation = MemberOrganisation(name='GS1',
+                                                 slug='gs1',
+                                                 is_active=1,
+                                                 country=country)
+        member_organisation.save()
+        response = self.client.post('/API/v1/AccountCreateOrUpdate/', self.post_data)
+        self.client.get(response.url)
 
     def test_page_exist(self):
         response = self.client.get(self.url)

@@ -1,56 +1,18 @@
 [
 {
-    "model": "uam.organisation",
-    "pk": 1,
-    "fields": {
-        "uuid": "53900001",
-        "country": 1,
-        "company": "53900001",
-        "street1": "",
-        "street2": "",
-        "city": "",
-        "state": "",
-        "zip": "",
-        "phone": "",
-        "gln": "5390000100004",
-        "vat": "",
-        "credit_points_balance": 0,
-        "active": true,
-        "prefix_override": ""
-    }
-},
-{
-    "model": "user.user",
-    "pk": 1,
-    "fields": {
-        "email": "53900001@test.com",
-        "username": "53900001@test.com",
-        "password": "",
-        "first_name": "",
-        "last_name": "",
-        "active": true,
-        "organisation": 1,
-        "customer_role": "gs1ie",
-        "agreed": false,
-        "agreed_date": "2018-01-26T07:51:42.628Z",
-        "agreed_version": "",
-        "login_count": 13
-    }
-},
-{
     "model": "prefixes.prefix",
-    "pk": 2,
+    "pk": 1,
     "fields": {
         "prefix": "53900001",
         "is_active": false,
         "is_suspended": false,
         "is_special": "",
-        "created": "2018-01-27T10:15:30.387Z",
-        "updated": "2018-01-27T10:15:30.388Z",
+        "created": "2018-01-28T18:22:28.448Z",
+        "updated": "2018-01-28T18:22:28.448Z",
         "starting_from": "5390000100004",
         "starting_from_gln": null,
-        "company_organisation": 2,
-        "member_organisation": 3,
+        "company_organisation": 1,
+        "member_organisation": 1,
         "description": ""
     }
 },
@@ -64,819 +26,15 @@
         "msg": "logging in: 53900001@test.com::",
         "ip_address": "127.0.0.1",
         "username": "53900001@test.com",
-        "created_at": "2018-01-26T07:51:42.629Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 2,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-26T10:45:49.503Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 3,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-26T10:45:53.932Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 4,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-26T10:46:09.967Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 5,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-26T10:48:42.350Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 6,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-26T10:49:30.176Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 7,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::53900001",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-26T22:26:09.871Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 8,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::53900001",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-27T07:05:13.540Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 9,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-27T09:19:40.340Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 10,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-27T10:01:44.860Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 11,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-27T10:15:18.323Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 12,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-27T10:18:36.915Z"
-    }
-},
-{
-    "model": "audit.log",
-    "pk": 13,
-    "fields": {
-        "logger": "audit",
-        "level": "INFO",
-        "trace": null,
-        "msg": "logging in: 53900001@test.com::53900001",
-        "ip_address": "127.0.0.1",
-        "username": "53900001@test.com",
-        "created_at": "2018-01-27T10:25:59.801Z"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 1,
-    "fields": {
-        "name": "Can add organisation",
-        "content_type": 1,
-        "codename": "add_organisation"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 2,
-    "fields": {
-        "name": "Can change organisation",
-        "content_type": 1,
-        "codename": "change_organisation"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 3,
-    "fields": {
-        "name": "Can delete organisation",
-        "content_type": 1,
-        "codename": "delete_organisation"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 4,
-    "fields": {
-        "name": "Can add user",
-        "content_type": 2,
-        "codename": "add_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 5,
-    "fields": {
-        "name": "Can change user",
-        "content_type": 2,
-        "codename": "change_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 6,
-    "fields": {
-        "name": "Can delete user",
-        "content_type": 2,
-        "codename": "delete_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 7,
-    "fields": {
-        "name": "Can add prefix",
-        "content_type": 3,
-        "codename": "add_prefix"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 8,
-    "fields": {
-        "name": "Can change prefix",
-        "content_type": 3,
-        "codename": "change_prefix"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 9,
-    "fields": {
-        "name": "Can delete prefix",
-        "content_type": 3,
-        "codename": "delete_prefix"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 10,
-    "fields": {
-        "name": "Can add log",
-        "content_type": 4,
-        "codename": "add_log"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 11,
-    "fields": {
-        "name": "Can change log",
-        "content_type": 4,
-        "codename": "change_log"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 12,
-    "fields": {
-        "name": "Can delete log",
-        "content_type": 4,
-        "codename": "delete_log"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 13,
-    "fields": {
-        "name": "Can add product",
-        "content_type": 5,
-        "codename": "add_product"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 14,
-    "fields": {
-        "name": "Can change product",
-        "content_type": 5,
-        "codename": "change_product"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 15,
-    "fields": {
-        "name": "Can delete product",
-        "content_type": 5,
-        "codename": "delete_product"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 16,
-    "fields": {
-        "name": "Can add log entry",
-        "content_type": 6,
-        "codename": "add_logentry"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 17,
-    "fields": {
-        "name": "Can change log entry",
-        "content_type": 6,
-        "codename": "change_logentry"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 18,
-    "fields": {
-        "name": "Can delete log entry",
-        "content_type": 6,
-        "codename": "delete_logentry"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 19,
-    "fields": {
-        "name": "Can add permission",
-        "content_type": 7,
-        "codename": "add_permission"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 20,
-    "fields": {
-        "name": "Can change permission",
-        "content_type": 7,
-        "codename": "change_permission"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 21,
-    "fields": {
-        "name": "Can delete permission",
-        "content_type": 7,
-        "codename": "delete_permission"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 22,
-    "fields": {
-        "name": "Can add group",
-        "content_type": 8,
-        "codename": "add_group"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 23,
-    "fields": {
-        "name": "Can change group",
-        "content_type": 8,
-        "codename": "change_group"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 24,
-    "fields": {
-        "name": "Can delete group",
-        "content_type": 8,
-        "codename": "delete_group"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 25,
-    "fields": {
-        "name": "Can add user",
-        "content_type": 9,
-        "codename": "add_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 26,
-    "fields": {
-        "name": "Can change user",
-        "content_type": 9,
-        "codename": "change_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 27,
-    "fields": {
-        "name": "Can delete user",
-        "content_type": 9,
-        "codename": "delete_user"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 28,
-    "fields": {
-        "name": "Can add content type",
-        "content_type": 10,
-        "codename": "add_contenttype"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 29,
-    "fields": {
-        "name": "Can change content type",
-        "content_type": 10,
-        "codename": "change_contenttype"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 30,
-    "fields": {
-        "name": "Can delete content type",
-        "content_type": 10,
-        "codename": "delete_contenttype"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 31,
-    "fields": {
-        "name": "Can add session",
-        "content_type": 11,
-        "codename": "add_session"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 32,
-    "fields": {
-        "name": "Can change session",
-        "content_type": 11,
-        "codename": "change_session"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 33,
-    "fields": {
-        "name": "Can delete session",
-        "content_type": 11,
-        "codename": "delete_session"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 34,
-    "fields": {
-        "name": "Can add country",
-        "content_type": 12,
-        "codename": "add_country"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 35,
-    "fields": {
-        "name": "Can change country",
-        "content_type": 12,
-        "codename": "change_country"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 36,
-    "fields": {
-        "name": "Can delete country",
-        "content_type": 12,
-        "codename": "delete_country"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 37,
-    "fields": {
-        "name": "Can add language",
-        "content_type": 13,
-        "codename": "add_language"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 38,
-    "fields": {
-        "name": "Can change language",
-        "content_type": 13,
-        "codename": "change_language"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 39,
-    "fields": {
-        "name": "Can delete language",
-        "content_type": 13,
-        "codename": "delete_language"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 40,
-    "fields": {
-        "name": "Can add language by country",
-        "content_type": 14,
-        "codename": "add_languagebycountry"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 41,
-    "fields": {
-        "name": "Can change language by country",
-        "content_type": 14,
-        "codename": "change_languagebycountry"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 42,
-    "fields": {
-        "name": "Can delete language by country",
-        "content_type": 14,
-        "codename": "delete_languagebycountry"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 43,
-    "fields": {
-        "name": "Can add profile",
-        "content_type": 15,
-        "codename": "add_profile"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 44,
-    "fields": {
-        "name": "Can change profile",
-        "content_type": 15,
-        "codename": "change_profile"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 45,
-    "fields": {
-        "name": "Can delete profile",
-        "content_type": 15,
-        "codename": "delete_profile"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 46,
-    "fields": {
-        "name": "Can add organization",
-        "content_type": 16,
-        "codename": "add_organization"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 47,
-    "fields": {
-        "name": "Can change organization",
-        "content_type": 16,
-        "codename": "change_organization"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 48,
-    "fields": {
-        "name": "Can delete organization",
-        "content_type": 16,
-        "codename": "delete_organization"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 49,
-    "fields": {
-        "name": "Can add organization owner",
-        "content_type": 17,
-        "codename": "add_organizationowner"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 50,
-    "fields": {
-        "name": "Can change organization owner",
-        "content_type": 17,
-        "codename": "change_organizationowner"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 51,
-    "fields": {
-        "name": "Can delete organization owner",
-        "content_type": 17,
-        "codename": "delete_organizationowner"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 52,
-    "fields": {
-        "name": "Can add organization user",
-        "content_type": 18,
-        "codename": "add_organizationuser"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 53,
-    "fields": {
-        "name": "Can change organization user",
-        "content_type": 18,
-        "codename": "change_organizationuser"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 54,
-    "fields": {
-        "name": "Can delete organization user",
-        "content_type": 18,
-        "codename": "delete_organizationuser"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 55,
-    "fields": {
-        "name": "Can add organization",
-        "content_type": 19,
-        "codename": "add_memberorganisation"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 56,
-    "fields": {
-        "name": "Can change organization",
-        "content_type": 19,
-        "codename": "change_memberorganisation"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 57,
-    "fields": {
-        "name": "Can delete organization",
-        "content_type": 19,
-        "codename": "delete_memberorganisation"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 58,
-    "fields": {
-        "name": "Can add organization owner",
-        "content_type": 20,
-        "codename": "add_memberorganisationowner"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 59,
-    "fields": {
-        "name": "Can change organization owner",
-        "content_type": 20,
-        "codename": "change_memberorganisationowner"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 60,
-    "fields": {
-        "name": "Can delete organization owner",
-        "content_type": 20,
-        "codename": "delete_memberorganisationowner"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 61,
-    "fields": {
-        "name": "Can add organization user",
-        "content_type": 21,
-        "codename": "add_memberorganisationuser"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 62,
-    "fields": {
-        "name": "Can change organization user",
-        "content_type": 21,
-        "codename": "change_memberorganisationuser"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 63,
-    "fields": {
-        "name": "Can delete organization user",
-        "content_type": 21,
-        "codename": "delete_memberorganisationuser"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 64,
-    "fields": {
-        "name": "Can add organization",
-        "content_type": 22,
-        "codename": "add_companyorganisation"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 65,
-    "fields": {
-        "name": "Can change organization",
-        "content_type": 22,
-        "codename": "change_companyorganisation"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 66,
-    "fields": {
-        "name": "Can delete organization",
-        "content_type": 22,
-        "codename": "delete_companyorganisation"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 67,
-    "fields": {
-        "name": "Can add organization owner",
-        "content_type": 23,
-        "codename": "add_companyorganisationowner"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 68,
-    "fields": {
-        "name": "Can change organization owner",
-        "content_type": 23,
-        "codename": "change_companyorganisationowner"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 69,
-    "fields": {
-        "name": "Can delete organization owner",
-        "content_type": 23,
-        "codename": "delete_companyorganisationowner"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 70,
-    "fields": {
-        "name": "Can add organization user",
-        "content_type": 24,
-        "codename": "add_companyorganisationuser"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 71,
-    "fields": {
-        "name": "Can change organization user",
-        "content_type": 24,
-        "codename": "change_companyorganisationuser"
-    }
-},
-{
-    "model": "auth.permission",
-    "pk": 72,
-    "fields": {
-        "name": "Can delete organization user",
-        "content_type": 24,
-        "codename": "delete_companyorganisationuser"
+        "created_at": "2018-01-28T18:22:28.446Z"
     }
 },
 {
     "model": "auth.user",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$100000$NS3KDDCFEJCf$YQ0U6yphCWJxW3PbeUE+AtIc+DFffXRkGAbjL9uBgZo=",
-        "last_login": "2018-01-27T10:19:10.672Z",
+        "password": "pbkdf2_sha256$100000$fX6pEBQ22Zqy$oc4o9UMheSEL67mmMhJwd/MeXPfg/wpFEZpeorG5I54=",
+        "last_login": "2018-01-28T18:20:03.453Z",
         "is_superuser": true,
         "username": "thomas",
         "first_name": "",
@@ -884,17 +42,17 @@
         "email": "test@test.com",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2018-01-26T07:48:56.733Z",
+        "date_joined": "2018-01-28T18:19:00.805Z",
         "groups": [],
         "user_permissions": []
     }
 },
 {
     "model": "auth.user",
-    "pk": 3,
+    "pk": 2,
     "fields": {
         "password": "",
-        "last_login": null,
+        "last_login": "2018-01-28T18:22:28.474Z",
         "is_superuser": false,
         "username": "53900001@test.com",
         "first_name": "",
@@ -902,32 +60,24 @@
         "email": "53900001@test.com",
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2018-01-27T10:25:59.775Z",
+        "date_joined": "2018-01-28T18:22:28.427Z",
         "groups": [],
         "user_permissions": []
     }
 },
 {
     "model": "sessions.session",
-    "pk": "5xvw7pqbz8jxvifixw6sjkwhqlu6pojk",
+    "pk": "a4o0hmfsy77kwk2uo4okexujb8sh3v0t",
     "fields": {
-        "session_data": "MWE5N2RjNzVkNjM5M2JlZWUwOGJmOGViNzhhZmJjNTNjN2RmNzA1Yzp7Il9sYW5ndWFnZSI6Im5sIiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6ImI0YTAzYTBhNWVmMmYwNjM2ZGQzYjIyOTU4MzlmZWIzMTI3MDQ2NzEifQ==",
-        "expire_date": "2018-02-10T10:21:50.560Z"
-    }
-},
-{
-    "model": "sessions.session",
-    "pk": "6vvn104v3f48sncgcywu22iedzu1wca6",
-    "fields": {
-        "session_data": "OTI0YzI5MTQ3ZDc2YTFkOTE1YjI5NmFhZjJkMzFhZWE2YWVmNDgwMDp7Il9sYW5ndWFnZSI6ImRlIiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6ImI0YTAzYTBhNWVmMmYwNjM2ZGQzYjIyOTU4MzlmZWIzMTI3MDQ2NzEiLCJmbGFzaF9tZXNzYWdlcyI6W10sInByZWZfbGFuZ3VhZ2UiOiJkZSJ9",
-        "expire_date": "2018-02-10T10:33:46.175Z"
+        "session_data": "MzY2NmU0OTQ1YjdiMDVkOGI5N2EzYjFlMjM3OTRlY2M2ZmE1ZjgxYjp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI2ZTk5ZTk0YzExY2E5N2I4N2QxNGEwNTc0ZGU5YzQ0ZTRmNTJlYzdlIiwiX2xhbmd1YWdlIjoiZW4tdXMifQ==",
+        "expire_date": "2018-02-11T18:22:28.528Z"
     }
 },
 {
     "model": "BCM.profile",
-    "pk": "",
+    "pk": "53900001@test.com",
     "fields": {
-        "user": 3,
+        "user": 2,
         "country": null,
         "language": null
     }
@@ -937,39 +87,23 @@
     "pk": "thomas",
     "fields": {
         "user": 1,
-        "country": 2,
-        "language": 2
+        "country": null,
+        "language": null
     }
 },
 {
     "model": "BCM.country",
     "pk": 1,
-    "fields": {
-        "name": "France",
-        "slug": "FR"
-    }
-},
-{
-    "model": "BCM.country",
-    "pk": 2,
     "fields": {
         "name": "Belgium",
         "slug": "BE"
     }
 },
 {
-    "model": "BCM.country",
-    "pk": 3,
-    "fields": {
-        "name": "Austria",
-        "slug": "AT"
-    }
-},
-{
     "model": "BCM.language",
     "pk": 1,
     "fields": {
-        "name": "french",
+        "name": "French",
         "slug": "fr"
     }
 },
@@ -977,16 +111,8 @@
     "model": "BCM.language",
     "pk": 2,
     "fields": {
-        "name": "dutch",
+        "name": "Dutch",
         "slug": "nl"
-    }
-},
-{
-    "model": "BCM.language",
-    "pk": 3,
-    "fields": {
-        "name": "german",
-        "slug": "de"
     }
 },
 {
@@ -994,120 +120,71 @@
     "pk": 1,
     "fields": {
         "country": 1,
-        "language": 1,
-        "default": true
-    }
-},
-{
-    "model": "BCM.languagebycountry",
-    "pk": 2,
-    "fields": {
-        "country": 2,
-        "language": 1,
-        "default": true
-    }
-},
-{
-    "model": "BCM.languagebycountry",
-    "pk": 3,
-    "fields": {
-        "country": 2,
         "language": 2,
         "default": false
     }
 },
 {
     "model": "BCM.languagebycountry",
-    "pk": 4,
-    "fields": {
-        "country": 2,
-        "language": 3,
-        "default": false
-    }
-},
-{
-    "model": "BCM.languagebycountry",
-    "pk": 5,
-    "fields": {
-        "country": 3,
-        "language": 3,
-        "default": true
-    }
-},
-{
-    "model": "member_organisations.memberorganisation",
-    "pk": 3,
-    "fields": {
-        "name": "GS1 Austria",
-        "is_active": true,
-        "created": "2018-01-27T07:48:17.286Z",
-        "modified": "2018-01-27T07:48:17.291Z",
-        "slug": "gs1-austria"
-    }
-},
-{
-    "model": "member_organisations.memberorganisation",
     "pk": 2,
     "fields": {
-        "name": "GS1 Belgium",
-        "is_active": true,
-        "created": "2018-01-27T07:47:46.416Z",
-        "modified": "2018-01-27T07:47:46.424Z",
-        "slug": "gs1-belgium"
+        "country": 1,
+        "language": 1,
+        "default": true
     }
 },
 {
     "model": "member_organisations.memberorganisation",
     "pk": 1,
     "fields": {
-        "name": "GS1 France",
+        "name": "GS1 Belgium",
         "is_active": true,
-        "created": "2018-01-26T22:16:17.393Z",
-        "modified": "2018-01-26T22:16:17.396Z",
-        "slug": "gs1-france"
+        "created": "2018-01-28T18:22:11.703Z",
+        "modified": "2018-01-28T18:22:11.709Z",
+        "slug": "gs1-belgium"
     }
 },
 {
     "model": "member_organisations.memberorganisationuser",
-    "pk": 2,
+    "pk": 1,
     "fields": {
-        "created": "2018-01-27T10:25:59.783Z",
-        "modified": "2018-01-27T10:25:59.783Z",
+        "created": "2018-01-28T18:22:28.432Z",
+        "modified": "2018-01-28T18:22:28.432Z",
         "is_admin": true,
-        "user": 3,
-        "organization": 3
+        "user": 2,
+        "organization": 1
     }
 },
 {
     "model": "member_organisations.memberorganisationowner",
-    "pk": 2,
+    "pk": 1,
     "fields": {
-        "created": "2018-01-27T10:25:59.784Z",
-        "modified": "2018-01-27T10:25:59.792Z",
-        "organization_user": 2,
-        "organization": 3
+        "created": "2018-01-28T18:22:28.434Z",
+        "modified": "2018-01-28T18:22:28.436Z",
+        "organization_user": 1,
+        "organization": 1
     }
 },
 {
     "model": "company_organisations.companyorganisation",
-    "pk": 2,
+    "pk": 1,
     "fields": {
         "name": "",
         "is_active": true,
-        "created": "2018-01-27T09:19:39.060Z",
-        "modified": "2018-01-27T10:25:59.813Z",
+        "created": "2018-01-28T18:22:28.420Z",
+        "modified": "2018-01-28T18:22:28.421Z",
         "slug": "-2",
-        "member_organisation": 3,
+        "member_organisation": 1,
         "uuid": "53900001",
         "country": null,
-        "company": "53900001",
+        "company": "",
         "street1": "",
         "street2": "",
         "city": "",
         "state": "",
         "zip": "",
         "phone": "",
-        "gln": "5390000100004",
+        "gln": "",
         "vat": "",
         "credit_points_balance": 0,
         "active": true,
@@ -1116,23 +193,61 @@
 },
 {
     "model": "company_organisations.companyorganisationuser",
-    "pk": 2,
+    "pk": 1,
     "fields": {
-        "created": "2018-01-27T10:25:59.793Z",
-        "modified": "2018-01-27T10:25:59.794Z",
+        "created": "2018-01-28T18:22:28.438Z",
+        "modified": "2018-01-28T18:22:28.438Z",
         "is_admin": true,
-        "user": 3,
-        "organization": 2
+        "user": 2,
+        "organization": 1
     }
 },
 {
     "model": "company_organisations.companyorganisationowner",
+    "pk": 1,
+    "fields": {
+        "created": "2018-01-28T18:22:28.439Z",
+        "modified": "2018-01-28T18:22:28.440Z",
+        "organization_user": 1,
+        "organization": 1
+    }
+},
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "email": "",
+        "username": "",
+        "password": "",
+        "first_name": "",
+        "last_name": "",
+        "active": true,
+        "organisation": null,
+        "customer_role": "",
+        "agreed": false,
+        "agreed_date": "2018-01-28T18:19:00.931Z",
+        "agreed_version": "",
+        "login_count": null
+    }
+},
+{
+    "model": "users.user",
     "pk": 2,
     "fields": {
-        "created": "2018-01-27T10:25:59.794Z",
-        "modified": "2018-01-27T10:25:59.794Z",
-        "organization_user": 2,
-        "organization": 2
+        "user": 2,
+        "email": "",
+        "username": "",
+        "password": "",
+        "first_name": "",
+        "last_name": "",
+        "active": true,
+        "organisation": null,
+        "customer_role": "",
+        "agreed": false,
+        "agreed_date": "2018-01-28T18:22:28.430Z",
+        "agreed_version": "",
+        "login_count": null
     }
 }
 ]

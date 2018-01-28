@@ -87,7 +87,7 @@ def prefixes_list(request):
                             return render(request, 'prefixes/prefix_exhausted.html',
                                                    {'current_user': current_user, 'prefix': prefix })
                         prefix_service.save(prefix)
-                        flash(request, 'Starting tin has been set to GTIN-%s' % prefix.starting_from, 'success')
+                        flash(request, 'Starting gtin has been set to GTIN-%s' % prefix.starting_from, 'success')
                         return redirect(reverse('prefixes:prefixes_list'))
 
                     # new location
@@ -180,7 +180,7 @@ def prefixes_set_starting(request, prefix_id):
                     if len(products) == 0:
                         prefix.starting_from = starting_number
                         prefix_service.save(prefix)
-                        flash(request, 'Starting tin has been set to GTIN-%s' % prefix.starting_from, 'success')
+                        flash(request, 'Starting gtin has been set to GTIN-%s' % prefix.starting_from, 'success')
                         return redirect(reverse('prefixes:prefixes_list'))
                     else:
                         error = 'This number is already assigned. Try another one.'

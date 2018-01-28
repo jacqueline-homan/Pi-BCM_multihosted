@@ -27,7 +27,7 @@
             {% for country in countries %}
                 <p>
                     {% if request.user.is_authenticated %}
-                        <a href="{% url 'profile' country=country.slug pk=request.user.username %}">{{ country.slug }} {% trans 'Admin Profile' %}</a>
+                        <a href="{% url 'profile' %}">{{ country.slug }} {% trans 'Admin Profile' %}</a>
                     {% else %}
                         <a href="{% url 'login' country=country.slug %}">{{ country.slug }} {% trans 'Admin Login' %}</a> |
                         <a href="{% url 'signup' country=country.slug %}">{{ country.slug }} {% trans 'Admin Register' %} </a>

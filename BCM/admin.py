@@ -3,12 +3,13 @@ from .models import Country, Language, LanguageByCountry, Profile
 
 
 class LanguageByCountryAdmin(admin.ModelAdmin):
-    list_display = ('country', 'language', 'default')
+    # list_display = ('country', 'language', 'default')
+    pass
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'username', 'country', 'language')
-
+    # list_display = ('user', 'username', 'country', 'language')
+    pass
 
 admin.site.register(Country)
 admin.site.register(Language)

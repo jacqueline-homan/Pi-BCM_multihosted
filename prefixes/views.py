@@ -13,10 +13,11 @@ from barcoding.utilities import normalize
 
 
 def prefixes_list(request):
-    current_user = users_service.get(1)
+    current_user = request.user
+    company_organisation = users_service.get_company_organisation(current_user)
 
     prefixes = prefix_service.all()
-    susp_prefixes = prefix_service.find(organisation=current_user.organisation, is_suspended=True).all()
+    susp_prefixes = prefix_service.find(company_organisation=company_organisation, is_suspended=True).all()
 
     '''
     prefixes = prefix_service.find_all().all()
@@ -143,7 +144,7 @@ def prefixes_list(request):
         selected_prefix = int(request.POST['select_prefix'])
         prefix_service.make_active(selected_prefix)
     except:
-        selected_prefix = prefix_service.get_active(current_user.organisation)
+        selected_prefix = prefix_service.get_active(company_organisation)
 
     config = {'GS1_GLN_CAPABILITY': settings.GS1_GLN_CAPABILITY}
 
@@ -212,11 +213,12 @@ def jsonify(**kwargs):
 def prefixes_ajax(request):
     if request.method != 'POST':
         return Http404()
-    current_user = users_service.get(1)
+    current_user = request.user
     prefix_id = request.POST.get('pk', None)
     if not prefix_id:
         return Http404()
-    prefix = prefix_service.find_item(organisation=current_user.organisation, id=prefix_id)
+    company_organisation = users_service.get_company_organisation(current_user)
+    prefix = prefix_service.find_item(company_organisation=company_organisation, id=prefix_id)
     if not prefix:
         return Http404()
     prefix.description = request.POST.get('value', None)

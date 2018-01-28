@@ -1,21 +1,27 @@
 from django.db import models
+from django.contrib.auth.models import User as AuthUser
 from uam.models import Organisation
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from service import Service
 
 
 class User(models.Model):
-    db_name = 'users'
+    db_name = 'user'
+
+    user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
 
     is_authenticated = True
 
-    email = models.CharField(max_length=255, default='', unique=True)
-    username = models.CharField(max_length=50,  default='', unique=True)
-    password = models.CharField(max_length=255, default='')
-    first_name = models.CharField(max_length=30,  default='')
-    last_name = models.CharField(max_length=30,  default='')
+    email = models.CharField(max_length=255, default='')        # to del
+    username = models.CharField(max_length=50,  default='')     # to del
+    password = models.CharField(max_length=255, default='')     # to del
+    first_name = models.CharField(max_length=30,  default='')   # to del
+    last_name = models.CharField(max_length=30,  default='')    # to del
     active = models.BooleanField(default=True)
 
-    organisation  = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)
+    organisation  = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)    # to del
     customer_role = models.CharField(max_length=20,  default='')
 
     # Terms and conditions agreement
@@ -65,3 +71,43 @@ class User(models.Model):
     # Enable leading digit?
     enable_leading = db.Column(db.Boolean, default=False)
     '''
+
+
+@receiver(post_save, sender=AuthUser)
+def create_user_profile(sender, instance, created, **kwargs):
+    user = User.objects.filter(user=instance).first()
+    if user:
+        instance.user.save()
+    else:
+        user = User(user=instance)
+        user.save()
+
+
+class UsersService(Service):
+    def __init__(self):
+        super().__init__(User)
+
+    def get_or_create(self, email, defaults={}):
+        # get or create user
+        auth_user, auth_user_created = AuthUser.objects.get_or_create(email=email, defaults={'username': email})
+
+        # link user to the organisations
+        member_organisation = defaults.get('member_organisation', None)
+        if auth_user_created and member_organisation:
+            member_organisation.add_user(auth_user)
+
+        company_organisation = defaults.get('company_organisation', None)
+        if auth_user_created and company_organisation:
+            company_organisation.add_user(auth_user)
+
+        return auth_user, auth_user_created
+
+    def get_company_organisation(self, user):
+        company_organisation = user.company_organisations_companyorganisation.first()
+        return company_organisation
+
+    def find(self, **kwargs):
+        auth_user = AuthUser.objects.filter(email=kwargs['email']).first()
+        #res = User.objects.filter(user=auth_user, customer_role=kwargs['customer_role'])
+        #if res:
+        return auth_user

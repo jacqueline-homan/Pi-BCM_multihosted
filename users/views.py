@@ -6,7 +6,11 @@ from django.conf import settings
 
 
 def profile(request):
-    current_user = {
+    current_user = request.user
+    company_organisation = users_service.get_company_organisation(current_user)
+
+    '''
+    {
         'id': 1,
         'active': True,
         'is_authenticated': True,
@@ -18,6 +22,7 @@ def profile(request):
             'uuid': '53900011'
         }
     }
+    '''
 
     prefixes = prefix_service.all()
     '''
@@ -52,7 +57,7 @@ def profile(request):
     terms_alert = False
     terms_version = settings.TERMS_VERSION
 
-    user = users_service.get(current_user['id'])
+    user = current_user.user
     if request.method == 'POST':
         if request.POST.get('agree'):
             user.agreed = True
@@ -72,12 +77,13 @@ def profile(request):
         'alerts': alerts,
         'terms_alert': terms_alert,
         'terms_version': terms_version,
-        'uuid': '53900011',
-        'company_name': current_user['organisation']['company'],
+        'uuid': company_organisation.uuid,
+        'company_name': company_organisation.company,
+        'organisation_active': company_organisation.active,
         'prefixes': prefixes,
     }
     if settings.DEBUG:
-        context.update({ 'uuid': current_user['organisation']['uuid'] })  # For debug purposes
+        context.update({ 'uuid': company_organisation.uuid })  # For debug purposes
 
     return render(request, 'user/profile.html', context)
 

@@ -1,12 +1,11 @@
-import json
 import logging
 import re
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db import transaction, IntegrityError
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
@@ -15,18 +14,12 @@ from company_organisations.models import CompanyOrganisation
 from member_organisations.models import MemberOrganisation
 from services import users_service, prefix_service
 from .forms import AccountCreateOrUpdateForm
+from core import jsonify
 
 
 # class User:
 #    def is_authenticated(self):
 #        return True
-
-
-def jsonify(**kwargs):
-    content = json.dumps(kwargs)
-    response = HttpResponse(content, content_type='application/json')
-    response['Content-Length'] = len(content)
-    return response
 
 
 @transaction.atomic
@@ -55,15 +48,17 @@ def account_create_or_update(request):
                     company_organisation.company = company_name
                     company_organisation.save()
 
-                # get or create user
-                auth_user, auth_user_created = User.objects.get_or_create(email=email, defaults={'username': email})
+                auth_user, auth_user_created = users_service.get_or_create(email=email,
+                                                             defaults={
+                                                                 'username': email,
+                                                                 'customer_role': 'gs1ie',
+                                                                 'member_organisation': member_organisation,
+                                                                 'company_organisation': company_organisation
+                                                             })
 
-                # link user to the organisations
-                if auth_user_created:
-                    member_organisation.add_user(auth_user)
-                    company_organisation.add_user(auth_user)
+                auth_user.save()
 
-                company_organisation = auth_user.company_organisations_companyorganisation.first()
+                company_organisation = users_service.get_company_organisation(auth_user)
 
                 # user, user_created = users_service.get_or_create(email=email,
                 #                                                  defaults={
@@ -71,8 +66,6 @@ def account_create_or_update(request):
                 #                                                      'customer_role': 'gs1ie',
                 #                                                      'organisation': organisation
                 #                                                  })
-
-
 
             except Exception as e:
                 return jsonify(success=False, message=str(e))
@@ -179,13 +172,16 @@ def api_auth(request, token):
         email, uuid = serializer.loads(token, max_age=30)
     except SignatureExpired:
         return render(request, 'gs1ie/token_expired.html', status=403)
-    user = users_service.find(email=email, customer_role='gs1ie').first()
+    user = users_service.find(email=email, customer_role='gs1ie')
     if not user:
         return render(request, 'gs1ie/user_not_found.html', status=404)
-    if user.login_count is None:
-        login_count = 1
-    else:
-        login_count = user.login_count + 1
-    users_service.update(user, login_count=login_count)
+
+    login(request, user)
+
+    #if user.login_count is None:
+    #    login_count = 1
+    #else:
+    #    login_count = user.login_count + 1
+    #users_service.update(user, login_count=login_count)
 
     return redirect(reverse('profile'))

@@ -154,8 +154,8 @@ class PrefixService(Service):
                 prefix.is_active = False
             prefix.save()
 
-    def get_active(self, organisation):
-        prfxs = self.find(organisation=organisation)
+    def get_active(self, company_organisation):
+        prfxs = self.find(company_organisation=company_organisation)
         for prfx in prfxs:
             if prfx.is_active:
                 return prfx.id

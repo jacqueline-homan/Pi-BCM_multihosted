@@ -7,9 +7,8 @@ def get_mo_choices():
     # choices should be specified with method!
     # if you replace "choices" with an internal class member,
     # ChoiceField tests will fail (choices will be empty)
-    return [
-        (mo.slug.lower(), mo.name) for mo in MemberOrganisation.objects.all()
-    ]
+    res = [ (mo.slug.lower(), mo.name) for mo in MemberOrganisation.objects.all() ]
+    return res
 
 
 class AccountCreateOrUpdateForm(forms.Form):

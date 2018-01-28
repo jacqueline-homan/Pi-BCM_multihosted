@@ -21,7 +21,7 @@
 
 {% block page_content %}
 
-    {% if  current_user.active and current_user.organisation.active %}
+    {% if  current_user.is_active and organisation_active %}
 
         {% if alerts %}
             <div class="row">

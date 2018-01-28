@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'gs1ie.apps.Gs1IeConfig',
     'uam.apps.UamConfig',
-    'user.apps.UserConfig',
+    'users.apps.UsersConfig',
     'prefixes.apps.PrefixesConfig',
     'audit.apps.AuditConfig',
     'products.apps.ProductsConfig',

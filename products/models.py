@@ -7,14 +7,14 @@ class Product(models.Model):
     db_name = "products"
 
     # product owner info
-    owner = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
 
     # organisation
-    organisation = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)
+    organisation = models.ForeignKey(Organisation, null=True, blank=True, on_delete=models.PROTECT)
 
     # Product info
-    gtin = models.CharField(max_length=14, default='', db_index=True)
-    gs1_company_prefix = models.CharField(max_length=75, default='', db_index=True)
+    gtin = models.CharField(max_length=14, default='', blank=True, db_index=True)
+    gs1_company_prefix = models.CharField(max_length=75, default='', blank=True, db_index=True)
     gln_of_information_provider = models.CharField(max_length=75)
 
     '''

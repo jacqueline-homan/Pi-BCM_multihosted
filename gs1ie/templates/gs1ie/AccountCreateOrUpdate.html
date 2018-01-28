@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 
 {% block page_title %}
-    AccountCreateOrUpdate
+    {% trans 'AccountCreateOrUpdate' %}
 {% endblock %}
 
 {% block page_content %}
@@ -13,7 +13,7 @@
                   action="/API/v1/AccountCreateOrUpdate/">
                 {% csrf_token %}
 
-                <legend>AccountCreateOrUpdate</legend>
+                <legend>{% trans 'AccountCreateOrUpdate' %}</legend>
                 {{ form.non_field_errors }}
                 <table>
 
@@ -26,7 +26,7 @@
                     </tr>
 
                     <tr>
-                        <td>Email:</td>
+                        <td>{% trans 'Email' %}:</td>
                         <td>
                             {{ form.email.errors }}
                             {{ form.email }}
@@ -34,7 +34,7 @@
                     </tr>
 
                     <tr>
-                        <td>Prefix:</td>
+                        <td>{% trans 'Prefix' %}:</td>
                         <td>
                             {{ form.company_prefix.errors }}
                             {{ form.company_prefix }}
@@ -42,7 +42,7 @@
                     </tr>
 
                     <tr>
-                        <td>Company Name:</td>
+                        <td>{% trans 'Company Name' %}:</td>
                         <td>
                             {{ form.company_name.errors }}
                             {{ form.company_name }}
@@ -50,7 +50,7 @@
                     </tr>
 
                     <tr>
-                        <td>Credits:</td>
+                        <td>{% trans 'Credits' %}:</td>
                         <td>
                             {{ form.credits.errors }}
                             {{ form.credits }}
@@ -58,10 +58,18 @@
                     </tr>
 
                     <tr>
-                        <td>TXN Ref:</td>
+                        <td>{% trans 'TXN Ref' %}:</td>
                         <td>
                             {{ form.txn_ref.errors }}
                             {{ form.txn_ref }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>{% trans 'GS1 MO' %}:</td>
+                        <td>
+                            {{ form.member_organisation.errors }}
+                            {{ form.member_organisation }}
                         </td>
                     </tr>
 
@@ -73,7 +81,7 @@
                 <div class="form-group">
                     <button type="submit"
                             class="btn btn-darkened">
-                        Send
+                        {% trans 'Send' %}
                     </button>
                 </div>
 

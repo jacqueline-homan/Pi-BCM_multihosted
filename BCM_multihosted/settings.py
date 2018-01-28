@@ -34,9 +34,10 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'gs1ie.apps.Gs1IeConfig',
     'uam.apps.UamConfig',
-    'user.apps.UserConfig',
+    'users.apps.UsersConfig',
     'prefixes.apps.PrefixesConfig',
     'audit.apps.AuditConfig',
+    'products.apps.ProductsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'BCM.apps.BcmConfig',
-    'organizations',
+    'member_organisations.apps.MemberOrganisationsConfig',
+    'company_organisations.apps.CompanyOrganisationsConfig'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'BCM_multihosted.urls'
@@ -75,6 +76,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'prefixes.apps.template_context_processor',
+                'BCM.context_processor.add_languages'
             ],
         },
     },
@@ -162,6 +165,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'assets'), )
 
 GS1_PREFIX_START_REGEX = "^539|^501|^509|^0\d\d"
 TERMS_VERSION = '2017/11/04'
+GS1_GLN_CAPABILITY = False
+PREFIXES_EXCEL_TEMPLATE = os.path.join(BASE_DIR, 'templates/prefixes/excel/GDSN_Template_v4.xlsx')
 
 try:
     from .local_settings import *

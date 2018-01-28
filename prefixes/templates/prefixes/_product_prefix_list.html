@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Your prefixes
+            </div>
+            <div class="panel-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <p>Select a number bank from the list below, select the desired action and press the
+                        Continue
+                        button.</p>
+                    <table class="table table-condensed table-striped">
+                        <thead>
+                        <th>Select</th>
+                        <th>Prefix Description</th>
+                        <th>Range</th>
+                        <th>Next number</th>
+                        <th>Products</th>
+                        </thead>
+                        <tbody>
+                        {% for prefix in prefixes %}
+                            <tr>
+                                <td><input type="radio" name="select_prefix" value="{{ prefix.id }}"
+                                           {% if prefix.id == selected_prefix %}checked{% endif %}></td>
+                                <td>
+                                    <a href="#" class="prefix-editable"
+                                       data-type="text"
+                                       data-pk="{{ prefix.id }}"
+                                       data-url="/prefixes/ajax/"
+                                       data-title="Prefix Description"
+                                    >{% if prefix.description %}{{ prefix.description }}{% else %}Block of {{ prefix.get_capacity }} GTINs{% endif %}</a>
+                                </td>
+                                <td>{% include 'prefixes/range_macros.html' with func='render_range' prefix=prefix only %}</td>
+                                <td>{% include 'prefixes/range_macros.html' with func='render_starting_number' prefix=prefix only %}</td>
+                                <td>{% if not prefix.products %}
+                                    No products
+                                {% else %}
+                                    <a href="{% url 'products.products_list' %}?prefix={{ prefix.prefix }}">{{ prefix.products }}
+                                        Product{{ prefix.products|pluralize }}</a>
+                                {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="well col-md-12">
+                        <h4>Actions</h4>
+                        <ul class="list-unstyled" id="prefix-actions">
+                            <li><input type="radio" name="prefix_action" value="new_product">&nbsp;
+                                {{ _("Enter a new product in selected range") }}
+                            </li>
+                            <li><input type="radio" name="prefix_action" value="set_this">&nbsp;
+                                {{ _("Set selected range as active and go to My Products") }}
+                            </li>
+                            <li><input type="radio" name="prefix_action" value="starting_gtin">&nbsp;
+                                {{ _("Set starting GTIN in selected range manually") }}
+                            </li>
+                            <li><input type="radio" name="prefix_action" value="first_available">&nbsp;
+                                {{ _("Set starting GTIN to first available number") }}
+                            </li>
+                            <li><input type="radio" name="prefix_action" value="export_available">&nbsp;
+                                {{ _("Export available GTINs in this range") }}
+                            </li>
+                        </ul>
+                        <button type="submit" class="btn btn-primary" onclick="flash_message(this)">
+                            {{ _("Continue") }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function flash_message(t) {
+        if (t.form['prefix_action'].value=='export_available') {
+            setTimeout( function() {
+                            flash('Available GTINs have been exported', 'success')
+                        }, 2000 )
+        }
+    }
+</script>

@@ -16,14 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from gs1ie.views import account_create_or_update
-from user.views import profile
+from gs1ie.views import account_create_or_update, api_auth
+from users.views import profile
 
 urlpatterns = [
     path('API/v1/AccountCreateOrUpdate/', account_create_or_update),
-    path('profile/', profile),
+    path('API/v1/auth/<token>/', api_auth, name='api_auth_v1'),
+    path('profile/', profile, name='profile'),
     path('gs1ie/', include('gs1ie.urls')),
-    path('user/', include('user.urls')),
+    path('prefixes/', include('prefixes.urls')),
+    path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
     path("", include("BCM.urls")),
 ]

@@ -1,17 +1,30 @@
-from django.db import models
 import random
+
 from django.contrib.auth.models import User
-from django.utils.translation import gettext as _
+from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext as _
 
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.SlugField(primary_key=True)
+
     # other info like firstname, surname and other stuff
-    country = models.ForeignKey("Country", on_delete=models.CASCADE, null=True)  # ?
     language = models.ForeignKey("Language", on_delete=models.CASCADE, null=True)  # ?
+
+    @property
+    def member_organisation(self):
+        return self.user.member_organisations_memberorganisation.first()
+
+    @property
+    def company_organisation(self):
+        return self.user.company_organisations_companyorganisation.first()
+
+    @property
+    def country(self):
+        return self.user.member_organisations_memberorganisation.first().country
 
     class Meta:
         verbose_name_plural = _("User profiles")
@@ -21,7 +34,6 @@ class Profile(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance, username=instance.username)
-
 
 
 @receiver(post_save, sender=User)
@@ -39,6 +51,7 @@ class Country(models.Model):
     slug = models.SlugField(max_length=2)
 
     class Meta:
+        ordering = ('name',)
         verbose_name_plural = _("Countries")
 
     def __str__(self):

@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-27 10:00+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: forms.py:22
+msgid "Unique User Id"
+msgstr ""
+
+#: forms.py:23
+msgid "User Email"
+msgstr ""
+
+#: forms.py:24
+msgid "Company Prefix"
+msgstr ""
+
+#: forms.py:25 templates/gs1ie/AccountCreateOrUpdate.html:45
+msgid "Company Name"
+msgstr ""
+
+#: forms.py:26
+msgid "Credit Points"
+msgstr ""
+
+#: forms.py:28
+msgid "Unique Transaction Reference"
+msgstr ""
+
+#: forms.py:30 templates/gs1ie/AccountCreateOrUpdate.html:69
+msgid "Country"
+msgstr ""
+
+#: templates/gs1ie/AccountCreateOrUpdate.html:5
+#: templates/gs1ie/AccountCreateOrUpdate.html:16
+msgid "AccountCreateOrUpdate"
+msgstr ""
+
+#: templates/gs1ie/AccountCreateOrUpdate.html:29
+msgid "Email"
+msgstr ""
+
+#: templates/gs1ie/AccountCreateOrUpdate.html:37
+msgid "Prefix"
+msgstr ""
+
+#: templates/gs1ie/AccountCreateOrUpdate.html:61
+msgid "TXN Ref"
+msgstr ""
+
+#: templates/gs1ie/AccountCreateOrUpdate.html:84
+msgid "Send"
+msgstr ""
+
+#: templates/gs1ie/token_expired.html:5
+msgid "Token expired"
+msgstr ""
+
+#: templates/gs1ie/token_expired.html:12
+msgid "This token has expired"
+msgstr ""
+
+#: templates/gs1ie/user_not_found.html:5 templates/gs1ie/user_not_found.html:12
+msgid "User not found"
+msgstr ""

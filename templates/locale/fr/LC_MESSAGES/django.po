@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-27 10:03+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: base.html:7
+msgid "GS1 Ireland Barcode Manager"
+msgstr ""
+
+#: base.html:125 base.html:152
+msgid "Home"
+msgstr ""
+
+#: base.html:127
+msgid "Support"
+msgstr ""
+
+#: base.html:131
+msgid "Sign In"
+msgstr ""
+
+#: base.html:135
+msgid "Return to GS1 Ireland Dashboard"
+msgstr ""
+
+#: base.html:183
+msgid "My Account"
+msgstr ""
+
+#: base.html:189
+msgid "Dashboard"
+msgstr ""
+
+#: base.html:196
+msgid "Prefix management"
+msgstr ""
+
+#: base.html:200
+msgid "Training and Resources"
+msgstr ""
+
+#: base.html:206
+msgid "Product Manager"
+msgstr ""
+
+#: base.html:212
+msgid "My Products"
+msgstr ""
+
+#: base.html:219
+msgid "Export products"
+msgstr ""
+
+#: base.html:226
+msgid "Import products"
+msgstr ""
+
+#: base.html:236
+msgid "Location Manager"
+msgstr ""
+
+#: base.html:242
+msgid "My Locations"
+msgstr ""
+
+#: base.html:254
+msgid "Active Prefix"
+msgstr ""
+
+#: base.html:258 base.html:261
+msgid "Allocated:"
+msgstr ""
+
+#: base.html:259 base.html:262
+msgid "Available:"
+msgstr ""
+
+#: base.html:285
+msgid "Create GS1 Barcodes"
+msgstr ""

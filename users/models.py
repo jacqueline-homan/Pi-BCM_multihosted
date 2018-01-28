@@ -108,7 +108,6 @@ class UsersService(Service):
 
     def find(self, **kwargs):
         auth_user = AuthUser.objects.filter(email=kwargs['email']).first()
-        res = User.objects.filter(user=auth_user, customer_role=kwargs['customer_role'])
-        if res:
-            return auth_user
-        return None
+        #res = User.objects.filter(user=auth_user, customer_role=kwargs['customer_role'])
+        #if res:
+        return auth_user

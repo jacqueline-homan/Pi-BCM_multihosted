@@ -3,6 +3,7 @@ from django.test import TestCase
 from BCM.models import Country
 from member_organisations.models import MemberOrganisation
 from services import organisation_service, users_service, prefix_service, logs_service
+from django.contrib.auth.models import User as AuthUser
 
 
 class Gs1IeTestCase(TestCase):
@@ -42,19 +43,13 @@ class Gs1IeTestCase(TestCase):
         assert response.status_code == 200
         self.assertContains(response, 'AccountCreateOrUpdate')
 
-    #def test_organisation_data(self):
-    #    self.client.post(self.url, self.post_data)
-    #    organisation = organisation_service.find(uuid='53900011').first()
-    #    assert organisation.uuid == '53900011'
-    #    assert organisation.company == 'GS1 Ireland'
-
-    #def test_users_data(self):
-    #    self.client.post(self.url, self.post_data)
-    #    users = users_service.all()
-    #    assert len(users) == 1
-    #    assert users[0].email == '53900011@test.com'
-    #    assert users[0].customer_role == 'gs1ie'
-    #    assert users[0].organisation.company == 'GS1 Ireland'
+    def test_users_data(self):
+        self.client.post(self.url, self.post_data)
+        auth_user = AuthUser.objects.filter(email='53900011@test.com').first()
+        assert auth_user is not None
+        company_organisation = users_service.get_company_organisation(auth_user)
+        assert company_organisation.uuid == '53900011'
+        assert company_organisation.company == 'GS1 Ireland'
 
     def test_prefixes_data(self):
         self.client.post(self.url, self.post_data)

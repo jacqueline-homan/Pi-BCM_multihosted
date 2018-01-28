@@ -78,7 +78,6 @@
     "pk": "53900001@test.com",
     "fields": {
         "user": 2,
-        "country": null,
         "language": null
     }
 },
@@ -87,7 +86,6 @@
     "pk": "thomas",
     "fields": {
         "user": 1,
-        "country": null,
         "language": null
     }
 },
@@ -217,13 +215,7 @@
     "pk": 1,
     "fields": {
         "user": 1,
-        "email": "",
-        "username": "",
-        "password": "",
-        "first_name": "",
-        "last_name": "",
         "active": true,
-        "organisation": null,
         "customer_role": "",
         "agreed": false,
         "agreed_date": "2018-01-28T18:19:00.931Z",
@@ -236,13 +228,7 @@
     "pk": 2,
     "fields": {
         "user": 2,
-        "email": "",
-        "username": "",
-        "password": "",
-        "first_name": "",
-        "last_name": "",
         "active": true,
-        "organisation": null,
         "customer_role": "",
         "agreed": false,
         "agreed_date": "2018-01-28T18:22:28.430Z",

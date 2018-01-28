@@ -1,0 +1,22 @@
+.welcome-title {
+    padding: 50px 0 20px 0;
+    text-align: center;
+}
+
+.welcome-navigation {
+    /*text-align: center;*/
+    padding-top: 50px;
+}
+
+.welcome-left-column {
+    border-right: 2px solid black;
+    text-align: center;
+}
+
+.welcome-right-column {
+    text-align: center;
+}
+
+.welcome-column-content {
+    display: inline-block;
+}

@@ -1,0 +1,16 @@
+{% extends 'bcm/new_base.html' %}
+{% load i18n %}
+{% block content %}
+	{% get_current_language as LANGUAGE_CODE %}
+	<!-- Current language: {{ LANGUAGE_CODE }} -->
+	<h1>{% trans "Choose your language" %}</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <select name="language">
+            {% for language in languages %}
+            <option value={{language.language.slug}}>{{language.language.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" name="Submit">
+    </form>
+{% endblock %}

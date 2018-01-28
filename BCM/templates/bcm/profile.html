@@ -1,0 +1,10 @@
+{% extends 'bcm/new_base.html' %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans 'User profile' %}</h1>
+<form action="" method="POST">
+	{% csrf_token %}
+{{form}}
+<input type="submit" name="" value="{% trans 'Submit' %}"/>
+</form>
+{% endblock %}

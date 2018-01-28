@@ -1,5 +1,6 @@
 from django.db import models
 import random
+
 import datetime
 now = datetime.datetime.now()
 # from organizations.models import
@@ -26,23 +27,23 @@ GS1_CLOUD_STATES_ENUM = {
     # 'STATE8': GS1_STATE_8
 }
 
-
 class Country(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=2)
 
     class Meta:
-        verbose_name_plural = "Countries"
+        verbose_name_plural = _("Countries")
 
     def __str__(self):
         return "{} ({})".format(self.name, self.slug)
 
     def get_default_language(self):
-    	default_lang = LanguageByCountry.objects.filter(country=self, default=True).first()
-    	if default_lang:
-    		return default_lang
-    	else:
-    		return random.choice(LanguageByCountry.objects.filter(country=self))
+        default_lang = LanguageByCountry.objects.filter(
+            country=self, default=True).first()
+        if default_lang:
+            return default_lang
+        else:
+            return random.choice(LanguageByCountry.objects.filter(country=self))
 
 
 class Language(models.Model):
@@ -59,7 +60,7 @@ class LanguageByCountry(models.Model):
     default = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name_plural = "Languages by countries"
+        verbose_name_plural = _("Languages by countries")
 
     def __str__(self):
         return "{}_{}".format(self.country.slug, self.language.slug)

@@ -13,7 +13,7 @@ from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from barcoding.utilities import normalize
 from company_organisations.models import CompanyOrganisation
 from member_organisations.models import MemberOrganisation
-from services import organisation_service, users_service, prefix_service
+from services import users_service, prefix_service
 from .forms import AccountCreateOrUpdateForm
 
 
@@ -56,14 +56,12 @@ def account_create_or_update(request):
                     company_organisation.save()
 
                 # get or create user
-                auth_user, auth_user_created = User.objects.get_or_create(email=email)
+                auth_user, auth_user_created = User.objects.get_or_create(email=email, defaults={'username': email})
 
                 # link user to the organisations
                 if auth_user_created:
                     member_organisation.add_user(auth_user)
                     company_organisation.add_user(auth_user)
-                    auth_user.username = email
-                    auth_user.save()
 
                 company_organisation = auth_user.company_organisations_companyorganisation.first()
 
@@ -102,7 +100,7 @@ def account_create_or_update(request):
             if len(prefixes_list) > 0:
                 first_prefix = prefixes_list[0]
                 derived_gln = normalize("EAN13", first_prefix)
-                company_organisation.gln=derived_gln
+                company_organisation.gln = derived_gln
                 company_organisation.save()
 
             for prfx in form_prefixes:

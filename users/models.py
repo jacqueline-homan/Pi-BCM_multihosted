@@ -13,15 +13,7 @@ class User(models.Model):
     user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
 
     is_authenticated = True
-
-    email = models.CharField(max_length=255, default='')        # to del
-    username = models.CharField(max_length=50,  default='')     # to del
-    password = models.CharField(max_length=255, default='')     # to del
-    first_name = models.CharField(max_length=30,  default='')   # to del
-    last_name = models.CharField(max_length=30,  default='')    # to del
     active = models.BooleanField(default=True)
-
-    #organisation  = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)    # to del
     customer_role = models.CharField(max_length=20,  default='')
 
     # Terms and conditions agreement

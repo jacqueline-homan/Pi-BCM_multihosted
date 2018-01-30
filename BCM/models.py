@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from django.utils.translation import gettext as _
 
 
+'''
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     username = models.SlugField(primary_key=True)
@@ -44,7 +45,7 @@ def save_user_profile(sender, instance, **kwargs):
     else:
         kwargs.pop("created")
         create_user_profile(sender, instance, created=True, **kwargs)
-
+'''
 
 class Country(models.Model):
     name = models.CharField(max_length=100)

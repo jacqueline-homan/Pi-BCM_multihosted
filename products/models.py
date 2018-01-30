@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import User
+from django.contrib.auth.models import User
 #from uam.models import Organisation
 
 
@@ -7,7 +7,7 @@ class Product(models.Model):
     db_name = "products"
 
     # product owner info
-    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT)
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 
     # organisation
     #organisation = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)

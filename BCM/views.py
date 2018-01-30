@@ -37,13 +37,11 @@ def index(request, country):
     countries = models.Country.objects.all()
     return render(request, 'bcm/generic.html', {"countries": countries})
 
-
 @login_required
 # @set_language_by_auto
 def after_login(request, country):
     # set_language_by_user(request, country)
     return redirect("profile", pk=request.user.username, country=country)
-
 
 class CountryLogin(auth_views.LoginView):
     template_name = 'bcm/registration/login.html'
@@ -59,7 +57,7 @@ class CountryLogin(auth_views.LoginView):
         context["next"] = "after_login"
         return context
 
-
+'''
 class ProfileView(LoginRequiredMixin, UpdateView):
     model = models.Profile
     template_name = "bcm/profile.html"
@@ -77,7 +75,7 @@ class ProfileView(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         # context["country"] = self.country
         return context
-
+'''
 
 class RegisterUser(CreateView):
     model = User

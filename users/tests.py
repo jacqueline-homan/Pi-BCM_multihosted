@@ -24,7 +24,8 @@ class UserTestCase(TestCase):
                                                  country=country)
         member_organisation.save()
         response = self.client.post('/API/v1/AccountCreateOrUpdate/', self.post_data)
-        self.client.get(response.url)
+        response = self.client.get(response.url)
+        pass
 
     def test_page_exist(self):
         response = self.client.get(self.url)

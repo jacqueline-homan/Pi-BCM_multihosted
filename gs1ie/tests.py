@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from BCM.models import Country
 from member_organisations.models import MemberOrganisation
-from services import organisation_service, users_service, prefix_service, logs_service
+from services import users_service, prefix_service, logs_service
 from django.contrib.auth.models import User as AuthUser
 
 

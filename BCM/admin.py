@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Country, Language, LanguageByCountry, Profile
+from .models import Country, Language, LanguageByCountry
 
 
 class LanguageByCountryAdmin(admin.ModelAdmin):
@@ -7,11 +7,11 @@ class LanguageByCountryAdmin(admin.ModelAdmin):
     pass
 
 
-class ProfileAdmin(admin.ModelAdmin):
+#class ProfileAdmin(admin.ModelAdmin):
     # list_display = ('user', 'username', 'country', 'language')
-    pass
+#    pass
 
 admin.site.register(Country)
 admin.site.register(Language)
 admin.site.register(LanguageByCountry, LanguageByCountryAdmin)
-admin.site.register(Profile, ProfileAdmin)
+#admin.site.register(Profile, ProfileAdmin)

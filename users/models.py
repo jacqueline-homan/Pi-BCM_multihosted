@@ -1,14 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User as AuthUser
-from uam.models import Organisation
+#from uam.models import Organisation
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from service import Service
 
 
-class User(models.Model):
-    db_name = 'user'
+class Profile(models.Model):
+    db_name = 'profile'
 
     user = models.OneToOneField(AuthUser, on_delete=models.CASCADE)
 
@@ -67,17 +67,17 @@ class User(models.Model):
 
 @receiver(post_save, sender=AuthUser)
 def create_user_profile(sender, instance, created, **kwargs):
-    user = User.objects.filter(user=instance).first()
-    if user:
-        instance.user.save()
+    profile = Profile.objects.filter(user=instance).first()
+    if profile:
+        instance.profile.save()
     else:
-        user = User(user=instance)
-        user.save()
+        profile = Profile(user=instance)
+        profile.save()
 
 
 class UsersService(Service):
     def __init__(self):
-        super().__init__(User)
+        super().__init__(Profile)
 
     def get_or_create(self, email, defaults={}):
         # get or create user

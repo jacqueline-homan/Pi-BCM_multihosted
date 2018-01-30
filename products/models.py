@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User
-from uam.models import Organisation
+#from uam.models import Organisation
 
 
 class Product(models.Model):
@@ -10,7 +10,7 @@ class Product(models.Model):
     owner = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
 
     # organisation
-    organisation = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)
+    #organisation = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)
 
     # Product info
     gtin = models.CharField(max_length=14, default='', db_index=True)

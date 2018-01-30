@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User as AuthUser
-from uam.models import Organisation
+#from uam.models import Organisation
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -21,7 +21,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=30,  default='')    # to del
     active = models.BooleanField(default=True)
 
-    organisation  = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)    # to del
+    #organisation  = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)    # to del
     customer_role = models.CharField(max_length=20,  default='')
 
     # Terms and conditions agreement

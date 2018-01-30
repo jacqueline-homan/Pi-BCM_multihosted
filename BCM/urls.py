@@ -21,7 +21,7 @@ urlpatterns = [
     path("<slug:country>/login", views.CountryLogin.as_view(), name="login"),
     path("logout", auth_views.LogoutView.as_view(next_page="index_redirect"), name="logout"),
     path("<slug:country>/signup", views.RegisterUser.as_view(), name="signup"),
-    path("<slug:country>/<slug:pk>/profile",views.ProfileView.as_view(), name="profile"),
+    #path("<slug:country>/<slug:pk>/profile",views.ProfileView.as_view(), name="profile"),
     path("<slug:country>/", views.index, name="index"),
     path("<slug:country>/after_login", views.after_login, name="after_login"),
     path("accounts/login/", views.index_redirect),

@@ -9,21 +9,6 @@ def profile(request):
     current_user = request.user
     company_organisation = users_service.get_company_organisation(current_user)
 
-    '''
-    {
-        'id': 1,
-        'active': True,
-        'is_authenticated': True,
-        'agreed': True,
-        'organisation': {
-            'active': True,
-            'credit_points_balance': 16,
-            'company': 'GS1 Ireland',
-            'uuid': '53900011'
-        }
-    }
-    '''
-
     prefixes = prefix_service.all()
     '''
     result = db.session.query('prefix', 'products').
@@ -57,15 +42,15 @@ def profile(request):
     terms_alert = False
     terms_version = settings.TERMS_VERSION
 
-    user = current_user.user
+    profile = current_user.profile
     if request.method == 'POST':
         if request.POST.get('agree'):
-            user.agreed = True
-            user.agreed_date = datetime.datetime.utcnow()
-            user.agreed_version = terms_version
-            user.save()
+            profile.agreed = True
+            profile.agreed_date = datetime.datetime.utcnow()
+            profile.agreed_version = terms_version
+            profile.save()
 
-    if not user.agreed:
+    if not profile.agreed:
         alerts = True
         terms_alert = True
 

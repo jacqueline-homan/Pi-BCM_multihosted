@@ -134,8 +134,7 @@ def account_create_or_update(request):
             except ObjectDoesNotExist:
                 prefix = prefix_service.find(company_organisation=company_organisation,
                                              member_organisation=member_organisation, is_active=False,
-                                             is_suspended=False).order_by(
-                    'prefix').first()
+                                             is_suspended=False).order_by('prefix').first()
                 if not prefix:
                     return jsonify(success=False, message='No working prefix found')
                 prefix.is_active = True
@@ -158,7 +157,7 @@ def account_create_or_update(request):
     else:
         form = AccountCreateOrUpdateForm()
 
-    current_user = User()
+    current_user = request.user
     context = {'current_user': current_user,
                'active_page': '',
                'form': form}

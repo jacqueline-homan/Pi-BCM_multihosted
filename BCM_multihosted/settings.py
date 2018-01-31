@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'BCM.apps.BcmConfig',
     'member_organisations.apps.MemberOrganisationsConfig',
-    'company_organisations.apps.CompanyOrganisationsConfig'
+    'company_organisations.apps.CompanyOrganisationsConfig',
+
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

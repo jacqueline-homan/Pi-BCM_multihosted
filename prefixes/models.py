@@ -5,7 +5,7 @@ from django.utils import timezone
 from service import Service
 from company_organisations.models import CompanyOrganisation
 from member_organisations.models import MemberOrganisation
-from products.models import Product
+from products.models.product import Product
 
 
 class Prefix(models.Model):

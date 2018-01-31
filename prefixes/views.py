@@ -8,7 +8,7 @@ from django.conf import settings
 from core import flash, flash_get_messages
 from services import prefix_service, users_service, product_service
 from .forms import PrefixActionForm, StartingNumberForm
-from products.models import Product
+from products.models.product import Product
 from barcoding.utilities import normalize
 
 

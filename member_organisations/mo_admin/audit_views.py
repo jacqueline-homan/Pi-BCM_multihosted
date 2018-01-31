@@ -62,6 +62,9 @@ class AuditLogAdmin(admin.ModelAdmin):
         extra_context['mo_admin_add_url'] = reverse(
             f'admin:{self.url_prefix}_{self.app_label}_{self.model_name}_add'
         )
+        extra_context['mo_admin_changelist_url'] = reverse(
+            f'admin:{self.url_prefix}_{self.app_label}_{self.model_name}_changelist'
+        )
 
         if args:
             extra_context['mo_admin_delete_url'] = reverse(

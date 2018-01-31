@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{# from theme("security/_macros.html") import render_field_with_errors, render_field #}
+{# from theme("prefixes/range_macros.html") import render_range_breadcrumb #}
+{% block title %}GS1 Ireland Barcode Manager: {{ title }}{% endblock %}
+{% block breadcrumb %}
+    <ol class="breadcrumb" style="display:inline-block">
+        <li><a href="{% url 'users:auth_profile' %}">{{ _("Home") }}</a></li>
+        <li>{{ title }}</li>
+    </ol>
+    <div class="active_range pull-right">Range: {% include 'prefixes/range_macros.html' with func='render_range_breadcrumb' prefix=prefix only %}
+        <a href="{% url 'prefixes:prefixes_list' %}"> [Change]</a></div>
+{% endblock %}
+{% block site_content %}
+    <div class="site-content">
+
+        <h2>{% block page_title %} {{ title }} {% endblock %}</h2>
+
+        {% block page_content %}
+            <div class="site-content-padder">
+
+                <form method="post" class="form-horizontal">
+                    {{ form.hidden_tag }}
+                    <fieldset>
+                        <legend>Packaging Level</legend>
+                        <p>Products are packaged at different levels, and each level requires a specific type of
+                            barcode. Choose the option below that best describes the packaging of your
+                            product.</p>
+
+                        <p class="fieldset">Note: Packaging levels are heirarchical, which means that you define the
+                            lowest level (base unit/each) first before proceeding to a higher level
+                            e.g. a case.</p>
+
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <img id="img-hiearchy" src=""
+                                     style="display:block;width:150px;margin:0 auto;margin-top: 50px">
+                            </div>
+                            <div class="col-xs-7 package-list-selector">
+                                <h3 style="margin-left: 30px;margin-bottom: 0">Level</h3>
+                                <div class="form-group">
+                                    <label class="control-label" for="package_level"></label>
+                                    <ul id="package_level">
+                                        <li><input id="package_level-3" name="package_level" type="radio" value="70">
+                                            <label for="package_level-3">Consumer Unit (Base Unit/Each) e.g. bottle of
+                                                beer</label></li>
+                                        <li><input id="package_level-4" name="package_level" type="radio" value="60">
+                                            <label for="package_level-4">Pack or inner pack e.g. six pack of beer
+                                                bottles</label></li>
+                                        <li><input id="package_level-5" name="package_level" type="radio" value="50">
+                                            <label for="package_level-5">Case or mixed case e.g. case of beer (bottles
+                                                or packs)</label></li>
+                                        <li><input id="package_level-0" name="package_level" type="radio" value="40">
+                                            <label for="package_level-0">Display unit</label></li>
+                                        <li><input id="package_level-6" name="package_level" type="radio" value="30">
+                                            <label for="package_level-6">Pallet e.g. pallet of cases of beer</label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class='row'>
+                            <div class="col-xs-12">
+                                <div class="pull-right">
+                                    <a class='btn btn-default' type=""
+                                       href="javascript:window.history.back()">Previous</a>
+                                    <input class='btn btn-primary' type="submit" value="Next">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+        {% endblock page_content %}
+    </div>
+{% endblock site_content %}
+
+{% block base_scripts %}
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            $('[name=package_level]').on('change', function (e) {
+                var packagingTypeData = {
+                    70:
+                        {
+                            src: "/static/wizard/pos.png",
+                        },
+
+                    60:
+                        {
+                            src: "/static/wizard/pack.png",
+                        },
+
+                    50:
+                        {
+                            src: "/static/wizard/case.png",
+                        },
+
+                    40:
+                        {
+                            src: "/static/wizard/shipper.png",
+                        },
+
+                    30:
+                        {
+                            src: "/static/wizard/pallet.png",
+                        },
+                };
+                var picture_path = packagingTypeData[$(this).val()]['src'];
+                $('#img-hiearchy').attr("src", picture_path);
+            });
+        })
+    </script>
+{% endblock base_scripts %}
+
+{% block base_css %}
+    <link href="{% static 'products/site/css/add_product.css' %}" rel="stylesheet"/>
+{% endblock %}

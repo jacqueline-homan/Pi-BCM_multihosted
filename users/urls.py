@@ -2,10 +2,9 @@ from django.urls import path
 
 from . import views
 
-app_name = 'user'
+app_name = 'users'
 urlpatterns = [
     path('profile/', views.profile, name='profile'),
-    path('products_products_list', views.products_products_list, name='products.products_list'),
     path('static_views_terms', views.static_views_terms, name='static_views.terms'),
     path('prefixes_prefixes_list', views.prefixes_prefixes_list, name='prefixes.prefixes_list'),
     path('auth_profile', views.auth_profile, name='auth_profile'),

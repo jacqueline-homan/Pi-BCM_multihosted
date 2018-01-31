@@ -30,4 +30,18 @@
             {{ prefix.prefix }}
         {% endif %}
     {% endwith %}
+{% elif func == 'render_range_breadcrumb' %}
+    {% with prefix.get_range as range %}
+        {% with prefix.prefix|length as plength %}
+            {% if prefix.is_upc %}
+                <b>{% for i in range.0 %}{% if forloop.counter0 >= 1 %}{% if forloop.counter0 == plength %}</b><span style="color:#F26334">{% elif forloop.counter0 == 12 %}</span>{% endif %}{{ i }}{% endif %}{% endfor %}
+                -
+                <b>{% for i in range.1 %}{% if forloop.counter0 >= 1 %}{% if forloop.counter0 == plength %}</b><span style="color:#F26334">{% elif forloop.counter0 == 12 %}</span>{% endif %}{{ i }}{% endif %}{% endfor %}
+            {% else %}
+                <b>{% for i in range.0 %}{% if forloop.counter0 == plength %}</b>{% elif forloop.counter0 == 12 %}<span style="color:#FFFFFF">{% endif %}{{ i }}{% endfor %}</span>
+                -
+                <b>{% for i in range.1 %}{% if forloop.counter0 == plength %}</b>{% elif forloop.counter0 == 12 %}<span style="color:#FFFFFF">{% endif %}{{ i }}{% endfor %}</span>
+            {% endif %}
+        {% endwith %}
+    {% endwith %}
 {% endif %}

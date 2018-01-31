@@ -69,11 +69,11 @@ def prefixes_list(request):
                     prefix_action = form.data['prefix_action']
                     # Enter a new product in selected range
                     if prefix_action == 'new_product':
-                        return redirect(reverse('user:products.add_product') + '?prefix=' + str(prefix.prefix))
+                        return redirect(reverse('products:add_product') + '?prefix=' + str(prefix.prefix))
 
                     # Set selected range as active and go to My Products
                     elif prefix_action == 'set_this':
-                        return redirect(reverse('user:products.products_list'))
+                        return redirect(reverse('products:products_list'))
 
                     # Set starting GTIN in selected range manually
                     elif prefix_action == 'starting_gtin':

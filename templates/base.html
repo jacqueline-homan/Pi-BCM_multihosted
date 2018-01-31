@@ -14,8 +14,8 @@
     <meta http-equiv="Content-Language" content="en-us"/>
 
     <link rel="shortcut icon"
-          href="{% static 'gs1ie/site/img/favicon.png' %}"/>
-    <link rel="icon" href="{% static 'gs1ie/site/img/favicon.png' %}"/>
+          href="{% static 'site/img/favicon.png' %}"/>
+    <link rel="icon" href="{% static 'site/img/favicon.png' %}"/>
 
 
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,700"
@@ -25,18 +25,18 @@
     <link href="{% static 'bootstrap-3/css/bootstrap.min.css' %}?v=20180107"
           rel="stylesheet" media="screen">
 
-    <link href="{% static 'gs1ie/site/css/master.css' %}?v=20180107"
+    <link href="{% static 'site/css/master.css' %}?v=20180107"
           rel="stylesheet"
           media="screen">
 
-    <link href="{% static 'gs1ie/site/css/style.css' %}?v=20180107" rel="stylesheet"
+    <link href="{% static 'site/css/style.css' %}?v=20180107" rel="stylesheet"
           media="screen">
 
-    <link href="{% static 'gs1ie/site/css/profile_strength.css' %}" rel="stylesheet">
+    <link href="{% static 'site/css/profile_strength.css' %}" rel="stylesheet">
 
     <!--[if lte IE 9]>
     <link rel="stylesheet" media="screen"
-          href="{% static 'gs1ie/site/css/ie.css' %}?v=201501"/>
+          href="{% static 'site/css/ie.css' %}?v=201501"/>
     <![endif]-->
 
     <!--[if lt IE 9]>
@@ -173,7 +173,7 @@
     </div>
 </div>
 
-<div class="container" id="messages">
+<div class="container" id="messages" style="margin-bottom:0px">
     {% for message,category in flashed_messages %}
         <div class="alert alert-{{ category }}">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -204,7 +204,7 @@
 
 
             <nav class="site-nav">
-                {% if current_user.is_authenticated and current_user.is_active %}
+                {% if user.is_authenticated and user.is_active %}
 
                     <ul>
                         <li>
@@ -236,21 +236,21 @@
                                 <li {% if activePage == "url 'user:products.products_list'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'user:products.products_list' %}">
+                                    <a href="{% url 'products:products_list' %}">
                                         {{ _("My Products") }}
                                     </a>
                                 </li>
                                 <li {% if activePage == "url 'user:excel.export_select'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'user:excel.export_select' %}">
+                                    <a href="{% url 'users:excel.export_select' %}">
                                         {{ _("Export products") }}
                                     </a>
                                 </li>
                                 <li {% if activePage == "url 'user:excel.import_file'" %}
                                     class="active"
                                 {% endif %}>
-                                    <a href="{% url 'user:excel.import_file' %}">
+                                    <a href="{% url 'users:excel.import_file' %}">
                                         {{ _("Import products") }}
                                     </a>
                                 </li>

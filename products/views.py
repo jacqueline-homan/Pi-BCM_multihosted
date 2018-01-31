@@ -30,4 +30,11 @@ def add_product(request):
         flash('You can not add a new product in this range. It\'s a suspended read-only range', 'danger')
         return redirect(reverse('products.products_list'))
 
-    return HttpResponse('products:add_product page')
+    context = { 'title': 'New Product',
+               'prefix': prefix }
+
+    return render(request, 'products/package_level_form.html', context)
+
+
+def products_list(request):
+    return HttpResponse('products.products_list page')

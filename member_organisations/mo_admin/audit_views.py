@@ -18,8 +18,6 @@ class AuditLogAdmin(admin.ModelAdmin):
         self.app_label = self.model._meta.app_label
         self.model_name = self.model._meta.model_name
 
-    # delete_confirmation_template =
-
     def get_changelist(self, request, **kwargs):
         from member_organisations.mo_admin.change_list import MOAdminChangeList
         return MOAdminChangeList
@@ -59,12 +57,21 @@ class AuditLogAdmin(admin.ModelAdmin):
 
         return custom_urls
 
+    def get_urls_context(self, args=None):
+        extra_context = dict()
+        extra_context['mo_admin_add_url'] = reverse(
+            f'admin:{self.url_prefix}_{self.app_label}_{self.model_name}_add'
+        )
+
+        if args:
+            extra_context['mo_admin_delete_url'] = reverse(
+                f'admin:{self.url_prefix}_{self.app_label}_{self.model_name}_delete',
+                args=args
+            )
+        return extra_context
+
     def mo_admin_changelist_view(self, request, extra_context=None):
-        extra_context = {
-            'mo_admin_add_url': reverse(
-                f'admin:{self.url_prefix}_{self.app_label}_{self.model_name}_add'
-            ),
-        }
+        extra_context = self.get_urls_context()
         response = super().changelist_view(request, extra_context)
         return response
 
@@ -73,6 +80,7 @@ class AuditLogAdmin(admin.ModelAdmin):
         return response
 
     def mo_admin_change_view(self, request, object_id, form_url='', extra_context=None):
+        extra_context = self.get_urls_context(args=(object_id, ))
         response = super().change_view(request, object_id, form_url, extra_context)
         return response
 

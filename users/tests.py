@@ -4,7 +4,7 @@ from BCM.models import Country
 from member_organisations.models import MemberOrganisation
 
 
-class UserTestCase(TestCase):
+class UsersTestCase(TestCase):
     url = '/profile/'
 
     post_data = {       'uuid': '53900011',

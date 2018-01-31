@@ -25,6 +25,7 @@ urlpatterns = [
     path('profile/', profile, name='profile'),
     path('gs1ie/', include('gs1ie.urls')),
     path('prefixes/', include('prefixes.urls')),
+    path('products/', include('products.urls')),
     path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
     path("", include("BCM.urls")),

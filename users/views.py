@@ -73,10 +73,6 @@ def profile(request):
     return render(request, 'user/profile.html', context)
 
 
-def products_add_product(request):
-    return HttpResponse('products.add_product page')
-
-
 def products_products_list(request):
     return HttpResponse('products.products_list page')
 

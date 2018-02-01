@@ -1,0 +1,107 @@
+[
+  {
+    "model": "products.PackageLevel",
+    "id": 1,
+    "fields": {
+      "level": "Pallet e.g. pallet of cases of beer"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 2,
+    "fields": {
+      "level": "Outer Case e.g. case of beer (bottles or packs)"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 3,
+    "fields": {
+      "level": "Pack or Inner Pack e.g. six pack of beer bottles"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 4,
+    "fields": {
+      "level": "Consumer Unit (Base Unit/Each) e.g. bottle of beer"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 5,
+    "fields": {
+      "level": "Display shipper"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 6,
+    "fields": {
+      "level": "Mixed module"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 7,
+    "fields": {
+      "level": "Transport load"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 10,
+    "fields": {
+      "level": "Transport load",
+      "unit_descriptor": "TRANSPORT_LOAD"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 20,
+    "fields": {
+      "level": "Mixed module",
+      "unit_descriptor": "MIXED_MODULE"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 30,
+    "fields": {
+      "level": "Pallet e.g. pallet of cases of beer",
+      "unit_descriptor": "PALLET"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 40,
+    "fields": {
+      "level": "Display shipper",
+      "unit_descriptor": "DISPLAY_SHIPPER"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 50,
+    "fields": {
+      "level": "Outer Case e.g. case of beer (bottles or packs)",
+      "unit_descriptor": "CASE"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 60,
+    "fields": {
+      "level": "Pack or Inner Pack e.g. six pack of beer bottles",
+      "unit_descriptor": "PACK_OR_INNER_PACK"
+    }
+  },
+  {
+    "model": "products.PackageLevel",
+    "id": 70,
+    "fields": {
+      "level": "Consumer Unit (Base Unit/Each) e.g. bottle of beer",
+      "unit_descriptor": "BASE_UNIT_OR_EACH"
+    }
+  }
+]

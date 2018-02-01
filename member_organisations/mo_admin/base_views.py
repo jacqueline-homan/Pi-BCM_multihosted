@@ -10,13 +10,57 @@ class BaseMOAdmin(admin.ModelAdmin):
     change_form_template = 'admin/mo_admin/change_form.html'
     # exclude = ('username', )  # prevent to view/update "self" fields
 
+    # cached_querysets = None
     app_label = None
     model_name = None
 
     def __init__(self, model, admin_site):
         super().__init__(model, admin_site)
+
+        # self.cached_querysets = dict()
         self.app_label = self.model._meta.app_label
         self.model_name = self.model._meta.model_name
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = self.filter_queryset_by_permissions(request, queryset=queryset)
+        return queryset
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        form_field = super().formfield_for_foreignkey(db_field, request, **kwargs)
+        if not form_field:
+            return None
+
+        form_field.queryset = self.filter_queryset_by_permissions(
+            request, queryset=form_field.queryset
+        )
+        return form_field
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        form_field = super().formfield_for_manytomany(db_field, request, **kwargs)
+        if not form_field:
+            return None
+
+        form_field.queryset = self.filter_queryset_by_permissions(
+            request, queryset=form_field.queryset
+        )
+        return form_field
+
+    def filter_queryset_by_permissions(self, request, queryset):
+        method_name = (
+            f'get_{queryset.model._meta.app_label}__{queryset.model._meta.model_name}_queryset'
+        ).lower()
+
+        if callable(getattr(self, method_name, None)):
+            # cached querysets, sometimes django calls this method a few times for the same field
+            # if method_name in self.cached_querysets:
+            #     return self.cached_querysets[method_name]
+
+            queryset = getattr(self, method_name)(request, queryset)
+            # self.cached_querysets[method_name] = queryset
+        else:
+            raise NotImplementedError(f'Not implemented "{self}.{method_name}()"')
+        return queryset
 
     def get_changelist(self, request, **kwargs):
         from member_organisations.mo_admin.change_list import MOAdminChangeList
@@ -75,19 +119,14 @@ class BaseMOAdmin(admin.ModelAdmin):
 
     def mo_admin_changelist_view(self, request, extra_context=None):
         extra_context = self.get_urls_context()
-        response = super().changelist_view(request, extra_context)
-        return response
+        return super().changelist_view(request, extra_context)
 
     def mo_admin_add_view(self, request, form_url='', extra_context=None):
-        response = super().add_view(request, form_url, extra_context)
-        return response
+        return super().add_view(request, form_url, extra_context)
 
     def mo_admin_change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = self.get_urls_context(args=(object_id, ))
-        response = super().change_view(request, object_id, form_url, extra_context)
-        return response
+        return super().change_view(request, object_id, form_url, extra_context)
 
     def mo_admin_delete_view(self, request, object_id, extra_context=None):
-        response = super().delete_view(request, object_id, extra_context)
-        return response
-
+        return super().delete_view(request, object_id, extra_context)

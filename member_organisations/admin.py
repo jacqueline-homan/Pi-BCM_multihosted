@@ -21,9 +21,13 @@ from .mo_admin.mo_views import (
 
 
 class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
+    # configuration dict,
+    # {app_label: <list-of-mo-admin-views-for-required-models>}
     mo_apps = OrderedDict([
         ('audit', [
-            AuditLogMOAdmin(Log, admin.site)
+            # we could override admin.site with a custom instance, it would bring standard urls
+            # like add_url, but for now it's easier to adjust templates and replace urls there
+            AuditLogMOAdmin(Log, admin.site),
         ]),
         ('company_organisations', [
             CompanyOrganisationMOAdmin(CompanyOrganisation, admin.site),
@@ -44,13 +48,12 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
             path('mo_admin/', self.admin_site.admin_view(self.mo_admin_index), name='mo_admin'),
         ]
 
-        # audit_custom_urls = audit_mo_admin.get_custom_urls()  # repeat for each model
+        # retrieving custom urls for all apps and all required models
         for app_label, admin_views in self.mo_apps.items():
             for admin_view in admin_views:
                 custom_urls += admin_view.get_custom_urls()
 
-        all_urls = custom_urls + urls  # urls order matters!
-        return all_urls
+        return custom_urls + urls  # urls order matters!
 
     @classmethod
     def get_reverse_url(cls, app_label, model_name, action, default=''):
@@ -87,6 +90,12 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         return app_list
 
     def mo_admin_index(self, request):
+        """
+        index page for mo admin, displays list of required apps
+        :param request:
+        :return:
+        """
+
         context = dict(
             # Include common variables for rendering the admin template.
             self.admin_site.each_context(request),

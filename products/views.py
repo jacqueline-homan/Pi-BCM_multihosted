@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse
 from services import prefix_service, package_level_service
-from core import flash
+from core import flash, flash_get_messages
 from .apps import subproducts_reset
+from .forms import PackageLevelForm
+from .models.package_level import PackageLevel
 
 
 def add_product(request):
@@ -32,32 +34,36 @@ def add_product(request):
         flash(request, 'You can not add a new product in this range. It\'s a suspended read-only range', 'danger')
         return redirect(reverse('products:products_list'))
 
-    if prefix.is_special != 'NULL':
-        #package_rows = services.package_level_service.find(
-        #    id=models.PACKAGE_LEVEL_SPECIAL_ENUM[prefix.is_special]).all()
-        package_rows = None
-    else:
-        package_rows = package_level_service.all()
+    #if prefix.is_special != 'NULL':
+    #    package_rows = services.package_level_service.find(
+    #        id=models.PACKAGE_LEVEL_SPECIAL_ENUM[prefix.is_special]).all()
+    #else:
+    #    package_rows = package_level_service.all()
+    package_rows = PackageLevel.service.all()
 
-    '''
-    title = "New Product"
-    if request.args.get('express'):
-        title = "Express Allocation"
+    express = True if request.POST.get('express') or request.GET.get('express') else False
+
+    title = 'New Product'
+    if express:
+        title = 'Express Allocation'
+
     if request.method == 'POST':
-        form = forms.PackageLevelForm(request.form)
+        form = PackageLevelForm(request.POST)
         form.set_package_levels(package_rows)
-        if form.validate():
-            if not session.get('new_product', None):
-                session['new_product'] = {'gtin': str(prefix.starting_from), 'package_level': form.package_level.data}
-            elif session.get('new_product')['gtin'] != str(prefix.starting_from):
-                session['new_product'] = {'gtin': str(prefix.starting_from), 'package_level': form.package_level.data}
+        if form.is_valid():
+            if not request.session.get('new_product', None):
+                request.session['new_product'] = {'gtin': str(prefix.starting_from),
+                                         'package_level': form.data['package_level']}
+            elif request.session.get('new_product')['gtin'] != str(prefix.starting_from):
+                request.session['new_product'] = {'gtin': str(prefix.starting_from),
+                                         'package_level': form.data['package_level']}
             else:
-                session['new_product']['package_level'] = form.package_level.data
-            if request.args.get('express'):
-                session['new_product'].update({'express': True})
-            elif 'express' in session['new_product']:
-                del session['new_product']['express']
-            return redirect(url_for('products.add_product_package_type'))
+                request.session['new_product']['package_level'] = form.data['package_level']
+            if express:
+                request.session['new_product'].update({'express': True})
+            elif 'express' in request.session['new_product']:
+                del request.session['new_product']['express']
+            return redirect(reverse('products:add_product_package_type'))
             # if session['new_product']['package_level'] == str(models.BASE_PACKAGE_LEVEL):
             #    if session['new_product'].get('express'):
             #        return redirect(url_for('products.add_product_express'))
@@ -66,19 +72,25 @@ def add_product(request):
             # else:
             #    return redirect(url_for('products.add_product_select_sub'))
         else:
-            flash('You must choose a level to proceed', 'danger')
+            flash(request, 'You must choose a level to proceed', 'danger')
     else:
-        form = forms.PackageLevelForm()
+        form = PackageLevelForm()
         form.set_package_levels(package_rows)
-        if session.get('new_product', None) and session.get('new_product')['gtin'] == str(prefix.starting_from):
-            form.package_level.data = session.get('new_product')['package_level']
-    '''
+        if ( request.session.get('new_product', None) and
+             request.session.get('new_product')['gtin'] == str(prefix.starting_from) ):
+            form.data['package_level'] = request.session.get('new_product')['package_level']
 
-    context = { 'title': 'New Product',
-               'prefix': prefix }
+    context = { 'title': title,
+               'prefix': prefix,
+     'flashed_messages': flash_get_messages(request)
+                }
 
     return render(request, 'products/package_level_form.html', context)
 
 
 def products_list(request):
-    return HttpResponse('products.products_list page')
+    return HttpResponse('products:products_list page')
+
+
+def add_product_package_type(request):
+    return HttpResponse('products:add_product_package_type')

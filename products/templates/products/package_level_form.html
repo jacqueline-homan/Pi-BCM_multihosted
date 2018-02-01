@@ -21,7 +21,7 @@
             <div class="site-content-padder">
 
                 <form method="post" class="form-horizontal">
-                    {{ form.hidden_tag }}
+                    {% csrf_token %}
                     <fieldset>
                         <legend>Packaging Level</legend>
                         <p>Products are packaged at different levels, and each level requires a specific type of
@@ -34,7 +34,7 @@
 
                         <div class="row">
                             <div class="col-xs-5">
-                                <img id="img-hiearchy" src=""
+                                <img id="img-hiearchy" src="{% static 'products/site/wizard/no-selected.png' %}"
                                      style="display:block;width:150px;margin:0 auto;margin-top: 50px">
                             </div>
                             <div class="col-xs-7 package-list-selector">
@@ -85,27 +85,27 @@
                 var packagingTypeData = {
                     70:
                         {
-                            src: "/static/wizard/pos.png",
+                            src: "{% static 'products/site/wizard/pos.png' %}",
                         },
 
                     60:
                         {
-                            src: "/static/wizard/pack.png",
+                            src: "{% static 'products/site/wizard/pack.png' %}",
                         },
 
                     50:
                         {
-                            src: "/static/wizard/case.png",
+                            src: "{% static 'products/site/wizard/case.png' %}",
                         },
 
                     40:
                         {
-                            src: "/static/wizard/shipper.png",
+                            src: "{% static 'products/site/wizard/shipper.png' %}",
                         },
 
                     30:
                         {
-                            src: "/static/wizard/pallet.png",
+                            src: "{% static 'products/site/wizard/pallet.png' %}",
                         },
                 };
                 var picture_path = packagingTypeData[$(this).val()]['src'];

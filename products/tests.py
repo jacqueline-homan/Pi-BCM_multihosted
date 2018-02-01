@@ -2,6 +2,8 @@ from django.test import TestCase
 from .apps import subproducts_reset
 from BCM.models import Country
 from member_organisations.models import MemberOrganisation
+from services import prefix_service
+from products.models.package_level import PackageLevel
 
 
 class ProductsTestCase(TestCase):
@@ -17,8 +19,8 @@ class ProductsTestCase(TestCase):
         assert session['new_product']['sub_products'] == []
 
 
-class ProductsAddProductTestCase(TestCase):
-    url = '/products/add_product/'
+class PageAddProductTestCase(TestCase):
+    url = '/products/add/'
 
     post_data = {       'uuid': '53900011',
                        'email': '53900011@test.com',
@@ -56,6 +58,14 @@ class ProductsAddProductTestCase(TestCase):
         self.assertContains(response, 'New Product')
         self.assertContains(response, 'Packaging Level')
 
+    def test_with_active_prefix(self):
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        prefix_service.make_active(prefix.id)
+        response = self.client.get(self.url)
+        self.assertContains(response, 'New Product')
+        self.assertContains(response, 'Packaging Level')
+
     def test_title_express(self):
         response = self.client.get(self.url + '?prefix=53900011')
         assert response.status_code == 200
@@ -65,3 +75,17 @@ class ProductsAddProductTestCase(TestCase):
         self.assertContains(response, 'Express Allocation')
         response = self.client.post(self.url, { 'prefix': '53900011', 'express': 1 })
         self.assertContains(response, 'Express Allocation')
+
+    def test_select_packaging_level(self):
+        response = self.client.get(self.url + '?prefix=53900011')
+        assert response.status_code == 200
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        prefix_service.make_active(prefix.id)
+        package_level = PackageLevel(id='70',
+                                     level='Consumer Unit (Base Unit/Each) e.g. bottle of beer',
+                                     unit_descriptor='BASE_UNIT_OR_EACH')
+        package_level.save()
+        response = self.client.post(self.url, { 'package_level': '70' })
+        assert response.status_code == 302
+        assert response.url == '/products/add_product_package_type/'

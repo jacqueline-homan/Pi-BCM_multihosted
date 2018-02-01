@@ -21,4 +21,4 @@ class MemberOrganisationUser(AbstractOrganizationUser):
 
 class MemberOrganisationOwner(AbstractOrganizationOwner):
     def __str__(self):
-        return f'"{self.organization_user.user}" owner of {self.organization}'
+        return f'"{self.organization_user.user}" owner of "{self.organization}"'

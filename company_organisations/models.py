@@ -41,8 +41,10 @@ class CompanyOrganisation(AbstractOrganization):
 
 
 class CompanyOrganisationUser(AbstractOrganizationUser):
-    pass
+    def __str__(self):
+        return f'"{self.user}" user of "{self.organization}"'
 
 
 class CompanyOrganisationOwner(AbstractOrganizationOwner):
-    pass
+    def __str__(self):
+        return f'"{self.organization_user.user}" owner of "{self.organization}"'

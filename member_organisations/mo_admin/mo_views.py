@@ -10,9 +10,10 @@ from .base_views import BaseMOAdmin
 
 
 class AuditLogMOAdmin(BaseMOAdmin):
-    # exclude = ('username', )
-    def check_permissions(self, request, queryset=None, obj=None):
-        pass
+    @classmethod
+    def get_audit__log_queryset(cls, request, queryset):
+        # todo: there are no fields to filter this model!
+        return queryset
 
 
 class CompanyOrganisationMOAdmin(BaseMOAdmin):
@@ -47,7 +48,13 @@ class CompanyOrganisationMOAdmin(BaseMOAdmin):
 
 
 class CompanyOrganisationOwnerMOAdmin(BaseMOAdmin):
-    pass
+    @classmethod
+    def get_company_organisations__companyorganisationowner_queryset(cls, request, queryset):
+
+        # 1. filter by organization, company organization should belong to request.user MO
+        # 2. filter by user, organization user should belong to CO, which belong to request.user MO
+
+        return queryset
 
 
 class CompanyOrganisationUserMOAdmin(BaseMOAdmin):

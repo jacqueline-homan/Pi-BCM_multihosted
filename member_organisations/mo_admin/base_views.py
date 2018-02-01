@@ -1,14 +1,14 @@
 from functools import update_wrapper
 
 from django.contrib import admin
-from django.urls import path, include, reverse
+from django.urls import path, reverse
 
 
-class AuditLogAdmin(admin.ModelAdmin):
+class BaseMOAdmin(admin.ModelAdmin):
     url_prefix = 'mo_admin'
     change_list_template = 'admin/mo_admin/change_list.html'
     change_form_template = 'admin/mo_admin/change_form.html'
-    exclude = ('username', )  # prevent to view/update "self" fields
+    # exclude = ('username', )  # prevent to view/update "self" fields
 
     app_label = None
     model_name = None

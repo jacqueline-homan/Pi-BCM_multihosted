@@ -55,3 +55,13 @@ class ProductsAddProductTestCase(TestCase):
         assert response.status_code == 200
         self.assertContains(response, 'New Product')
         self.assertContains(response, 'Packaging Level')
+
+    def test_title_express(self):
+        response = self.client.get(self.url + '?prefix=53900011')
+        assert response.status_code == 200
+        self.assertContains(response, 'New Product')
+        response = self.client.get(self.url + '?prefix=53900011&express=1')
+        assert response.status_code == 200
+        self.assertContains(response, 'Express Allocation')
+        response = self.client.post(self.url, { 'prefix': '53900011', 'express': 1 })
+        self.assertContains(response, 'Express Allocation')

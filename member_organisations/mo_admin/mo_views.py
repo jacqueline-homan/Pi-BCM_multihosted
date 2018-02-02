@@ -24,6 +24,9 @@ class CompanyOrganisationMOAdmin(BaseMOAdmin):
         """
         name convention:
             "get_{model._meta.app_label}__{model._meta.model_name}_queryset".lower()
+
+        if a method doesn't exist you'll recieve the exception
+        with a required method and class names
         """
 
         allowed_organizations = get_allowed_mo_for_mo_admin(request.user)

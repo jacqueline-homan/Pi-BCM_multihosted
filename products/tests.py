@@ -4,7 +4,7 @@ from BCM.models import Country
 from member_organisations.models import MemberOrganisation
 from services import prefix_service
 from products.models.package_level import PackageLevel
-
+from products.models.package_type import PackageType
 
 class ProductsTestCase(TestCase):
     def test_subproducts_reset(self):
@@ -89,3 +89,49 @@ class PageAddProductTestCase(TestCase):
         response = self.client.post(self.url, { 'package_level': '70' })
         assert response.status_code == 302
         assert response.url == '/products/add_product_package_type/'
+
+
+class PageAddProductPackageTypeTestCase(TestCase):
+    url = '/products/add_product_package_type/'
+
+    def setUp(self):
+        country = Country(slug='BE', name='Belgium')
+        country.save()
+        member_organisation = MemberOrganisation(name='GS1',
+                                                 slug='gs1',
+                                                 is_active=1,
+                                                 country=country)
+        member_organisation.save()
+        response = self.client.post('/API/v1/AccountCreateOrUpdate/', { 'uuid': '53900011',
+                                                                       'email': '53900011@test.com',
+                                                              'company_prefix': '53900011,53900012',
+                                                                'company_name': 'GS1 Ireland',
+                                                                     'credits': '39:20,43:100,44:100',
+                                                                     'txn_ref': 'Test_1,Test_3,Test_2',
+                                                         'member_organisation': 'gs1' })
+        self.client.get(response.url)
+        prefix = prefix_service.find(prefix='53900011').first()
+        assert prefix.prefix == '53900011'
+        prefix_service.make_active(prefix.id)
+        package_level = PackageLevel(id='70',
+                                     level='Consumer Unit (Base Unit/Each) e.g. bottle of beer',
+                                     unit_descriptor='BASE_UNIT_OR_EACH')
+        package_level.save()
+        response = self.client.post('/products/add/', { 'package_level': '70' })
+        assert response.status_code == 302
+        assert response.url == '/products/add_product_package_type/'
+
+    def test_page_exist(self):
+        response = self.client.get(self.url)
+        assert response.status_code == 200
+        self.assertContains(response, 'Base Unit / Each')
+
+    def test_select_tray_press_next(self):
+        package_type = PackageType( id = 14,
+                                  type = 'Tray',
+                                  code = 'PU',
+                            ui_enabled = 1 )
+        package_type.save()
+        response = self.client.post(self.url, {'package_type' : '14'} )
+        assert response.status_code == 302
+        assert response.url == '/products/add_product_base_details/'

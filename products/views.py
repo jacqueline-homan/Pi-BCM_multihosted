@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, Http404
+from django.conf import settings
 from services import prefix_service
 from core import flash, flash_get_messages
 from .apps import subproducts_reset
@@ -89,10 +90,6 @@ def add_product(request):
     return render(request, 'products/package_level_form.html', context)
 
 
-def products_list(request):
-    return HttpResponse('products:products_list page')
-
-
 def add_product_package_type(request):
     """
     package type selector
@@ -100,18 +97,63 @@ def add_product_package_type(request):
     """
     session = request.session.get('new_product', None)
     if not session:
-        Http404()
-    gtin = session['gtin']
+        raise Http404('Session does not exist')
+    gtin = session.get('gtin', None)
+    if not gtin:
+        raise Http404('No gtin in session')
     prefix = prefix_service.find_item(starting_from=str(gtin))
+    if not prefix:
+        raise Http404('Starting prefix (%s) not found' % prefix)
     package_types = PackageType.service.filter(ui_enabled=True).order_by('id').all()
 
-    form = PackageTypeForm()
-    form.set_package_types(package_types)
-    form.bar_placement.data = '/static/products/site/wizard/proddesc/BG.png'
+    if request.method == 'POST':
+        form = PackageTypeForm(request.POST)
+        form.set_package_types(package_types)
+        if form.is_valid():
+            request.session['new_product'].update({
+                'package_type': form.data['package_type'],
+                'bar_placement': form.bar_placement.data
+            })
+            if session.get('package_level') == '70':
+                return redirect(reverse('products:add_product_base_details'))
+            else:
+                return redirect(reverse('products:add_product_select_sub'))
+    else:
+        form = PackageTypeForm()
+        form.set_package_types(package_types)
+        if session.get('package_level') == '70':
+            form.bar_placement.data = settings.STATIC_URL + 'products/site/wizard/proddesc/BG.png'
+            form.data['package_type'] = '1'
+        else:
+            form.bar_placement.data = settings.STATIC_URL + 'products/site/wizard/proddesc/CS.png'
+            form.data['package_type'] = '34'
+
+    if session.get('package_level') == '70':
+        package_level = 'Base Unit / Each'
+    elif session.get('package_level') == '60':
+        package_level = 'Pack or inner pack'
+    elif session.get('package_level') == '50':
+        package_level = 'Case or mixed case'
+    elif session.get('package_level') == '40':
+        package_level = 'Display unit'
+    else:
+        package_level = 'Pallet' # 30
 
     context = { 'form': form,
               'prefix': prefix,
        'package_types': package_types,
-       #'package_level': package_level
+       'package_level': package_level
                 }
     return render(request, 'products/package_type_form.html', context=context)
+
+
+def products_list(request):
+    return HttpResponse('products:products_list page')
+
+
+def add_product_base_details(request):
+    return HttpResponse('products:add_product_base_details')
+
+
+def add_product_select_sub(request):
+    return HttpResponse('products:add_product_select_sub')

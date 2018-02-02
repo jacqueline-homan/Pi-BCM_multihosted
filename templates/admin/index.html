@@ -50,8 +50,21 @@
 {% endblock %}
 
 {% block sidebar %}
-{% comment %}
+
 <div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% trans 'Administration sections' %}</h2>
+        <h3>{% trans 'Member organizations' %}</h3>
+            <ul class="actionlist">
+                <li>
+                    <strong>
+                        <a href="{% url 'admin:mo_admin' %}">{% trans "Member Organizations Admin" %}</a>
+                    </strong>
+                    <br/>
+                </li>
+            </ul>
+    </div>
+
     <div class="module" id="recent-actions-module">
         <h2>{% trans 'Recent actions' %}</h2>
         <h3>{% trans 'My actions' %}</h3>
@@ -80,5 +93,4 @@
             {% endif %}
     </div>
 </div>
-{% endcomment %}
 {% endblock %}

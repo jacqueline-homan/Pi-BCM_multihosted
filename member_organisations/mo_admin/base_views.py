@@ -156,22 +156,23 @@ class BaseMOAdmin(admin.ModelAdmin):
         custom_urls = [
             path(
                 f'{self.url_prefix}/{app_label}_{model_name}/',
-                wrap(self.mo_admin_changelist_view),
+                # wrap(self.mo_admin_changelist_view),
+                self.mo_admin_changelist_view,
                 name=f'{self.url_prefix}_{app_label}_{model_name}_changelist'
             ),
             path(
                 f'{self.url_prefix}/{app_label}_{model_name}/add/',
-                wrap(self.mo_admin_add_view),
+                self.mo_admin_add_view,
                 name=f'{self.url_prefix}_{app_label}_{model_name}_add',
             ),
             path(
                 f'{self.url_prefix}/{app_label}_{model_name}/<path:object_id>/change/',
-                wrap(self.mo_admin_change_view),
+                self.mo_admin_change_view,
                 name=f'{self.url_prefix}_{app_label}_{model_name}_change',
             ),
             path(
                 f'{self.url_prefix}/{app_label}_{model_name}/<path:object_id>/delete/',
-                wrap(self.mo_admin_delete_view),
+                self.mo_admin_delete_view,
                 name=f'{self.url_prefix}_{app_label}_{model_name}_delete',
             ),
         ]

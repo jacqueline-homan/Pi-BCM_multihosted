@@ -47,7 +47,8 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
     def get_urls(self):
         urls = super().get_urls()
         custom_urls = [
-            path('mo_admin/', self.admin_site.admin_view(self.mo_admin_index), name='mo_admin'),
+            # path('mo_admin/', self.admin_site.admin_view(self.mo_admin_index), name='mo_admin'),
+            path('mo_admin/', self.mo_admin_index, name='mo_admin'),
         ]
 
         # retrieving custom urls for all apps and all required models

@@ -11,6 +11,7 @@ class AuditLogMOAdmin(BaseMOAdmin):
 
 class CompanyOrganisationMOAdmin(BaseMOAdmin):
     related_models_actions = {
+        # it's possible to enable/disable links for related models here
         'member_organisation': {
             'can_add_related': False,
             'can_change_related': False,

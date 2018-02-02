@@ -1,0 +1,23 @@
+{% if func == 'render_field_with_errors' %}
+    <div class="form-group{% if field.errors %} has-error{% endif %}">
+        {% if label != None %}
+            <label class="control-label" for="{{ field.id }}">{{ label }}</label>
+        {% else %}
+            <label class="control-label" for="{{ field.id }}">{{ field.label }}</label>
+        {% endif %}
+
+        <select name="{{ field.name }}" class="{{ class }}">
+            {% for choice in field %}
+                {{ choice }}
+            {% endfor %}
+        </select>
+
+        {% if field.errors %}
+            <span class="help-block">
+                {% for error in field.errors %}
+                    <small>{{ error }}</small><br/>
+                {% endfor %}
+            </span>
+        {% endif %}
+    </div>
+{% endif %}

@@ -81,10 +81,6 @@ def prefixes_prefixes_list(request):
     return HttpResponse('prefixes.prefixes_list page')
 
 
-def auth_profile(request):
-    return HttpResponse('auth_profile page')
-
-
 def excel_export_select(request):
     return HttpResponse('excel.export_select page')
 

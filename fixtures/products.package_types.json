@@ -59,7 +59,7 @@
     "fields": {
       "type": "Egg carton",
       "code": "EGG_CT",
-      "ui_enabled": true
+      "ui_enabled": false
     }
   },
   {
@@ -95,7 +95,7 @@
     "fields": {
       "type": "Set",
       "code": "SET",
-      "ui_enabled": true
+      "ui_enabled": false
     }
   },
   {
@@ -104,7 +104,7 @@
     "fields": {
       "type": "Tag (apparel)",
       "code": "TAG",
-      "ui_enabled": true
+      "ui_enabled": false
     }
   },
   {
@@ -113,7 +113,7 @@
     "fields": {
       "type": "Thin items or containers",
       "code": "THIN",
-      "ui_enabled": true
+      "ui_enabled": false
     }
   },
   {
@@ -158,7 +158,7 @@
     "fields": {
       "type": "Flow wrapped items",
       "code": "FLW",
-      "ui_enabled": true
+      "ui_enabled": false
     }
   },
   {
@@ -176,7 +176,7 @@
     "fields": {
       "type": "Basket or hamper",
       "code": "BK",
-      "ui_enabled": true
+      "ui_enabled": false
     }
   },
     {
@@ -203,7 +203,7 @@
     "fields": {
       "type": "Keg",
       "code": "KEG",
-      "ui_enabled": true
+      "ui_enabled": false
     }
   },
   {
@@ -212,7 +212,7 @@
     "fields": {
       "type": "Kit",
       "code": "KIT",
-      "ui_enabled": true
+      "ui_enabled": false
     }
   }
 ]

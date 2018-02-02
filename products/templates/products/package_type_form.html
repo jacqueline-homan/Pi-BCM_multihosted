@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}GS1 Ireland Barcode Manager: New product{% endblock %}
+{% block breadcrumb %}
+    <ol class="breadcrumb" style="display:inline-block">
+        <li><a href="{% url 'users:profile' %}">{{ _("Home") }}</a></li>
+        <li>New Product</li>
+    </ol>
+    <div class="active_range pull-right">Range: {% include 'prefixes/range_macros.html' with func='render_range_breadcrumb' prefix=prefix only %}
+        <a href="{% url 'prefixes:prefixes_list' %}"> [Change]</a></div>
+{% endblock %}
+{% block site_content %}
+    <div class="site-content">
+
+        <h2>{% block page_title %} New {{ package_level }}
+            <span class="sub-title">(Step 1 of 2: Packaging)</span>
+        {% endblock %}</h2>
+
+        {% block page_content %}
+            <div class="site-content-padder">
+                <div class="span8">
+
+                    <form method="post" class="">
+                        <fieldset>
+                            {% csrf_token %}
+                            <!--<legend>New Base Unit / Each - Product Packaging</legend>-->
+                            <p>The purpose of this step is to show you where to place the barcode on your products and
+                                select the
+                                appropriately sized barcode symbol. Barcode symbols are placed where they can be best
+                                scanned at
+                                point-of-sale
+                                as shown below by these general example pictures.</p>
+
+                            <h3 class="small-legd">PRODUCT AND PACKAGING TYPES</h3>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    {% include 'security/_macros.html' with func='render_field_with_errors' field=form.package_type class='form-control' only %}
+                                </div>
+                                <div class="col-xs-6">
+                                    <label>
+                                        Packaging example:
+                                    </label>
+                                    <img id="bar_placement_img" src="{{ form.bar_placement.data }}" style="width: 500px;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                </div>
+                                <div class="col-xs-6">
+                                    <label>
+                                        Packaging definition:
+                                    </label>
+                                    <p id="description">
+                                        A preformed, flexible container, generally enclosed on all but one side, which
+                                        forms an opening that may or may not be sealed after filling.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <hr>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="pull-right">
+                                        <a class="btn btn-default" type="" href="{% url 'products:add_product' %}">Previous</a>
+                                        <input class="btn btn-primary" type="submit" value="Next">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        {% endblock page_content %}
+    </div>
+{% endblock site_content %}
+
+{% block base_scripts %}
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            {% include 'products/packaging_type_selector.js' %}
+        })
+    </script>
+{% endblock base_scripts %}
+
+{% block base_css %}
+    <link href="{% static 'products/site/css/add_product.css' %}" rel="stylesheet"/>
+{% endblock base_css %}

@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, reverse
-from django.http import HttpResponse
-from services import prefix_service, package_level_service
+from django.http import HttpResponse, Http404
+from services import prefix_service
 from core import flash, flash_get_messages
 from .apps import subproducts_reset
-from .forms import PackageLevelForm
+from .forms import PackageLevelForm, PackageTypeForm
 from .models.package_level import PackageLevel
 from .models.package_type import PackageType
 
@@ -94,4 +94,24 @@ def products_list(request):
 
 
 def add_product_package_type(request):
-    return HttpResponse('products:add_product_package_type')
+    """
+    package type selector
+    :return:
+    """
+    session = request.session.get('new_product', None)
+    if not session:
+        Http404()
+    gtin = session['gtin']
+    prefix = prefix_service.find_item(starting_from=str(gtin))
+    package_types = PackageType.service.filter(ui_enabled=True).order_by('id').all()
+
+    form = PackageTypeForm()
+    form.set_package_types(package_types)
+    form.bar_placement.data = '/static/products/site/wizard/proddesc/BG.png'
+
+    context = { 'form': form,
+              'prefix': prefix,
+       'package_types': package_types,
+       #'package_level': package_level
+                }
+    return render(request, 'products/package_type_form.html', context=context)

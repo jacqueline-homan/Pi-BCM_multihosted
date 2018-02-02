@@ -6,7 +6,7 @@
 {% block title %}GS1 Ireland Barcode Manager: {{ title }}{% endblock %}
 {% block breadcrumb %}
     <ol class="breadcrumb" style="display:inline-block">
-        <li><a href="{% url 'users:auth_profile' %}">{{ _("Home") }}</a></li>
+        <li><a href="{% url 'users:profile' %}">{{ _("Home") }}</a></li>
         <li>{{ title }}</li>
     </ol>
     <div class="active_range pull-right">Range: {% include 'prefixes/range_macros.html' with func='render_range_breadcrumb' prefix=prefix only %}
@@ -34,7 +34,7 @@
 
                         <div class="row">
                             <div class="col-xs-5">
-                                <img id="img-hiearchy" src="{% static 'products/site/wizard/no-selected.png' %}"
+                                <img id="img-hiearchy" src="{% static 'products/site/wizard/packaging-level.gif' %}"
                                      style="display:block;width:150px;margin:0 auto;margin-top: 50px">
                             </div>
                             <div class="col-xs-7 package-list-selector">

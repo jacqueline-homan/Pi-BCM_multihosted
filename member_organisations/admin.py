@@ -21,6 +21,8 @@ from .mo_admin.mo_views import (
 
 
 class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
+    list_display = ('organization_user', 'organization')
+
     # configuration dict,
     # {app_label: <list-of-mo-admin-views-for-required-models>}
     mo_apps = OrderedDict([
@@ -105,6 +107,14 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         return TemplateResponse(request, 'admin/mo_admin/index.html', context)
 
 
-admin.site.register(MemberOrganisation)
+class MemberOrganisationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'country', 'slug')
+
+
+class MemberOrganisationUserAdmin(admin.ModelAdmin):
+    list_display = ('user', 'organization', 'is_admin')
+
+
 admin.site.register(MemberOrganisationOwner, MemberOrganisationOwnerAdmin)
-admin.site.register(MemberOrganisationUser)
+admin.site.register(MemberOrganisation, MemberOrganisationAdmin)
+admin.site.register(MemberOrganisationUser, MemberOrganisationUserAdmin)

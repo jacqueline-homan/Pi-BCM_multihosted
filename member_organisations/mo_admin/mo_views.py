@@ -1,11 +1,4 @@
-from functools import update_wrapper
-
-from django.core.exceptions import PermissionDenied
-from django.contrib import admin
-from django.urls import path, reverse
-
-from company_organisations.models import CompanyOrganisationOwner
-from member_organisations.models import MemberOrganisationOwner
+from member_organisations.mo_admin.helpers import get_allowed_mo_for_mo_admin
 from .base_views import BaseMOAdmin
 
 
@@ -26,19 +19,7 @@ class CompanyOrganisationMOAdmin(BaseMOAdmin):
             "get_{model._meta.app_label}__{model._meta.model_name}_queryset".lower()
         """
 
-        member_organization_admin_ids = (  # mo where the current user is admin
-            request.user.member_organisations_memberorganisationuser
-            .filter(is_admin=True)
-            .values_list('organization', flat=True)
-        )
-        member_organization_owner_ids = (  # mo where the current user is owner
-            MemberOrganisationOwner.objects
-            .filter(organization__owner__organization_user__user=request.user)
-            .values_list('organization', flat=True)
-        )
-        allowed_organizations = (
-                set(member_organization_admin_ids) | set(member_organization_owner_ids)
-        )
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
         queryset = queryset.filter(member_organisation__in=allowed_organizations)
         return queryset
 
@@ -48,22 +29,103 @@ class CompanyOrganisationMOAdmin(BaseMOAdmin):
 
 
 class CompanyOrganisationOwnerMOAdmin(BaseMOAdmin):
+
     @classmethod
     def get_company_organisations__companyorganisationowner_queryset(cls, request, queryset):
+        """
+        queryset filtering for CO owners changelist
+        link: "/mo_admin/company_organisations_companyorganisationowner/"
+        """
 
-        # 1. filter by organization, company organization should belong to request.user MO
-        # 2. filter by user, organization user should belong to CO, which belong to request.user MO
+        # filter by organization, company organization should belong to request.user MO
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(organization__member_organisation__in=allowed_organizations)
 
+        # filter by user, organization user should belong to CO, which belong to request.user MO
+        queryset = queryset.filter(
+            organization_user__organization__member_organisation__in=allowed_organizations
+        )
+        return queryset
+
+    @classmethod
+    def get_company_organisations__companyorganisationuser_queryset(cls, request, queryset):
+        """
+        queryset filtering for CO owners edit/add: CO user FK
+        link: "/mo_admin/company_organisations_companyorganisationowner/<number>/<change/add>"
+        """
+
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(organization__member_organisation__in=allowed_organizations)
+        return queryset
+
+    @classmethod
+    def get_company_organisations__companyorganisation_queryset(cls, request, queryset):
+        """
+        queryset filtering for CO owners edit/add: CO FK
+        link: "/mo_admin/company_organisations_companyorganisationowner/<number>/<change/add>"
+        """
+
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(member_organisation__in=allowed_organizations)
         return queryset
 
 
 class CompanyOrganisationUserMOAdmin(BaseMOAdmin):
-    pass
+    @classmethod
+    def get_company_organisations__companyorganisationuser_queryset(cls, request, queryset):
+        """
+        queryset filtering for CO users changelist
+        link: "/mo_admin/company_organisations_companyorganisationuser/"
+        """
+
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(organization__member_organisation__in=allowed_organizations)
+        return queryset
+
+    @classmethod
+    def get_auth__user_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(
+            member_organisations_memberorganisation__in=allowed_organizations
+        )
+        return queryset
+
+    @classmethod
+    def get_company_organisations__companyorganisation_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(member_organisation__in=allowed_organizations)
+        return queryset
 
 
 class PrefixMOAdmin(BaseMOAdmin):
-    pass
+    exclude = ('member_organisation', )
+
+    @classmethod
+    def get_prefixes__prefix_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(member_organisation__in=allowed_organizations)
+        return queryset
+
+    @classmethod
+    def get_company_organisations__companyorganisation_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(member_organisation__in=allowed_organizations)
+        return queryset
 
 
 class ProductMOAdmin(BaseMOAdmin):
-    pass
+    @classmethod
+    def get_products__product_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(
+            owner__member_organisations_memberorganisation__in=allowed_organizations
+        )
+        return queryset
+
+    @classmethod
+    def get_auth__user_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(
+            member_organisations_memberorganisation__in=allowed_organizations
+        )
+        return queryset

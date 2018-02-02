@@ -6,6 +6,7 @@ class ServiceManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset()
 
+
 class PackageLevel(models.Model):
     # Package level description
     level = models.CharField(max_length=100, default='')

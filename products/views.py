@@ -5,6 +5,7 @@ from core import flash, flash_get_messages
 from .apps import subproducts_reset
 from .forms import PackageLevelForm
 from .models.package_level import PackageLevel
+from .models.package_type import PackageType
 
 
 def add_product(request):

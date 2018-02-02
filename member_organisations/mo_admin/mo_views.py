@@ -10,7 +10,13 @@ class AuditLogMOAdmin(BaseMOAdmin):
 
 
 class CompanyOrganisationMOAdmin(BaseMOAdmin):
-    exclude = ('member_organisation', )
+    related_models_actions = {
+        'member_organisation': {
+            'can_add_related': False,
+            'can_change_related': False,
+            'can_delete_related': False,
+        }
+    }
 
     @classmethod
     def get_company_organisations__companyorganisation_queryset(cls, request, queryset):
@@ -25,6 +31,12 @@ class CompanyOrganisationMOAdmin(BaseMOAdmin):
 
     @classmethod
     def get_bcm__country_queryset(cls, request, queryset):
+        return queryset
+
+    @classmethod
+    def get_member_organisations__memberorganisation_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(pk__in=allowed_organizations)
         return queryset
 
 
@@ -98,8 +110,6 @@ class CompanyOrganisationUserMOAdmin(BaseMOAdmin):
 
 
 class PrefixMOAdmin(BaseMOAdmin):
-    exclude = ('member_organisation', )
-
     @classmethod
     def get_prefixes__prefix_queryset(cls, request, queryset):
         allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
@@ -110,6 +120,12 @@ class PrefixMOAdmin(BaseMOAdmin):
     def get_company_organisations__companyorganisation_queryset(cls, request, queryset):
         allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
         queryset = queryset.filter(member_organisation__in=allowed_organizations)
+        return queryset
+
+    @classmethod
+    def get_member_organisations__memberorganisation_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(pk__in=allowed_organizations)
         return queryset
 
 

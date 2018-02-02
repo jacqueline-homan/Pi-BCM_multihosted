@@ -27,6 +27,18 @@ class BaseMOAdmin(ModifiedModelAdmin):
     change_form_template = 'admin/mo_admin/change_form.html'
     related_models_actions = None
 
+    # it's possible to enable/disable links for related models here
+    # by default all related model actions are disabled
+    #
+    # related_models_actions = {
+    #     # it's possible to enable/disable links for related models here
+    #     'member_organisation': {
+    #         'can_add_related': False,
+    #         'can_change_related': False,
+    #         'can_delete_related': False,
+    #     }
+    # }
+
     app_label = None
     model_name = None
 

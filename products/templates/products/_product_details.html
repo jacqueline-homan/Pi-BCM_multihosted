@@ -1,7 +1,7 @@
 <!-- company row -->
 <div class="row">
     <div class='col-xs-9' style='padding-right: 3px'>
-        {# render_field_with_errors4_help(form.company, _label="Company Name", value=form.company.data or current_user.organisation.company) #}
+        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.company label='Company Name' only %}
     </div>
     <div class='col-xs-3' style='padding-right: 3px;color: red'>
     </div>
@@ -13,8 +13,7 @@
 {% if product_package_level_id == 70 %}
     <div class="row">
         <div class="col-xs-9" style="padding-right: 3px">
-            {% render_field_with_errors4_help(form.labelDescription,
-              _label=form.labelDescription.field_human, label_class="description-label", required=True) %}
+            {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.labelDescription label='Label Description' required=True only %}
         </div>
     </div>
 {% else %}
@@ -26,27 +25,27 @@
 <!-- brand row -->
 <div class="row">
     <div class='col-xs-6'>
-        {# render_field_with_errors4_help(form.brand, required=True) #}
+        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.brand label='Brand' required=True only %}
     </div>
     <div class='col-xs-6'>
-        {# render_field_with_errors4_help(form.sub_brand) #}
+        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.sub_brand label='Sub brand' only %}
     </div>
 </div>
 
 <!-- name / variant -->
 <div class="row">
     <div class='col-xs-6'>
-        {# render_field_with_errors4_help(form.functional_name, _label="Product Type/Functional Name", required=True) #}
+        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.functional_name label='Product Type/Functional Name' required=True only %}
     </div>
     <div class='col-xs-6'>
-        {# render_field_with_errors4_help(form.variant) #}
+        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.variant label='Variant' only %}
     </div>
 </div>
 
 <!-- product-trade-item description row -->
 <div class="row">
     <div class="col-xs-9" style="padding-right: 3px">
-        {# render_field_with_errors4_help(form.description, _label="Product/Trade Item Description", label_class="description-label", required=True) #}
+        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.description label='Product/Trade Item Description' required=True only %}
     </div>
     <div class="col-xs-3" style="padding-top: 32px;padding-left: 5px">
         <label><input type='checkbox' id='auto-fill'/> Auto-Fill</label>
@@ -56,12 +55,11 @@
 <!-- GPC / SKU -->
 <div class="row">
     <div class='col-xs-6'>
-        {# render_field_with_errors4_help(form.category, _label=form.category.field_human, required=True) #}
-        <small><a href="https://www.gs1ie.org/standards/data-exchange/Master-Data/GPC/" target="_blank">To find your GPC
-            Brick
-            Code, click here</a></small>
+        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.category label='Global Product Classification' required=True only %}
+        <small><a href="https://www.gs1ie.org/standards/data-exchange/Master-Data/GPC/" target="_blank">
+            To find your GPC Brick Code, click here</a></small>
     </div>
     <div class='col-xs-6'>
-        {# render_field_with_errors4_help(form.sku, _label="Company/Internal Product Code or SKU") #}
+        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.sku label='Company/Internal Product Code or SKU' only %}
     </div>
 </div>

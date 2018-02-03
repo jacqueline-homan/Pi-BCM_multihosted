@@ -7,7 +7,7 @@
             </legend>
 
             {# if form.errors.get('imageFields') #}
-                <div class="alert error" style="color:#b94a48 !important; border: 1px solid #b94a48;">
+                <div class="alert error" style="color:#b94a48 !important; border: 1px solid #b94a48; display:none">
                     {# form.errors.get('imageFields')[0] #}
                 </div>
             {# endif #}
@@ -30,7 +30,11 @@
             <input type="file" class="form-control" name="upload"/>
 
             <div class="thumbnail">
-                <img src="{# product_image|default('/static/site/img/no-image.gif', true) #}" alt='No image'>
+                {% if product_image %}
+                    <img src="{{ product_image }}">
+                {% else %}
+                    <img src="{{ '/static/site/img/no-image.gif' }}" alt="No image">
+                {% endif %}
             </div>
 
             <div class="well well-sm">
@@ -38,7 +42,7 @@
             </div>
 
             <div class="well well-sm">
-                {# render_field_with_errors4_help(form.website_url, _label="External image URL (if hosted)") #}
+                {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.website_url label='External image URL (if hosted)' only %}
             </div>
 
         </fieldset>

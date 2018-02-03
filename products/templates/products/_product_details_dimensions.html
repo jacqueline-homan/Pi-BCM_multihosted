@@ -2,26 +2,26 @@
     <legend>Dimensions</legend>
     <div class="row">
         <div class='col-xs-6'>
-            {# render_field_with_errors4_help(form.depth, _label=form.depth.field_human) #}
+            {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.depth label='Depth' only %}
         </div>
         <div class='col-xs-6'>
-            {# render_field_with_errors4_help(form.depth_uom, _label=form.depth_uom.field_human) #}
-        </div>
-    </div>
-    <div class="row">
-        <div class='col-xs-6'>
-            {# render_field_with_errors4_help(form.width, _label=form.width.field_human) #}
-        </div>
-        <div class='col-xs-6'>
-            {# render_field_with_errors4_help(form.width_uom, _label=form.width_uom.field_human) #}
+            {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.depth_uom label='&nbsp;' only %}
         </div>
     </div>
     <div class="row">
         <div class='col-xs-6'>
-            {# render_field_with_errors4_help(form.height, _label=form.height.field_human) #}
+            {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.width label='Width' only %}
         </div>
         <div class='col-xs-6'>
-            {# render_field_with_errors4_help(form.height_uom, _label=form.height_uom.field_human) #}
+            {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.width_uom label='&nbsp;' only %}
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-xs-6'>
+            {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.height label='Height' only %}
+        </div>
+        <div class='col-xs-6'>
+            {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.height_uom label='&nbsp;' only %}
         </div>
     </div>
 </fieldset>

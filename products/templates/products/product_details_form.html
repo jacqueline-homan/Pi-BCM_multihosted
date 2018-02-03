@@ -9,8 +9,8 @@
         <li><a href="{% url 'users:profile' %}">{{ _("Home") }}</a></li>
         <li>New Product</li>
     </ol>
-    <div class="active_range pull-right">Range: {# render_range_breadcrumb(prefix) #} <a
-            href="{% url 'prefixes:prefixes_list' %}"> [Change]</a></div>
+    <div class="active_range pull-right">Range: {% include 'prefixes/range_macros.html' with func='render_range_breadcrumb' prefix=prefix only %}
+        <a href="{% url 'prefixes:prefixes_list' %}"> [Change]</a></div>
 {% endblock %}
 {% block site_content %}
     <div class="site-content">
@@ -76,17 +76,17 @@
                                     </span>
                                     {% endif %}
 
-                                    {# render_field_with_errors4_help(form.is_cunit, 'The item is a Consumer Unit') #}
-                                    {# render_field_with_errors4_help(form.is_dunit, 'The item is a Dispatch Unit') #}
-                                    {# render_field_with_errors4_help(form.is_vunit, 'The item is a Variable Weight Product') #}
-                                    {# render_field_with_errors4_help(form.is_iunit, 'The item is an Invoice Unit') #}
-                                    {# render_field_with_errors4_help(form.is_ounit, 'The item is an Orderable Unit') #}
+                                    {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.is_cunit label='The item is a Consumer Unit' only %}
+                                    {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.is_dunit label='The item is a Dispatch Unit' only %}
+                                    {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.is_vunit label='The item is a Variable Weight Product' only %}
+                                    {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.is_iunit label='The item is an Invoice Unit' only %}
+                                    {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.is_ounit label='The item is an Orderable Unit' only %}
                                     <br/>
                                 </fieldset>
                                 <! -- product options end -->
                                 <fieldset class='fieldset'>
                                     <legend>Base unit indicator</legend>
-                                    {# render_field_with_errors4_help(form.is_bunit, 'The item is a Base Unit', readonly=True) #}
+                                    {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.is_bunit label='The item is a Base Unit' readonly=True only %}
                                 </fieldset>
 
                             </div>
@@ -94,19 +94,19 @@
 
                             <!-- COO -->
                             <div class="col-md-6">
-                                {# render_field_with_errors4_help(form.country_of_origin) #}
-                                {# render_field_with_errors4_help(form.target_market) #}
-                                {# render_field_with_errors4_help(form.language) #}
+                                {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.country_of_origin label='Country Of Origin' only %}
+                                {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.target_market label='Target Market' only %}
+                                {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.language label='Language' only %}
 
                                 <div class="row">
                                     <div class="col-xs-8">
                                         {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.gln_of_information_provider label='GLN of Information provider' only %}
-                                        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.is_bunit label='IsBunit' only %}
                                     </div>
                                     <div class="col-xs-4"
                                          style="padding-top: 32px;padding-left: 5px">
                                         <label><input type='checkbox' id='gln-auto-fill'/>
-                                            Default GLN</label>
+                                            Default GLN
+                                        </label>
                                     </div>
                                 </div>
 

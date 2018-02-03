@@ -73,6 +73,13 @@ class Product(models.Model):
     address = db.Column(db.String(200))
     company_phone = db.Column(db.String(20))
     company_email = db.Column(db.String(75))
+    # Company details
+    company = models.CharField(max_length=100)
+    contact = models.CharField(max_length=50)
+    address = models.CharField(max_length=200)
+    company_phone = models.CharField(max_length=20)
+    company_email = models.CharField(max_length=75)
+
 
     # Auto fill fields
     bar_type = db.Column(

@@ -212,12 +212,11 @@ def add_product_base_details(request):
                                        company = prefix.organisation.company )
     else:
         context['is_new'] = 1
-        form = ProductDetailForm({})
-        #form = ProductDetailForm({ 'gln_of_information_provider' : ''})
+        form = ProductDetailForm()
         # default values - new product GET
-        form.data['gln_of_information_provider'] = normalize('EAN13', prefix.prefix)
-        form.data['is_bunit'] = True
-        #form.company.default = prefix.organisation.company
+        form.initial['gln_of_information_provider'] = normalize('EAN13', prefix.prefix)
+        form.initial['is_bunit'] = True
+        form.initial['company'] = prefix.member_organisation.name
         # _add_field_descriptions(form)
         #form.process()
 

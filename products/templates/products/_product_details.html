@@ -1,0 +1,67 @@
+<!-- company row -->
+<div class="row">
+    <div class='col-xs-9' style='padding-right: 3px'>
+        {# render_field_with_errors4_help(form.company, _label="Company Name", value=form.company.data or current_user.organisation.company) #}
+    </div>
+    <div class='col-xs-3' style='padding-right: 3px;color: red'>
+    </div>
+</div>
+
+
+<!-- label description row -->
+
+{% if product_package_level_id == 70 %}
+    <div class="row">
+        <div class="col-xs-9" style="padding-right: 3px">
+            {% render_field_with_errors4_help(form.labelDescription,
+              _label=form.labelDescription.field_human, label_class="description-label", required=True) %}
+        </div>
+    </div>
+{% else %}
+    <input type="hidden" name="labelDescription" id="labelDescription" value="{{ form.labelDescription.data }}"/>
+{% endif %}
+
+<input type="hidden" name="mark" id="mark" value="{{ form.mark.data }}"/>
+
+<!-- brand row -->
+<div class="row">
+    <div class='col-xs-6'>
+        {# render_field_with_errors4_help(form.brand, required=True) #}
+    </div>
+    <div class='col-xs-6'>
+        {# render_field_with_errors4_help(form.sub_brand) #}
+    </div>
+</div>
+
+<!-- name / variant -->
+<div class="row">
+    <div class='col-xs-6'>
+        {# render_field_with_errors4_help(form.functional_name, _label="Product Type/Functional Name", required=True) #}
+    </div>
+    <div class='col-xs-6'>
+        {# render_field_with_errors4_help(form.variant) #}
+    </div>
+</div>
+
+<!-- product-trade-item description row -->
+<div class="row">
+    <div class="col-xs-9" style="padding-right: 3px">
+        {# render_field_with_errors4_help(form.description, _label="Product/Trade Item Description", label_class="description-label", required=True) #}
+    </div>
+    <div class="col-xs-3" style="padding-top: 32px;padding-left: 5px">
+        <label><input type='checkbox' id='auto-fill'/> Auto-Fill</label>
+    </div>
+</div>
+
+<!-- GPC / SKU -->
+<div class="row">
+    <div class='col-xs-6'>
+        {# render_field_with_errors4_help(form.category, _label=form.category.field_human, required=True) #}
+        <small><a href="https://www.gs1ie.org/standards/data-exchange/Master-Data/GPC/" target="_blank">To find your GPC
+            Brick
+            Code, click here</a></small>
+    </div>
+    <div class='col-xs-6'>
+        {# render_field_with_errors4_help(form.sku, _label="Company/Internal Product Code or SKU") #}
+    </div>
+</div>

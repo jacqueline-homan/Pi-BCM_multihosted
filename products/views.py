@@ -7,6 +7,7 @@ from .apps import subproducts_reset
 from .forms import PackageLevelForm, PackageTypeForm
 from .models.package_level import PackageLevel
 from .models.package_type import PackageType
+from .models.product import Product
 
 
 def add_product(request):
@@ -147,12 +148,39 @@ def add_product_package_type(request):
     return render(request, 'products/package_type_form.html', context=context)
 
 
+def add_product_base_details(request):
+    """
+     -- used for the NEW (Step 2 - EACH)
+    """
+    '''
+    product = Product.service.create( gtin = gtin,
+                                     owner = current_user,
+                              organisation = current_user.organisation,
+                               description = form.description.data,
+                          labelDescription = form.functional_name.data,
+                                     brand = form.brand.data, 
+                                 sub_brand = form.sub_brand.data,
+                           functional_name = form.functional_name.data,
+                                   variant = form.variant.data, 
+                                  category = form.category.data,
+                        gs1_company_prefix = prefix.prefix, 
+                           gs1_cloud_state = 'INACTIVE',
+                          package_level_id = form.package_level_id.data,
+                           package_type_id = int(package_type),
+                               net_content = form.net_content.data,
+                           net_content_uom = form.net_content_uom.data,
+                                             # non-null fields
+                                  language = form.language.data,
+                             target_market = form.target_market.data,
+                         country_of_origin = form.country_of_origin.data,
+                                   company = prefix.organisation.company )
+    '''
+    context = {}
+    return render(request, 'products/product_details_form.html', context=context)
+
+
 def products_list(request):
     return HttpResponse('products:products_list page')
-
-
-def add_product_base_details(request):
-    return HttpResponse('products:add_product_base_details')
 
 
 def add_product_select_sub(request):

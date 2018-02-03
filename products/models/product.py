@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 
 
 class Product(models.Model):
-    db_name = "products"
-
     # product owner info
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 

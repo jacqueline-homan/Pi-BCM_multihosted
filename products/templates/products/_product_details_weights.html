@@ -1,0 +1,21 @@
+<fieldset class='fieldset' id='weight_fs'>
+    <legend>Weights</legend>
+    <div class='row'>
+        <div class='col-xs-6'>
+            {# render_field_with_errors4_help(form.gross_weight, _label=form.gross_weight.field_human) #}
+        </div>
+        <div class='col-xs-6'>
+            {# render_field_with_errors4_help(form.gross_weight_uom, _label=form.gross_weight_uom.field_human) #}
+        </div>
+    </div>
+    {% if product_package_level_id == 70 %}
+        <div class="row">
+            <div class='col-xs-6'>
+                {# render_field_with_errors4_help(form.net_weight, _label=form.net_weight.field_human ) #}
+            </div>
+            <div class='col-xs-6'>
+                {# render_field_with_errors4_help(form.net_weight_uom, _label=form.net_weight_uom.field_human) #}
+            </div>
+        </div>
+    {% endif %}
+</fieldset>

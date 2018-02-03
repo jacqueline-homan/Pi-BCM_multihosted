@@ -1,0 +1,385 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{# from theme("security/_macros.html") import render_field_with_errors4, render_field, render_field_with_errors4_help #}
+{# from theme("prefixes/range_macros.html") import render_range_breadcrumb, render_gtin, render_gtin13, render_package_level #}
+{% block title %}GS1 Ireland Barcode Manager: New product{% endblock %}
+{% block breadcrumb %}
+    <ol class="breadcrumb" style="display:inline-block">
+        <li><a href="{% url 'users:profile' %}">{{ _("Home") }}</a></li>
+        <li>New Product</li>
+    </ol>
+    <div class="active_range pull-right">Range: {# render_range_breadcrumb(prefix) #} <a
+            href="{% url 'prefixes:prefixes_list' %}"> [Change]</a></div>
+{% endblock %}
+{% block site_content %}
+    <div class="site-content">
+
+        <h2>{% block page_title %}{{ title }}{% endblock page_title %}</h2>
+
+        {% block page_content %}
+            <div class="site-content-padder">
+
+                <form method="post" enctype="multipart/form-data" id="detailsform">
+                    {% csrf_token %}
+
+                    <!--<legend>New Base Unit / Each - Product Detail</legend>-->
+
+                    <fieldset class='fieldset'>
+                        <legend>Product Identification</legend>
+
+                        <div class='row hidden'>
+                            <div class='col-xs-12'>
+                                <fieldset class='fieldset' style="border-color: #dd0000">
+                                    <legend>GTIN</legend>
+                                    {% if product_package_level_id != 70 %}
+                                        <input class="form-control"
+                                               {% if readonly %}readonly="readonly"{% endif %}
+                                               size="1" maxlength="1" id="gtin0" name="gtin0"
+                                               type="number" min="0" max="9" value="{{ gtin0 }}"
+                                               style="display:inline;width:15%;text-align: right;"/>
+                                    {% else %}
+                                    {% endif %}
+                                    <div id="gtin13"
+                                         class="gtin13-class">{# render_gtin13(gtin13, prefix.prefix|length, kind) #}</div>
+                                </fieldset>
+                                <br/>
+                            </div>
+                        </div>
+
+                        {% include 'products/_product_details.html' %}
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+
+                            <!-- Options -->
+                            <div class="col-xs-6">
+
+                                <! -- product options -->
+                                <fieldset class='fieldset' id="options_fs"
+                                          {% if form.errors.optionalFields %}style="color:#b94a48 !important; border: 1px solid #b94a48;"{% endif %}>
+                                    <legend {% if form.errors.optionalFields %}style="color:#b94a48 !important;"{% endif %}>
+                                        Options <span style="color: red"> * </span><span
+                                            style="font-size: 0.6em;vertical-align: middle;">(Tick if yes)&nbsp;</span>
+                                    </legend>
+
+                                    {% if form.errors.optionalFields %}
+                                        <span class="help-block" style="color:#b94a48">
+                                        <small>{{ form.errors.optionalFields|first }}</small><br>
+                                    </span>
+                                    {% endif %}
+
+                                    {# render_field_with_errors4_help(form.is_cunit, 'The item is a Consumer Unit') #}
+                                    {# render_field_with_errors4_help(form.is_dunit, 'The item is a Dispatch Unit') #}
+                                    {# render_field_with_errors4_help(form.is_vunit, 'The item is a Variable Weight Product') #}
+                                    {# render_field_with_errors4_help(form.is_iunit, 'The item is an Invoice Unit') #}
+                                    {# render_field_with_errors4_help(form.is_ounit, 'The item is an Orderable Unit') #}
+                                    <br/>
+                                </fieldset>
+                                <! -- product options end -->
+                                <fieldset class='fieldset'>
+                                    <legend>Base unit indicator</legend>
+                                    {# render_field_with_errors4_help(form.is_bunit, 'The item is a Base Unit', readonly=True) #}
+                                </fieldset>
+
+                            </div>
+
+
+                            <!-- COO -->
+                            <div class="col-md-6">
+                                {# render_field_with_errors4_help(form.country_of_origin) #}
+                                {# render_field_with_errors4_help(form.target_market) #}
+                                {# render_field_with_errors4_help(form.language) #}
+
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        {# render_field_with_errors4_help(form.gln_of_information_provider,_label="GLN of Information provider") #}
+                                    </div>
+                                    <div class="col-xs-4"
+                                         style="padding-top: 32px;padding-left: 5px">
+                                        <label><input type='checkbox' id='gln-auto-fill'/>
+                                            Default GLN</label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6" style="color: red">
+                                Fields marked with (*) are required.
+                            </div>
+                        </div>
+
+                    </fieldset>
+
+                    <!-- subproducts start -->
+                    {% if sub_products %}
+                        <div class="row">
+                            <div class="col-xs-12">
+
+
+                                <fieldset class="fieldset" id="sub_products_fs"
+                                          {% if form.errors.subProducts %}style="color:#b94a48 !important; border: 1px solid #b94a48;"{% endif %}>
+
+                                    <legend {% if form.errors.subProducts %}style="color:#b94a48 !important;"{% endif %}>
+                                        Contained items
+                                    </legend>
+
+                                    <p>How many of this product are contained in the unit?</p>
+
+                                    <table class="table table-striped" style="margin-bottom: 0;">
+                                        <thead>
+                                        <th>GTIN</th>
+                                        <th>Description</th>
+                                        <th>Package level</th>
+                                        <th style="text-align: right;padding-right: 30px">Count</th>
+                                        </thead>
+                                        <tbody>
+                                        {% for p, cnt, valid in sub_products %}
+                                            <tr>
+                                                <td>{# render_gtin(p.gtin, prefix.prefix|length) #}</td>
+                                                <td>{{ p.description }}</td>
+                                                <td>{# render_package_level(p) #}</td>
+                                                <td style="text-align: right;width:25%;padding-right:0">
+                                                    <div class="pull-right col-xs-8 {% if not valid %}has-error{% endif %}">
+                                                        <input type="text"
+                                                               class="form-control"
+                                                               name="pid_{{ p.id }}"
+                                                               value="{{ cnt }}"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </fieldset>
+
+
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- subproducts end -->
+
+
+                    {% include 'products/_product_details_weights.html' %}
+
+                    {% include 'products/_product_details_dimensions.html' %}
+
+                    {# if product_package_level_id == 70 #}
+                        {% include 'products/_product_details_image.html' %}
+                    {# endif #}
+
+                    <hr>
+
+                    <div class='row'>
+                        <div class="col-xs-12">
+                            <div class="pull-right">
+                                {% if product_package_level_id == 70 %}
+                                    <a class='btn btn-default' type="" href="/products/add/basic">Previous</a>
+                                {% else %}
+                                    <a class='btn btn-default' type="" href="/products/add/case">Previous</a>
+                                {% endif %}
+                                <a class='btn btn-primary' href="javascript:void(0)"
+                                   onclick="return submitForm()">Next</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        {% endblock page_content %}
+    </div>
+{% endblock site_content %}
+
+{% block base_scripts %}
+    <script type='text/javascript'>
+
+        function pad(str, max) {
+            str = str.toString();
+            return str.length < max ? pad("0" + str, max) : str;
+        }
+
+        function submitForm() {
+            var gtin0 = ($("#gtin0").val() != undefined) ? $("#gtin0").val() : '0'; //package level indicator
+            $("#gtin").val(gtin0 + pad($("#gtin13").text().replace(/\s+/g, ''), 13)); // complete gtin14
+            $('#detailsform').submit();
+            return false;
+        }
+
+        function GTINCheckDigit(s) {
+            var result = 0;
+            for (counter = s.length - 1; counter >= 0; counter--) {
+                result = result + parseInt(s.charAt(counter)) * Math.pow(3, ((counter + 1) % 2));
+            }
+            return (10 - (result % 10)) % 10;
+        }
+
+        function checkdigit() {
+            var checkdigit;
+            checkdigit = GTINCheckDigit($('#gtin0').val() + pad($("#gtin13").text().replace(/\s+/g, ''), 13).substring(0, 12));
+            return checkdigit;
+        }
+
+        function gln_auto_fill() {
+            var default_gln = "{{  leading_gln }}";
+            if ($('#gln-auto-fill').is(':checked')) {
+                $('#gln_of_information_provider').val(default_gln);
+                $('#gln_of_information_provider').attr('readonly', 'readonly');
+            } else {
+                $("#gln_of_information_provider").prop('readonly', false);
+            }
+        }
+
+        function init_gln() {
+            var default_gln = "{{  leading_gln }}";
+            if ($('#gln_of_information_provider').val() == default_gln) {
+                $('#gln_of_information_provider').attr('readonly', 'readonly');
+                $("#gln-auto-fill").attr("checked", true);
+            } else {
+                $("#gln_of_information_provider").prop('readonly', false);
+                $("#gln-auto-fill").attr("checked", false);
+            }
+        }
+
+        function auto_fill() {
+            if ($('#auto-fill').is(':checked')) {
+                var desc = $('#brand').val() + ' '
+                    + $('#sub_brand').val() + ' '
+                    + $('#functional_name').val() + ' '
+                    + $('#variant').val();
+                if ($("#net_content").length > 0) {
+                    desc = desc + ' '
+                        + $('#net_content').val() + ' '
+                        + $('#net_content_uom :selected').text() + ' ';
+                }
+                $('#description').val(desc);
+            }
+        }
+
+
+        $(document).ready(function () {
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('#brand, #sub_brand, #functional_name, #variant, #auto-fill').change(function (e) {
+                auto_fill()
+            });
+
+            $('#gln-auto-fill').change(function (e) {
+                gln_auto_fill();
+            });
+
+            $('#gtin').attr('readonly', 'readonly');
+            $('#brand, #sub_brand, #functional_name, #variant, #net_content, #net_content_uom').change(function (e) {
+                auto_fill()
+            });
+            $("#gtin0").on('change', function () {
+                $("#cd").text(checkdigit());
+            });
+            $("#gross_weight_uom").on('change', function () {
+                if ($("#gross_weight_uom").val() == '__None') {
+                    $("#gross_weight").attr({'disabled': 'disabled'}).val('');
+                } else {
+                    $("#gross_weight").removeAttr('disabled');
+                }
+            });
+            $("#net_weight_uom").on('change', function () {
+                if ($("#net_weight_uom").val() == '__None') {
+                    $("#net_weight").attr({'disabled': 'disabled'}).val('');
+                } else {
+                    $("#net_weight").removeAttr('disabled');
+                }
+            });
+            $("#depth_uom").on('change', function () {
+                if ($("#depth_uom").val() == '__None') {
+                    $("#depth").attr({'disabled': 'disabled'}).val('');
+                } else {
+                    $("#depth").removeAttr('disabled');
+                }
+            });
+            $("#width_uom").on('change', function () {
+                if ($("#width_uom").val() == '__None') {
+                    $("#width").attr({'disabled': 'disabled'}).val('');
+                } else {
+                    $("#width").removeAttr('disabled');
+                }
+            });
+            $("#height_uom").on('change', function () {
+                if ($("#height_uom").val() == '__None') {
+                    $("#height").attr({'disabled': 'disabled'}).val('');
+                } else {
+                    $("#height").removeAttr('disabled');
+                }
+            });
+            $("#net_content_uom").on('change', function () {
+                if ($("#net_content_uom").val() == '__None') {
+                    $("#net_content").attr({'disabled': 'disabled'}).val('');
+                } else {
+                    $("#net_content").removeAttr('disabled');
+                }
+            });
+            if ($("#depth_uom").val() == '__None') {
+                $("#depth").attr({'disabled': 'disabled'}).val('');
+            }
+            if ($("#width_uom").val() == '__None') {
+                $("#width").attr({'disabled': 'disabled'}).val('');
+            }
+            if ($("#height_uom").val() == '__None') {
+                $("#height").attr({'disabled': 'disabled'}).val('');
+            }
+            if ($("#gross_weight_uom").val() == '__None') {
+                $("#gross_weight").attr({'disabled': 'disabled'}).val('');
+            }
+            if ($("#net_weight_uom").val() == '__None') {
+                $("#net_weight").attr({'disabled': 'disabled'}).val('');
+            }
+            if ($("#net_content_uom").val() == '__None') {
+                $("#net_content").attr({'disabled': 'disabled'}).val('');
+            }
+
+            var is_new = {{ is_new }};
+            if (is_new) {
+                $("#language").val({{ config.GS1_LANGUAGE_ID }});
+                $("#country_of_origin").val({{ config.GS1_COUNTRY_OF_ORIGIN_ID }});
+                $("#target_market").val({{ config.GS1_TARGET_MARKET_ID }});
+            }
+
+            // set initial gln state
+            init_gln();
+
+            {% if not current_user.advanced_tab %}
+                $("#is_bunit").attr({'disabled': 'disabled'}).val('');
+            {% endif %}
+
+        })
+    </script>
+{% endblock %}
+
+{% block base_css %}
+    <link rel="stylesheet" href="{% static 'products/site/css/add_product.css' %}"/>
+    <style>
+        .fieldset > legend {
+            border: none;
+            width: auto;
+            margin-bottom: auto;
+        }
+
+        .img-align > div {
+            display: inline-table;
+        }
+
+        .img-align > div > a {
+            display: block;
+        }
+    </style>
+{% endblock %}

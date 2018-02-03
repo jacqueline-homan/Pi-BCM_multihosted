@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-xs-12">
+
+        <fieldset class='fieldset' id="image_fs">
+            <legend>Product Image
+                <span style="font-size: 0.6em;vertical-align: middle;">(Upload a picture of your product)&nbsp;</span>
+            </legend>
+
+            {# if form.errors.get('imageFields') #}
+                <div class="alert error" style="color:#b94a48 !important; border: 1px solid #b94a48;">
+                    {# form.errors.get('imageFields')[0] #}
+                </div>
+            {# endif #}
+
+            <div class="well">
+                <p>
+                    Please upload an image of your product and/or a publicly-accessible Web URL of an image of the
+                    product. This URL should be for an image (jpg or png), not for a web page (html). This is a text
+                    field and the format will be, for example:
+                </p>
+                <p>
+                    https://www.gs1.org/docs/gs1-cloud/0950400059231.JPG</p>
+                <p>
+                    Including a URL to an image of your product will ensure potential customers can access the image you
+                    want them to see and not something they just find on the internet. It can also help online market
+                    places to have an accurate representation of your product and help you increase sales.
+                </p>
+            </div>
+
+            <input type="file" class="form-control" name="upload"/>
+
+            <div class="thumbnail">
+                <img src="{# product_image|default('/static/site/img/no-image.gif', true) #}" alt='No image'>
+            </div>
+
+            <div class="well well-sm">
+                Accepted file types are: JPG, PNG, GIF with a size less than 2 MB
+            </div>
+
+            <div class="well well-sm">
+                {# render_field_with_errors4_help(form.website_url, _label="External image URL (if hosted)") #}
+            </div>
+
+        </fieldset>
+    </div>
+</div>

@@ -4,10 +4,11 @@ from django.conf import settings
 from services import prefix_service
 from core import flash, flash_get_messages
 from .apps import subproducts_reset
-from .forms import PackageLevelForm, PackageTypeForm
+from .forms import PackageLevelForm, PackageTypeForm, ProductDetailForm
 from .models.package_level import PackageLevel
 from .models.package_type import PackageType
 from .models.product import Product
+from barcoding.utilities import normalize
 
 
 def add_product(request):
@@ -151,31 +152,80 @@ def add_product_package_type(request):
 def add_product_base_details(request):
     """
      -- used for the NEW (Step 2 - EACH)
+    GET / POST for adding a base level item
+    :template_name: products/product_details_form.html
+    :return:
     """
-    '''
-    product = Product.service.create( gtin = gtin,
-                                     owner = current_user,
-                              organisation = current_user.organisation,
-                               description = form.description.data,
-                          labelDescription = form.functional_name.data,
-                                     brand = form.brand.data, 
-                                 sub_brand = form.sub_brand.data,
-                           functional_name = form.functional_name.data,
-                                   variant = form.variant.data, 
-                                  category = form.category.data,
-                        gs1_company_prefix = prefix.prefix, 
-                           gs1_cloud_state = 'INACTIVE',
-                          package_level_id = form.package_level_id.data,
-                           package_type_id = int(package_type),
-                               net_content = form.net_content.data,
-                           net_content_uom = form.net_content_uom.data,
-                                             # non-null fields
-                                  language = form.language.data,
-                             target_market = form.target_market.data,
-                         country_of_origin = form.country_of_origin.data,
-                                   company = prefix.organisation.company )
-    '''
-    context = {}
+
+    template_name = "products/product_details_form.html"
+
+    session = request.session.get('new_product', None)
+    if not session:
+        raise Http404()
+    for k in ['package_type', 'package_level', 'gtin', 'bar_placement']:  # Check session and restart if missing
+        if k not in session.keys():
+            del request.session['new_product']
+            flash(request, 'Add new product restarted #010', 'danger')
+            return redirect(reverse('products:add_product'))
+
+    gtin = session.get('gtin', '0')
+    package_type = session.get('package_type')
+    bar_placement = session.get('bar_placement')
+
+    prefix = prefix_service.find_item(starting_from=str(gtin))
+    if not prefix:
+        raise Http404()
+    if prefix.is_upc():
+        kind = 'UPCA'
+    else:
+        kind = 'EAN13'
+    title = 'New Base Unit / Each (Step 2 of 2: Details)'
+    context = {          'prefix': prefix,
+                          'gtin0': '0',
+                         'gtin13': session['gtin'],
+                          'title': title,
+                           'kind': kind,
+       'product_package_level_id': int(session['package_level']),
+                    'leading_gln': normalize('EAN13', prefix.prefix) }
+
+    if request.method == 'POST':
+        product = Product.service.create( gtin = gtin,
+                                         owner = current_user,
+                                  organisation = current_user.organisation,
+                                   description = form.description.data,
+                              labelDescription = form.functional_name.data,
+                                         brand = form.brand.data,
+                                     sub_brand = form.sub_brand.data,
+                               functional_name = form.functional_name.data,
+                                       variant = form.variant.data,
+                                      category = form.category.data,
+                            gs1_company_prefix = prefix.prefix,
+                               gs1_cloud_state = 'INACTIVE',
+                              package_level_id = form.package_level_id.data,
+                               package_type_id = int(package_type),
+                                   net_content = form.net_content.data,
+                               net_content_uom = form.net_content_uom.data,
+                                                 # non-null fields
+                                      language = form.language.data,
+                                 target_market = form.target_market.data,
+                             country_of_origin = form.country_of_origin.data,
+                                       company = prefix.organisation.company )
+    else:
+        context['is_new'] = 1
+        form = ProductDetailForm({})
+        #form = ProductDetailForm({ 'gln_of_information_provider' : ''})
+        # default values - new product GET
+        form.data['gln_of_information_provider'] = normalize('EAN13', prefix.prefix)
+        form.data['is_bunit'] = True
+        #form.company.default = prefix.organisation.company
+        # _add_field_descriptions(form)
+        #form.process()
+
+    context['form'] = form
+    #form.bar_placement.data = session.get('bar_placement')
+    #form.package_level_id.data = session.get('package_level')
+    #form.package_type_id.data = session.get('package_type')
+    #form.image.data = session.get('image', settings.NO_IMAGE)
     return render(request, 'products/product_details_form.html', context=context)
 
 

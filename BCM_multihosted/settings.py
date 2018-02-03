@@ -160,12 +160,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'assets'), )
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
 GS1_PREFIX_START_REGEX = "^539|^501|^509|^0\d\d"
 TERMS_VERSION = '2017/11/04'
 GS1_GLN_CAPABILITY = False
 PREFIXES_EXCEL_TEMPLATE = os.path.join(BASE_DIR, 'templates/prefixes/excel/GDSN_Template_v4.xlsx')
+NO_IMAGE = '/static/site/img/no-image.gif'  # Image to show when product has no image
 
 try:
     from .local_settings import *

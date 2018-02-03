@@ -18,3 +18,10 @@ class PackageTypeForm(forms.Form):
         self.fields['package_type'].choices = [(str(row.id), row.type) for row in rows]
 
 
+class ProductDetailForm(forms.Form):
+    gtin = forms.HiddenInput()
+    bar_placement = forms.HiddenInput()
+    package_level_id = forms.HiddenInput()
+    package_type_id = forms.HiddenInput()
+    gln_of_information_provider = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'})) #'', [Regexp('^[0-9]{13}$', message="Should be 13 digits."), check_gln])
+    is_bunit = forms.BooleanField()

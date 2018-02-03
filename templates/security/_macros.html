@@ -20,4 +20,47 @@
             </span>
         {% endif %}
     </div>
+{% elif func == 'render_field_with_errors4_help' %}
+    {% if field.data == True or field.data == False %}
+            <div class="input-group input-group-checkbox{% if required %} required{% endif %}">
+                <div class="checkbox">
+                    {% if label != None %}
+                        <label>{{ field }} {{ label }}</label>
+                    {% else %}
+                        <label>{{ field }} {{ field.label }}</label>
+                    {% endif %}
+                </div>
+                {% if field.description %}
+                <span class="input-group-addon field-info" data-toggle="tooltip" title="{{ field.description }}" data-container="body" data-placement="right" data-delay="{&quot;show&quot;:&quot;0&quot;, &quot;hide&quot;:&quot;0&quot;}" data-trigger="hover focus click">
+                    <span class="glyphicon glyphicon-info-sign field-info-icon" aria-hidden="true"></span>
+                </span>
+                {% endif %}
+            </div>
+    {% else %}
+        <div class="form-group{% if field.errors %} has-error{% endif %}{% if required %} required{% endif %}">
+            {% if label != None %}
+                <label class="control-label" for="{{ field.id }}">{{ label }}</label>
+            {% else %}
+                <label class="control-label" for="{{ field.id }}">{{ field.label }}</label>
+            {% endif %}
+            {% if field.description %}
+                <div class="input-group">
+                    {{ field }} (class="form-control", **kwargs)|safe
+                    <span class="input-group-addon field-info" data-toggle="tooltip" title="{{ field.description }}"
+                          data-container="body" data-placement="right" data-delay='{"show":"0", "hide":"0"}' data-trigger="hover focus click">
+                        <span class="glyphicon glyphicon-info-sign field-info-icon" aria-hidden="true"></span>
+                    </span>
+                </div>
+            {% else %}
+                {{ field  }}
+            {% endif %}
+            {% if field.errors %}
+                <span class="help-block">
+                    {% for error in field.errors %}
+                        <small>{{ error }}</small><br/>
+                    {% endfor %}
+                </span>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endif %}

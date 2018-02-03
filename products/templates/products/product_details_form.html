@@ -100,7 +100,8 @@
 
                                 <div class="row">
                                     <div class="col-xs-8">
-                                        {# render_field_with_errors4_help(form.gln_of_information_provider,_label="GLN of Information provider") #}
+                                        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.gln_of_information_provider label='GLN of Information provider' only %}
+                                        {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.is_bunit label='IsBunit' only %}
                                     </div>
                                     <div class="col-xs-4"
                                          style="padding-top: 32px;padding-left: 5px">

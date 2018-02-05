@@ -9,6 +9,7 @@ class BaseMOAdmin(ModifiedModelAdmin):
     change_form_template = 'admin/mo_admin/change_form.html'
     add_form_template = 'admin/mo_admin/change_form.html'
     delete_confirmation_template = 'admin/mo_admin/delete_confirmation.html'
+    delete_selected_confirmation_template = 'admin/mo_admin/delete_selected_confirmation.html'
     related_models_actions = None
 
     # it's possible to enable/disable links for related models here

@@ -44,4 +44,10 @@
             {% endif %}
         {% endwith %}
     {% endwith %}
+{% elif func == 'render_gtin13' %}
+    {% if kind == 'EAN13' or case %}
+        <b>{% for i in gtin13 %}{% if forloop.counter0 == plength %}</b> <span style="color:#F26334">{% elif forloop.counter0 == 12 %}</span> <span id="cd">{% endif %}{{ i }}{% endfor %}</span>
+    {% elif kind == 'UPCA' %}
+        <b>{% for i in gtin13 %}{% if forloop.counter0 >= 1 %}{% if forloop.counter0 == plength %}</b> <span style="color: #F26334">{% elif forloop.counter0 == 12 %}</span> <span id="cd">{% endif %}{{ i }}{% endif %}{% endfor %}</span>
+    {% endif %}
 {% endif %}

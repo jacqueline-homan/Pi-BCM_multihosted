@@ -22,6 +22,7 @@
 
                 <form method="post" enctype="multipart/form-data" id="detailsform">
                     {% csrf_token %}
+                    <input type="hidden" name="gtin" id="gtin" />
 
                     <!--<legend>New Base Unit / Each - Product Detail</legend>-->
 
@@ -41,7 +42,8 @@
                                     {% else %}
                                     {% endif %}
                                     <div id="gtin13"
-                                         class="gtin13-class">{# render_gtin13(gtin13, prefix.prefix|length, kind) #}</div>
+                                         class="gtin13-class">{# render_gtin13(gtin13, prefix.prefix|length, kind) #}
+                                        {% include 'prefixes/range_macros.html' with func='render_gtin13' gtin13=gtin13 kind='EAN13' plength=prefix.prefix|length case=False only %}</div>
                                 </fieldset>
                                 <br/>
                             </div>
@@ -212,6 +214,7 @@
 
         function submitForm() {
             var gtin0 = ($("#gtin0").val() != undefined) ? $("#gtin0").val() : '0'; //package level indicator
+            var gtin13 = $("#gtin13").text()
             $("#gtin").val(gtin0 + pad($("#gtin13").text().replace(/\s+/g, ''), 13)); // complete gtin14
             $('#detailsform').submit();
             return false;

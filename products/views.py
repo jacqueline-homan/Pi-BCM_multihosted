@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, Http404
 from django.conf import settings
@@ -189,27 +190,93 @@ def add_product_base_details(request):
                     'leading_gln': normalize('EAN13', prefix.prefix) }
 
     if request.method == 'POST':
-        product = Product.service.create( gtin = gtin,
-                                         owner = current_user,
-                                  organisation = current_user.organisation,
-                                   description = form.description.data,
-                              labelDescription = form.functional_name.data,
-                                         brand = form.brand.data,
-                                     sub_brand = form.sub_brand.data,
-                               functional_name = form.functional_name.data,
-                                       variant = form.variant.data,
-                                      category = form.category.data,
-                            gs1_company_prefix = prefix.prefix,
-                               gs1_cloud_state = 'INACTIVE',
-                              package_level_id = form.package_level_id.data,
-                               package_type_id = int(package_type),
-                                   net_content = form.net_content.data,
-                               net_content_uom = form.net_content_uom.data,
-                                                 # non-null fields
-                                      language = form.language.data,
-                                 target_market = form.target_market.data,
-                             country_of_origin = form.country_of_origin.data,
-                                       company = prefix.organisation.company )
+        context['is_new'] = 0
+        form = ProductDetailForm(request.POST)
+        if form.is_valid():
+            form_data = {}
+            for formfield in form.fields:
+                try:
+                    if form.data[formfield] != '':
+                        form_data[formfield] = form.data[formfield]
+                    else:
+                        form_data[formfield] = None
+                except Exception as e:
+                    print('Field error: %s' % e)
+
+            # gtin = form.data['gtin']
+            gtin = '0' + gtin
+            if not re.match('\d{14}', gtin) or not gtin[1:14].startswith(prefix.prefix):
+                flash(request, 'You entered a non valid GTIN number (error #001)', 'danger')
+                return render(request, template_name, form=form, **context)
+            try:
+                ### PRODUCT CREATE UI
+                product = Product(                gtin = gtin,
+                                                 owner = request.user,
+                                # company_organisation = request.user.company_organisation,
+                                #  member_organisation = request.user.member_organisation,
+                                               company = form.data['company'],
+                                   # label_description = form.data['label_description'],
+                                                 brand = form.data['brand'],
+                                             sub_brand = form.data['sub_brand'],
+                                       functional_name = form.data['functional_name'],
+                                               variant = form.data['variant'],
+                                           description = form.data['description'],
+                                              category = form.data['category'],
+                                                 # sku = form.data['sku'],
+                                   # country_of_origin = form.data['country_of_origin'],
+                                       # target_market = form.data['target_market'],
+                                            # language = form.data['language'],
+                           gln_of_information_provider = form.data['gln_of_information_provider'],
+                                            # is_bunit = form.data['is_bunit'],
+                                            # is_cunit = form.data['is_cunit'],
+                                            # is_dunit = form.data['is_dunit'],
+                                            # is_vunit = form.data['is_vunit'],
+                                            # is_iunit = form.data['is_iunit'],
+                                            # is_ounit = form.data['is_ounit'],
+                                        # gross_weight = form.data['gross_weights'],
+                                    # gross_weight_uom = form.data['gross_weight_uom'],
+                                          # net_weight = form.data['net_weight'],
+                                      # net_weight_uom = form.data['net_weight_uom'],
+                                               # depth = form.data['depth'],
+                                           # depth_uom = form.data['depth_uom'],
+                                               # width = form.data['width'],
+                                           # width_uom = form.data['width_uom'],
+                                              # height = form.data['height'],
+                                          # height_uom = form.data['height_uom'],
+                                           website_url = form.data['website_url'],
+                                    gs1_company_prefix = prefix.prefix,
+                                       gs1_cloud_state = 'INACTIVE',
+                                    # package_level_id = form.data['package_level_id'],
+                                     # package_type_id = int(package_type),
+                                     #     net_content = form.net_content.data,
+                                     # net_content_uom = form.net_content_uom.data,
+                )
+                product.save()
+            except Exception as e:
+                print('Database field error: %s' % e)
+                flash(request, str(e), 'danger')
+                return render(template_name, form=form, **context)
+            '''
+            form.populate_obj(product)
+            img = request.files.get('upload')
+            if img:
+                try:
+                    product.add_image(img)
+                except Exception as e:
+                    flash(str(e), 'danger')
+            else:
+                product.image = current_app.config['NO_IMAGE']
+            services.product_service.save(product)
+            if not prefix.increment_starting_from():
+                flash('You have reached the end of this prefix range or next number is already allocated. ' +
+                      'Please set new starting number manually.', 'danger')
+            services.prefix_service.save(prefix)
+            del session['new_product']
+            ## TODO
+            return redirect(url_for('products.view_product_summary', product_id=product.id))
+        else:
+            logging.debug('ProductDetailFormOptions error: %s' % str(form.errors))
+        '''
     else:
         context['is_new'] = 1
         form = ProductDetailForm()

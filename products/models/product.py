@@ -1,11 +1,26 @@
 from django.db import models
 from django.contrib.auth.models import User
+from company_organisations.models import CompanyOrganisation
+from member_organisations.models import MemberOrganisation
 #from uam.models import Organisation
+
+
+class ServiceManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()
+
+    def create(self, **kwargs):
+        pass
 
 
 class Product(models.Model):
     # product owner info
     owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
+
+    company_organisation = models.ForeignKey(CompanyOrganisation, null=True, on_delete=models.PROTECT)
+    member_organisation = models.ForeignKey(MemberOrganisation, null=True, on_delete=models.PROTECT)
+    company = models.CharField(max_length=100, null=True)
+
 
     # organisation
     #organisation = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)
@@ -13,7 +28,32 @@ class Product(models.Model):
     # Product info
     gtin = models.CharField(max_length=14, default='', blank=True, db_index=True)
     gs1_company_prefix = models.CharField(max_length=75, default='', blank=True, db_index=True)
-    gln_of_information_provider = models.CharField(max_length=75)
+    gln_of_information_provider = models.CharField(max_length=75, null=True)
+
+    category = models.CharField(max_length=75, null=True)
+
+    # Used for books with this mapping:
+    description = models.CharField(max_length=200, null=True)  # functiona_name
+    sku = models.CharField(max_length=75, null=True)
+    brand = models.CharField(max_length=75, null=True)  # publisher
+    sub_brand = models.CharField(max_length=75, null=True)
+    functional_name = models.CharField(max_length=75, null=True)  # title
+    variant = models.CharField(max_length=75, null=True)  # info
+
+    website_url = models.CharField(max_length=256, null=True)
+
+    # Dimensions
+    #height = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    # height_uom = models.ForeignKey("DimensionUOM")
+
+    #width = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    # width_uom = models.ForeignKey("DimensionUOM")
+
+    #depth = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    # depth_uom = models.ForeignKey('DimensionUOM')
+
+    gs1_cloud_state = models.CharField(max_length=75, null=True)
+
 
     '''
     category = db.Column(db.String(75), nullable=False)
@@ -154,3 +194,7 @@ class Product(models.Model):
     def __str__(self):
         return '%s | %s | %s' % (self.gtin, self.description, self.brand)
     '''
+
+    objects = models.Manager()
+    service = ServiceManager()
+

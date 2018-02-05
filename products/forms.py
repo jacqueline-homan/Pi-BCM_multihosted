@@ -28,7 +28,7 @@ class ProductDetailForm(forms.Form):
     company = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control'}))
 
     # Label Description
-    labelDescription = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'})) #'Label Description', [Required("Label Description: This field is required.")])
+    label_description = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'})) #'Label Description', [Required("Label Description: This field is required.")])
 
     # Brand
     brand = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'brand'}))     # 'Brand', [Required("Brand: This field is required.")])
@@ -94,3 +94,16 @@ class ProductDetailForm(forms.Form):
 
     # External image URL (if hosted)
     website_url = forms.URLField(widget=forms.TextInput(attrs={'class':'form-control'}))   # URLField('', [Optional(), URL(require_tld=True, message=u'Invalid URL.')])
+
+    def is_valid(self):
+        '''
+        Vaidation function, we are not using djando validation
+        :return:
+        '''
+
+        # form_errors = check_values(template_name, form, **context)
+        # if form_errors is not None:
+        #     return form_errors
+        # Clean empty values from formfields
+
+        return True

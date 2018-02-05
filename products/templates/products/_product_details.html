@@ -13,11 +13,11 @@
 {% if product_package_level_id == 70 %}
     <div class="row">
         <div class="col-xs-9" style="padding-right: 3px">
-            {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.labelDescription label='Label Description' required=True only %}
+            {% include 'security/_macros.html' with func='render_field_with_errors4_help' field=form.label_description label='Label Description' required=True only %}
         </div>
     </div>
 {% else %}
-    <input type="hidden" name="labelDescription" id="labelDescription" value="{{ form.labelDescription.data }}"/>
+    <input type="hidden" name="label_description" id="label_description" value="{{ form.label_description.data }}"/>
 {% endif %}
 
 <input type="hidden" name="mark" id="mark" value="{{ form.mark.data }}"/>

@@ -1,6 +1,5 @@
 import copy
 import json
-from functools import update_wrapper
 from urllib.parse import quote as urlquote
 
 from django.contrib import admin

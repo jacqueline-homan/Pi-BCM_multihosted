@@ -94,7 +94,7 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         context = dict(
             # Include common variables for rendering the admin template.
             self.admin_site.each_context(request),
-            app_list=self.get_app_list(request, self.mo_apps, url_prefix='go_admin'),
+            app_list=self.get_app_list(request, self.mo_apps, url_prefix='mo_admin'),
         )
         return TemplateResponse(request, 'admin/mo_admin/index.html', context)
 

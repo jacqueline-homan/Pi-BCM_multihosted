@@ -1,15 +1,7 @@
-from collections import OrderedDict
-
 from django.contrib import admin
 from django.template.response import TemplateResponse
 from django.urls import path, reverse, NoReverseMatch
 
-from audit.models import Log
-from company_organisations.models import (
-    CompanyOrganisation, CompanyOrganisationOwner, CompanyOrganisationUser
-)
-from prefixes.models import Prefix
-from products.models import Product
 from member_organisations.models import (
     MemberOrganisation, MemberOrganisationOwner, MemberOrganisationUser
 )
@@ -70,7 +62,7 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         ]
 
         for app in app_list:
-            app_label = app.get('app_label', '').lower()
+            app_label = app.get('app_label', '')
             app['app_url'] = '#'  # prevent direct urls to base django admin
             for model in app.get('models', []):
                 model_name = model.get('object_name', '').lower()

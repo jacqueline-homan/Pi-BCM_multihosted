@@ -11,14 +11,14 @@
 
 {% block breadcrumbs %}
     <div class="breadcrumbs">
-        <a href="{% url 'admin:mo_admin' %}">{% trans 'Home' %}</a>
+        <a href="{% url 'admin:go_admin' %}">{% trans 'Home' %}</a>
         &rsaquo; <a href="{{ mo_admin_changelist_url }}">{{ opts.verbose_name_plural|capfirst }}</a>
         &rsaquo; {% trans 'Delete' %}
     </div>
 {% endblock %}
 
 {% block branding %}
-    <h1 id="site-name"><a href="{% url 'admin:mo_admin' %}">GO Admin</a></h1>
+    <h1 id="site-name"><a href="{% url 'admin:go_admin' %}">GO Admin</a></h1>
 {% endblock %}
 
 {% block content %}

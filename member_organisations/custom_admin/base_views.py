@@ -11,6 +11,7 @@ class BaseCustomAdminMethods(ModifiedMethodsModelAdmin):
     delete_confirmation_template = 'admin/{url_prefix}/delete_confirmation.html'
     delete_selected_confirmation_template = 'admin/{url_prefix}/delete_selected_confirmation.html'
     related_models_actions = None
+    raise_not_implemented_queryset_exception = True
 
     # it's possible to enable/disable links for related models here
     # by default all related model actions are disabled
@@ -76,7 +77,10 @@ class BaseCustomAdminMethods(ModifiedMethodsModelAdmin):
         if callable(getattr(self, method_name, None)):
             queryset = getattr(self, method_name)(request, queryset)
         else:
-            raise NotImplementedError(f'Not implemented "{self}.{method_name}()"')
+            if self.raise_not_implemented_queryset_exception:
+                # default behaviour, if a filter queryset isn't specified,
+                # raise errors with additional information
+                raise NotImplementedError(f'Not implemented "{self}.{method_name}()"')
         return queryset
 
     def get_changelist(self, request, **kwargs):

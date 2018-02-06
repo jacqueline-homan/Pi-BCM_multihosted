@@ -4,6 +4,7 @@ from company_organisations.models import CompanyOrganisation
 from member_organisations.models import MemberOrganisation
 from .target_market import TargetMarket
 from .country_of_origin import CountryOfOrigin
+from .language import Language
 
 
 class ServiceManager(models.Manager):
@@ -77,12 +78,52 @@ class Product(models.Model):
     # avail_barcode_width = models.CharField(75)
 
     country_of_origin = models.ForeignKey(CountryOfOrigin, null=True, on_delete=models.CASCADE )
-
     point_of_sale = models.CharField(max_length=75, null=True)
-
     website_url = models.CharField(max_length=256, null=True)
+    # enquiries = models.CharField(null=True)
 
-    target_market = models.ForeignKey(TargetMarket, null=True, on_delete=models.CASCADE )
+    is_bunit = models.BooleanField(default=False)
+    is_cunit = models.BooleanField(default=False)
+    is_dunit = models.BooleanField(default=False)
+    is_vunit = models.BooleanField(default=False)
+    is_iunit = models.BooleanField(default=False)
+    is_ounit = models.BooleanField(default=False)
+    # is_temp = models.BooleanField(default=False)
+    # is_active = models.BooleanField(default=False)
+    # is_public = models.BooleanField(default=False)
+
+    # pub_date = models.DateTimeField(null=True)  # AQ
+    # eff_date = models.DateTimeField(null=True)  # AR
+    # created = db.Column(db.DateTime, default=datetime.datetime.now)
+    # updated = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+
+    #  GDSN ADDITIONS
+    name_of_information_provider = models.CharField(max_length=100, null=True)
+    target_market = models.ForeignKey(TargetMarket, null=True, on_delete=models.CASCADE)
+    # start_availability = db.Column(db.DateTime)
+    # returnable = db.Column(db.Boolean, default=False)
+    # end_availability = db.Column(db.DateTime)
+    # last_change = db.Column(db.DateTime)
+    # brand_owner_gln = db.Column(db.String(13))
+    # brand_owner_name = db.Column(db.String(100))
+    # discontinued_date = db.Column(db.DateTime)
+
+    # GEPIR ADDITIONS
+    language = models.ForeignKey(Language, null=True, on_delete=models.CASCADE)
+    # role_of_information_provider_id = db.Column(db.Integer, db.ForeignKey("iprole.id"))
+    # role_of_information_provider = db.relationship("IPRole", foreign_keys=role_of_information_provider_id)
+    # additional_identification_of_ip = db.Column(db.String(100))
+    # manufacturer_gln = db.Column(db.String(13))
+    # manufacturer_name = db.Column(db.String(75))
+    # manufacturer_role_id = db.Column(db.Integer, db.ForeignKey("iprole.id"))
+    # manufacturer_role = db.relationship("IPRole", foreign_keys=manufacturer_role_id)
+    # manufacturer_additional_identification = db.Column(db.String(100))
+    # category_definition = db.Column(db.String(200))
+    # category_name = db.Column(db.String(75))
+    # additional_classification_code = db.Column(db.String(75))
+    # descriptive_size = db.Column(db.String(75))
+    # size_code = db.Column(db.String(25))
+    # is_price_on_pack = db.Column(db.Boolean, default=False)
 
     gs1_cloud_state = models.CharField(max_length=75, null=True)
 

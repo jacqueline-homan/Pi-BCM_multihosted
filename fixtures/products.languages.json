@@ -1,0 +1,26 @@
+[
+{
+    "model": "products.Language",
+    "pk": 1,
+    "fields": {
+        "name": "German",
+        "slug": "de"
+    }
+},
+{
+    "model": "products.Language",
+    "pk": 2,
+    "fields": {
+        "name": "French",
+        "slug": "fr"
+    }
+},
+{
+    "model": "products.Language",
+    "pk": 3,
+    "fields": {
+        "name": "Dutch",
+        "slug": "nl"
+    }
+}
+]

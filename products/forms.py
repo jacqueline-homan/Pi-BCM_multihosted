@@ -1,6 +1,7 @@
 from django import forms
 from .models.target_market import TargetMarket
 from .models.country_of_origin import CountryOfOrigin
+from .models.language import Language
 
 
 # used in /products/add or /products/<id>/edit
@@ -112,14 +113,15 @@ class ProductDetailForm(forms.Form):
 
     def set_countries_of_origin(self):
         rows = CountryOfOrigin.objects.order_by('name').all()
-        self.fields['country_of_origin'].choices = [(str(row.code), row.name) for row in rows]
+        self.fields['country_of_origin'].choices = [(row.code, row.name) for row in rows]
 
     def set_target_markets(self):
         rows = TargetMarket.objects.order_by('market').all()
-        self.fields['target_market'].choices = [(str(row.code), row.market) for row in rows]
+        self.fields['target_market'].choices = [(row.code, row.market) for row in rows]
 
     def set_languages(self):
-        pass
+        rows = Language.objects.order_by('name').all()
+        self.fields['language'].choices = [(row.slug, row.name) for row in rows]
 
     def set_weight_units(self):
         pass

@@ -291,6 +291,7 @@ def add_product_base_details(request):
     #form.image.data = session.get('image', settings.NO_IMAGE)
     form.set_countries_of_origin()
     form.set_target_markets()
+    form.set_languages()
     context['form'] = form
     return render(request, 'products/product_details_form.html', context=context)
 

@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from django.contrib import admin
+from django.contrib.auth.models import Group
 
 from audit.models import Log
 from member_organisations.models import (
@@ -14,8 +15,11 @@ from prefixes.models import Prefix
 from products.models import Product
 from . import go_views
 
-# {app_label: <list-of-mo-admin-views-for-required-models>}
 
+required_django_group, is_created = Group.objects.get_or_create(name='GO Admins')
+
+
+# {app_label: <list-of-mo-admin-views-for-required-models>}
 apps_config = OrderedDict([
     ('audit', [
         # we could override admin.site with a custom instance, it would bring standard urls
@@ -44,3 +48,9 @@ apps_config = OrderedDict([
         go_views.ProductCustomAdmin(Product, admin.site)
     ]),
 ])
+
+
+config = {
+    'required_django_group': required_django_group,
+    'apps_config': apps_config,
+}

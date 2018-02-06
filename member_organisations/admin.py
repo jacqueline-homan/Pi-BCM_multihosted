@@ -6,16 +6,12 @@ from member_organisations.models import (
     MemberOrganisation, MemberOrganisationOwner, MemberOrganisationUser
 )
 
-from .mo_admin.apps_config import apps_config as mo_apps_config
-from .go_admin.apps_config import apps_config as go_apps_config
+from .mo_admin.config import config as mo_admin_config
+from .go_admin.config import config as go_admin_config
 
 
 class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
     list_display = ('organization_user', 'organization')
-
-    # configuration ordered dicts
-    mo_apps = mo_apps_config
-    go_apps = go_apps_config
 
     def get_urls(self):
         urls = super().get_urls()
@@ -25,14 +21,14 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         ]
 
         # retrieving custom urls for all apps and all required models (go admin)
-        custom_urls += self.get_custom_urls_for_config(self.go_apps)
+        custom_urls += self.get_custom_urls_for_config(**mo_admin_config)
         # retrieving custom urls for all apps and all required models (mo admin)
-        custom_urls += self.get_custom_urls_for_config(self.mo_apps)
+        custom_urls += self.get_custom_urls_for_config(**go_admin_config)
 
         return custom_urls + urls  # urls order matters!
 
     @classmethod
-    def get_custom_urls_for_config(cls, apps_config):
+    def get_custom_urls_for_config(cls, apps_config, required_django_group):
         """
         Retrieving custom urls for all apps and all required models go admin
         """
@@ -40,7 +36,7 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         custom_urls = list()
         for app_label, admin_views in apps_config.items():
             for admin_view in admin_views:
-                custom_urls += admin_view.get_custom_urls()
+                custom_urls += admin_view.get_custom_urls(required_django_group)
 
         return custom_urls
 
@@ -86,7 +82,9 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         context = dict(
             # Include common variables for rendering the admin template.
             self.admin_site.each_context(request),
-            app_list=self.get_app_list(request, self.mo_apps, url_prefix='mo_admin'),
+            app_list=self.get_app_list(
+                request, mo_admin_config['apps_config'], url_prefix='mo_admin'
+            ),
         )
         return TemplateResponse(request, 'admin/mo_admin/index.html', context)
 
@@ -100,7 +98,9 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         context = dict(
             # Include common variables for rendering the admin template.
             self.admin_site.each_context(request),
-            app_list=self.get_app_list(request, self.go_apps, url_prefix='go_admin'),
+            app_list=self.get_app_list(
+                request, go_admin_config['apps_config'], url_prefix='go_admin'
+            ),
         )
         return TemplateResponse(request, 'admin/go_admin/index.html', context)
 

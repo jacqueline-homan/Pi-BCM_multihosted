@@ -1,6 +1,7 @@
 from django.urls import path, reverse
 
 from member_organisations.custom_admin.modified_model_admin import ModifiedMethodsModelAdmin
+from django.contrib.auth.decorators import user_passes_test
 
 
 class BaseCustomAdminMethods(ModifiedMethodsModelAdmin):
@@ -12,6 +13,7 @@ class BaseCustomAdminMethods(ModifiedMethodsModelAdmin):
     delete_selected_confirmation_template = 'admin/{url_prefix}/delete_selected_confirmation.html'
     related_models_actions = None
     raise_not_implemented_queryset_exception = True
+    required_django_group = None  # todo: implement group requirements
 
     # it's possible to enable/disable links for related models here
     # by default all related model actions are disabled
@@ -88,30 +90,33 @@ class BaseCustomAdminMethods(ModifiedMethodsModelAdmin):
         CustomAdminChangeList.url_prefix = self.url_prefix
         return CustomAdminChangeList
 
-    def get_custom_urls(self):
+    def get_custom_urls(self, required_django_group):
         app_label = self.app_label
         model_name = self.model_name
+
+        def check_permissions(user):
+            # user must have a required group for admin sections ("MO Admins", "GO Admins")
+            return user.groups.filter(name=required_django_group.name).exists()
 
         custom_urls = [
             path(
                 f'{self.url_prefix}/{app_label}/{model_name}/',
-                # wrap(self.mo_admin_changelist_view),
-                self.custom_admin_changelist_view,
+                user_passes_test(check_permissions)(self.custom_admin_changelist_view),
                 name=f'{self.url_prefix}_{app_label}_{model_name}_changelist'
             ),
             path(
                 f'{self.url_prefix}/{app_label}/{model_name}/add/',
-                self.custom_admin_add_view,
+                user_passes_test(check_permissions)(self.custom_admin_add_view),
                 name=f'{self.url_prefix}_{app_label}_{model_name}_add',
             ),
             path(
                 f'{self.url_prefix}/{app_label}/{model_name}/<path:object_id>/change/',
-                self.custom_admin_change_view,
+                user_passes_test(check_permissions)(self.custom_admin_change_view),
                 name=f'{self.url_prefix}_{app_label}_{model_name}_change',
             ),
             path(
                 f'{self.url_prefix}/{app_label}/{model_name}/<path:object_id>/delete/',
-                self.custom_admin_delete_view,
+                user_passes_test(check_permissions)(self.custom_admin_delete_view),
                 name=f'{self.url_prefix}_{app_label}_{model_name}_delete',
             ),
         ]
@@ -120,19 +125,19 @@ class BaseCustomAdminMethods(ModifiedMethodsModelAdmin):
 
     def get_urls_context(self, args=None):
         extra_context = dict()
-        extra_context['mo_admin_add_url'] = reverse(
+        extra_context['custom_admin_add_url'] = reverse(
             f'admin:{self.url_prefix}_{self.app_label}_{self.model_name}_add'
         )
-        extra_context['mo_admin_changelist_url'] = reverse(
+        extra_context['custom_admin_changelist_url'] = reverse(
             f'admin:{self.url_prefix}_{self.app_label}_{self.model_name}_changelist'
         )
 
         if args:
-            extra_context['mo_admin_delete_url'] = reverse(
+            extra_context['custom_admin_delete_url'] = reverse(
                 f'admin:{self.url_prefix}_{self.app_label}_{self.model_name}_delete',
                 args=args
             )
-            extra_context['mo_admin_change_url'] = reverse(
+            extra_context['custom_admin_change_url'] = reverse(
                 f'admin:{self.url_prefix}_{self.app_label}_{self.model_name}_change',
                 args=args
             )

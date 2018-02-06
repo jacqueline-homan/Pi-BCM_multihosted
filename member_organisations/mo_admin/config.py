@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from django.contrib import admin
+from django.contrib.auth.models import Group
 
 from audit.models import Log
 from company_organisations.models import (
@@ -9,6 +10,9 @@ from company_organisations.models import (
 from prefixes.models import Prefix
 from products.models import Product
 from . import mo_views
+
+
+required_django_group, is_created = Group.objects.get_or_create(name='MO Admins')
 
 # {app_label: <list-of-mo-admin-views-for-required-models>}
 apps_config = OrderedDict([
@@ -29,3 +33,8 @@ apps_config = OrderedDict([
         mo_views.ProductCustomAdmin(Product, admin.site)
     ]),
 ])
+
+config = {
+    'required_django_group': required_django_group,
+    'apps_config': apps_config,
+}

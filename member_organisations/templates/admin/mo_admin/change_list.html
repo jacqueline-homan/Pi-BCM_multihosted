@@ -49,8 +49,8 @@
                     {% if has_add_permission %}
                         <li>
 {#                            {% url cl.opts|admin_urlname:'add' as add_url %}#}
-                            <!-- mo admin: mo_admin_add_url -->
-                            <a href="{% add_preserved_filters mo_admin_add_url is_popup to_field %}" class="addlink">
+                            <!-- mo admin: custom_admin_add_url -->
+                            <a href="{% add_preserved_filters custom_admin_add_url is_popup to_field %}" class="addlink">
                                 {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
                             </a>
                         </li>

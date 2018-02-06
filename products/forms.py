@@ -2,6 +2,7 @@ from django import forms
 from .models.target_market import TargetMarket
 from .models.country_of_origin import CountryOfOrigin
 from .models.language import Language
+from .models.dimension_uom import DimensionUOM
 
 
 # used in /products/add or /products/<id>/edit
@@ -127,4 +128,7 @@ class ProductDetailForm(forms.Form):
         pass
 
     def set_dimension_units(self):
-        pass
+        rows = DimensionUOM.objects.order_by('uom').all()
+        self.fields['depth_uom'].choices = [(row.code, row.uom) for row in rows]
+        self.fields['width_uom'].choices = [(row.code, row.uom) for row in rows]
+        self.fields['height_uom'].choices = [(row.code, row.uom) for row in rows]

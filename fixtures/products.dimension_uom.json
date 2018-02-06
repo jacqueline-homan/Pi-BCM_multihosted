@@ -1,0 +1,47 @@
+[
+  {
+    "model": "products.DimensionUOM",
+    "pk": 1,
+    "fields": {
+      "uom": "Inches",
+      "abbr": "in",
+      "code": "INH"
+    }
+  },
+  {
+    "model": "products.DimensionUOM",
+    "pk": 2,
+    "fields": {
+      "uom": "Feet",
+      "abbr": "ft",
+      "code": "FOT"
+    }
+  },
+  {
+    "model": "products.DimensionUOM",
+    "pk": 3,
+    "fields": {
+      "uom": "Millimetres",
+      "abbr": "mm",
+      "code": "MMT"
+    }
+  },
+  {
+    "model": "products.DimensionUOM",
+    "pk": 4,
+    "fields": {
+      "uom": "Centimetres",
+      "abbr": "cm",
+      "code": "CMT"
+    }
+  },
+  {
+    "model": "products.DimensionUOM",
+    "pk": 5,
+    "fields": {
+      "uom": "Metres",
+      "abbr": "m",
+      "code": "MTR"
+    }
+  }
+]

@@ -1,26 +1,11 @@
-from django.contrib.auth.models import Group
-from django.test import TestCase, RequestFactory
-from django.urls import reverse
+from django.test import TestCase
 
-from BCM.models import Country
+from member_organisations.custom_admin.base_admin_tests import BaseAdminTestCase
 
 
-class PrefixesTestCase(TestCase):
-
-    fixtures = (
-        'fixtures/countries.json',
-        'fixtures/groups.json',
-    )
+class MOAdminTestCase(BaseAdminTestCase, TestCase):
+    url_prefix = 'mo_admin'
+    group_name = 'MO Admins'
 
     def setUp(self):
         super().setUp()
-
-    def test_group_autocreation(self):
-        # from django.db import connection
-        # a = connection.settings_dict
-        # print(f'test connections: {a}')
-        # url = reverse('admin:mo_admin')
-        # print(url)
-        # response = self.client.get(url)
-        # print(Group.objects.all())
-        pass

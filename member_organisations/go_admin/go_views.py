@@ -65,7 +65,7 @@ class PrefixCustomAdmin(BaseCustomAdminMethods):
 
 class ProductCustomAdmin(BaseCustomAdminMethods):
     url_prefix = URL_PREFIX
-    raise_not_implemented_queryset_exception = True
+    raise_not_implemented_queryset_exception = False
 
 
 class AuditLogCustomAdmin(BaseCustomAdminMethods):

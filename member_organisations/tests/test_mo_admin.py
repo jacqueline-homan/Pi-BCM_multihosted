@@ -9,3 +9,8 @@ class MOAdminTestCase(BaseAdminTestCase, TestCase):
 
     def setUp(self):
         super().setUp()
+
+    # todo: adding tests for all available models (add urls)
+    # todo: changing tests for all available models (change urls)
+    # todo: deleting tests for all available models (delete urls)
+    # todo: allowed/not allowed related model querysets/instances for admin-specific models

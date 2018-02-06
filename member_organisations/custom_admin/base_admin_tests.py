@@ -8,6 +8,11 @@ from member_organisations.admin import MemberOrganisationOwnerAdmin
 
 
 class BaseAdminTestCase(object):
+    """
+    We have to inherit from "object" here cause TestCase is something like singleton
+    and if TestCase will be specified here, base class will be tested too with errors
+    """
+
     url_prefix = None  # 'mo_admin' / 'go_admin'
     group_name = None  # 'MO Admins' / 'GO Admins'
     mo_admin_instance = None
@@ -71,7 +76,8 @@ class BaseAdminTestCase(object):
         Authorized and authenticated users must receive 200 http response
         """
 
-        result = self.client.login(**self.user_credentials)
+        login_result = self.client.login(**self.user_credentials)
+        self.assertTrue(login_result, 'Can\'t login to with test user credentials')
 
         url_names = self.get_urls_by_types(['changelist', 'add'])
         for url_name in url_names:

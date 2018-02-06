@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from company_organisations.models import CompanyOrganisation
 from member_organisations.models import MemberOrganisation
 from .target_market import TargetMarket
+from .country_of_origin import CountryOfOrigin
 
 
 class ServiceManager(models.Manager):
@@ -19,18 +20,18 @@ class Product(models.Model):
 
     company_organisation = models.ForeignKey(CompanyOrganisation, null=True, on_delete=models.PROTECT)
     member_organisation = models.ForeignKey(MemberOrganisation, null=True, on_delete=models.PROTECT)
-    company = models.CharField(max_length=100, null=True)
-
-
-    # organisation
-    #organisation = models.ForeignKey(Organisation, null=True, on_delete=models.PROTECT)
 
     # Product info
     gtin = models.CharField(max_length=14, default='', blank=True, db_index=True)
     gs1_company_prefix = models.CharField(max_length=75, default='', blank=True, db_index=True)
     gln_of_information_provider = models.CharField(max_length=75, null=True)
-
     category = models.CharField(max_length=75, null=True)
+    # attributes = models.CharField(max_length=500)
+    # label_description = models.CharField(max_length=500)
+
+    # barcodes = models.ForeignKey('Barcode')
+    # package_level = models.ForeignKey('PackageLevel')
+    # package_type = models.ForeignKey('PackageType', null=True)
 
     # Used for books with this mapping:
     description = models.CharField(max_length=200, null=True)  # functiona_name
@@ -40,19 +41,48 @@ class Product(models.Model):
     functional_name = models.CharField(max_length=75, null=True)  # title
     variant = models.CharField(max_length=75, null=True)  # info
 
-    website_url = models.CharField(max_length=256, null=True)
-
-    target_market = models.ForeignKey(TargetMarket, null=True, on_delete=models.PROTECT )
+    # use product.add_image(request.files['img']) method to save image
+    # image = models.CharField()
 
     # Dimensions
-    #height = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    depth = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    # depth_uom = models.ForeignKey('DimensionUOM')
+    width = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    # width_uom = models.ForeignKey("DimensionUOM")
+    height = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     # height_uom = models.ForeignKey("DimensionUOM")
 
-    #width = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    # width_uom = models.ForeignKey("DimensionUOM")
+    # Qualified  values
+    # net_content = models.CharField(max_length=10)
+    # net_content_uom = models.ForeignKey("NetContentUOM")
+    gross_weight = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    # gross_weight_uom = models.ForeignKey("WeightUOM")
+    net_weight = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    # net_weight_uom = models.ForeignKey("WeightUOM")
 
-    #depth = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    # depth_uom = models.ForeignKey('DimensionUOM')
+    # Company details
+    company = models.CharField(max_length=100, null=True)
+    # contact = models.CharField(max_length=50)
+    # address = models.CharField(max_length=200)
+    # company_phone = models.CharField(max_length=20)
+    # company_email = models.CharField(max_length=75)
+
+    # Auto fill fields - TODO
+    # bar_type = db.Column(
+    #    db.Enum('NULL', 'UPCA', 'EAN13', 'RSS14', 'ISBN13', 'ITF14', name='gs1ie_bc_kind'), default='EAN13',
+    #    nullable=False)
+
+    # bar_placement = models.CharField(50, default='/static/site/img/empty.gif')
+    # avail_barcode_height = models.CharField(75)
+    # avail_barcode_width = models.CharField(75)
+
+    country_of_origin = models.ForeignKey(CountryOfOrigin, null=True, on_delete=models.CASCADE )
+
+    point_of_sale = models.CharField(max_length=75, null=True)
+
+    website_url = models.CharField(max_length=256, null=True)
+
+    target_market = models.ForeignKey(TargetMarket, null=True, on_delete=models.CASCADE )
 
     gs1_cloud_state = models.CharField(max_length=75, null=True)
 

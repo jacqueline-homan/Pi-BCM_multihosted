@@ -1,5 +1,6 @@
 from django import forms
 from .models.target_market import TargetMarket
+from .models.country_of_origin import CountryOfOrigin
 
 
 # used in /products/add or /products/<id>/edit
@@ -110,12 +111,12 @@ class ProductDetailForm(forms.Form):
         return True
 
     def set_countries_of_origin(self):
-        pass
+        rows = CountryOfOrigin.objects.order_by('name').all()
+        self.fields['country_of_origin'].choices = [(str(row.code), row.name) for row in rows]
 
     def set_target_markets(self):
         rows = TargetMarket.objects.order_by('market').all()
-        for row in rows:
-            self.fields['target_market'].choices = [(str(row.code), row.market) for row in rows]
+        self.fields['target_market'].choices = [(str(row.code), row.market) for row in rows]
 
     def set_languages(self):
         pass

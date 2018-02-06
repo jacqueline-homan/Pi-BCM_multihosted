@@ -212,8 +212,6 @@ def add_product_base_details(request):
                 ### PRODUCT CREATE UI
                 product = Product(                gtin = gtin,
                                                  owner = request.user,
-                                # company_organisation = request.user.company_organisation,
-                                #  member_organisation = request.user.member_organisation,
                                                company = form.data['company'],
                                    # label_description = form.data['label_description'],
                                                  brand = form.data['brand'],
@@ -291,6 +289,7 @@ def add_product_base_details(request):
     #form.package_level_id.data = session.get('package_level')
     #form.package_type_id.data = session.get('package_type')
     #form.image.data = session.get('image', settings.NO_IMAGE)
+    form.set_countries_of_origin()
     form.set_target_markets()
     context['form'] = form
     return render(request, 'products/product_details_form.html', context=context)

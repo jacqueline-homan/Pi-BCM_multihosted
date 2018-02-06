@@ -1,15 +1,15 @@
 from django.urls import path, reverse
 
-from member_organisations.mo_admin.modified_mixins import ModifiedModelAdmin
+from member_organisations.custom_admin.modified_model_admin import ModifiedMethodsModelAdmin
 
 
-class BaseMOAdmin(ModifiedModelAdmin):
-    url_prefix = 'mo_admin'
-    change_list_template = 'admin/mo_admin/change_list.html'
-    change_form_template = 'admin/mo_admin/change_form.html'
-    add_form_template = 'admin/mo_admin/change_form.html'
-    delete_confirmation_template = 'admin/mo_admin/delete_confirmation.html'
-    delete_selected_confirmation_template = 'admin/mo_admin/delete_selected_confirmation.html'
+class BaseCustomAdminMethods(ModifiedMethodsModelAdmin):
+    url_prefix = '__URL_PREFIX_IS_NOT_DEFINED__'  # override this attribute in subclass
+    change_list_template = 'admin/{url_prefix}/change_list.html'
+    change_form_template = 'admin/{url_prefix}/change_form.html'
+    add_form_template = 'admin/{url_prefix}/change_form.html'
+    delete_confirmation_template = 'admin/{url_prefix}/delete_confirmation.html'
+    delete_selected_confirmation_template = 'admin/{url_prefix}/delete_selected_confirmation.html'
     related_models_actions = None
 
     # it's possible to enable/disable links for related models here
@@ -32,6 +32,13 @@ class BaseMOAdmin(ModifiedModelAdmin):
 
         if not self.related_models_actions:
             self.related_models_actions = dict()
+
+        # update django template paths with "self.url_prefix"
+        for attr_name in dir(self):
+            attr = getattr(self, attr_name)
+            if (attr_name.endswith('_template') and
+                    isinstance(attr, str) and attr.endswith('.html')):
+                setattr(self, attr_name, attr.format(url_prefix=self.url_prefix))
 
         self.app_label = self.model._meta.app_label
         self.model_name = self.model._meta.model_name
@@ -73,8 +80,9 @@ class BaseMOAdmin(ModifiedModelAdmin):
         return queryset
 
     def get_changelist(self, request, **kwargs):
-        from member_organisations.mo_admin.change_list import MOAdminChangeList
-        return MOAdminChangeList
+        from member_organisations.custom_admin.change_list import CustomAdminChangeList
+        CustomAdminChangeList.url_prefix = self.url_prefix
+        return CustomAdminChangeList
 
     def get_custom_urls(self):
         app_label = self.app_label
@@ -84,22 +92,22 @@ class BaseMOAdmin(ModifiedModelAdmin):
             path(
                 f'{self.url_prefix}/{app_label}/{model_name}/',
                 # wrap(self.mo_admin_changelist_view),
-                self.mo_admin_changelist_view,
+                self.custom_admin_changelist_view,
                 name=f'{self.url_prefix}_{app_label}_{model_name}_changelist'
             ),
             path(
                 f'{self.url_prefix}/{app_label}/{model_name}/add/',
-                self.mo_admin_add_view,
+                self.custom_admin_add_view,
                 name=f'{self.url_prefix}_{app_label}_{model_name}_add',
             ),
             path(
                 f'{self.url_prefix}/{app_label}/{model_name}/<path:object_id>/change/',
-                self.mo_admin_change_view,
+                self.custom_admin_change_view,
                 name=f'{self.url_prefix}_{app_label}_{model_name}_change',
             ),
             path(
                 f'{self.url_prefix}/{app_label}/{model_name}/<path:object_id>/delete/',
-                self.mo_admin_delete_view,
+                self.custom_admin_delete_view,
                 name=f'{self.url_prefix}_{app_label}_{model_name}_delete',
             ),
         ]
@@ -126,18 +134,18 @@ class BaseMOAdmin(ModifiedModelAdmin):
             )
         return extra_context
 
-    def mo_admin_changelist_view(self, request, extra_context=None):
+    def custom_admin_changelist_view(self, request, extra_context=None):
         extra_context = self.get_urls_context()
         return super().changelist_view(request, extra_context)
 
-    def mo_admin_add_view(self, request, form_url='', extra_context=None):
+    def custom_admin_add_view(self, request, form_url='', extra_context=None):
         extra_context = self.get_urls_context()
         return super().add_view(request, form_url, extra_context)
 
-    def mo_admin_change_view(self, request, object_id, form_url='', extra_context=None):
+    def custom_admin_change_view(self, request, object_id, form_url='', extra_context=None):
         extra_context = self.get_urls_context(args=(object_id, ))
         return super().change_view(request, object_id, form_url, extra_context)
 
-    def mo_admin_delete_view(self, request, object_id, extra_context=None):
+    def custom_admin_delete_view(self, request, object_id, extra_context=None):
         extra_context = self.get_urls_context(args=(object_id,))
         return super().delete_view(request, object_id, extra_context)

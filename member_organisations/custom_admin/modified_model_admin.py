@@ -18,7 +18,7 @@ IS_POPUP_VAR = '_popup'
 TO_FIELD_VAR = '_to_field'
 
 
-class ModifiedModelAdmin(admin.ModelAdmin):
+class ModifiedMethodsModelAdmin(admin.ModelAdmin):
     """
     this class contains modified methods which can't be easily overridden,
     common situation: a few lines have to be changed in the middle of a long method

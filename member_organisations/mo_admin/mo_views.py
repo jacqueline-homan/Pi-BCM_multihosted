@@ -1,15 +1,21 @@
 from member_organisations.mo_admin.helpers import get_allowed_mo_for_mo_admin
-from .base_views import BaseMOAdmin
+from member_organisations.custom_admin.base_views import BaseCustomAdminMethods
 
 
-class AuditLogMOAdmin(BaseMOAdmin):
+URL_PREFIX = 'mo_admin'
+
+
+class AuditLogCustomAdmin(BaseCustomAdminMethods):
+    url_prefix = URL_PREFIX
+
     @classmethod
     def get_audit__log_queryset(cls, request, queryset):
         # todo: there are no fields to filter this model!
         return queryset
 
 
-class CompanyOrganisationMOAdmin(BaseMOAdmin):
+class CompanyOrganisationCustomAdmin(BaseCustomAdminMethods):
+    url_prefix = URL_PREFIX
     related_models_actions = {
         # it's possible to enable/disable links for related models here
         'member_organisation': {
@@ -44,7 +50,8 @@ class CompanyOrganisationMOAdmin(BaseMOAdmin):
         return queryset
 
 
-class CompanyOrganisationOwnerMOAdmin(BaseMOAdmin):
+class CompanyOrganisationOwnerCustomAdmin(BaseCustomAdminMethods):
+    url_prefix = URL_PREFIX
 
     @classmethod
     def get_company_organisations__companyorganisationowner_queryset(cls, request, queryset):
@@ -86,7 +93,9 @@ class CompanyOrganisationOwnerMOAdmin(BaseMOAdmin):
         return queryset
 
 
-class CompanyOrganisationUserMOAdmin(BaseMOAdmin):
+class CompanyOrganisationUserCustomAdmin(BaseCustomAdminMethods):
+    url_prefix = URL_PREFIX
+
     @classmethod
     def get_company_organisations__companyorganisationuser_queryset(cls, request, queryset):
         """
@@ -113,7 +122,9 @@ class CompanyOrganisationUserMOAdmin(BaseMOAdmin):
         return queryset
 
 
-class PrefixMOAdmin(BaseMOAdmin):
+class PrefixCustomAdmin(BaseCustomAdminMethods):
+    url_prefix = URL_PREFIX
+
     @classmethod
     def get_prefixes__prefix_queryset(cls, request, queryset):
         allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
@@ -133,7 +144,9 @@ class PrefixMOAdmin(BaseMOAdmin):
         return queryset
 
 
-class ProductMOAdmin(BaseMOAdmin):
+class ProductCustomAdmin(BaseCustomAdminMethods):
+    url_prefix = URL_PREFIX
+
     @classmethod
     def get_products__product_queryset(cls, request, queryset):
         allowed_organizations = get_allowed_mo_for_mo_admin(request.user)

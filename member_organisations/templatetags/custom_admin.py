@@ -11,3 +11,12 @@ def mo_admin_submit_row(context):
     """
 
     return submit_row(context)
+
+
+@register.inclusion_tag('admin/go_admin/submit_line.html', takes_context=True)
+def go_admin_submit_row(context):
+    """
+    Override submit row to specify required mo_admin template
+    """
+
+    return submit_row(context)

@@ -90,13 +90,13 @@ class BaseCustomAdminMethods(ModifiedMethodsModelAdmin):
         CustomAdminChangeList.url_prefix = self.url_prefix
         return CustomAdminChangeList
 
-    def get_custom_urls(self, required_django_group):
+    def get_custom_urls(self, required_django_group_name):
         app_label = self.app_label
         model_name = self.model_name
 
         def check_permissions(user):
             # user must have a required group for admin sections ("MO Admins", "GO Admins")
-            return user.groups.filter(name=required_django_group.name).exists()
+            return user.groups.filter(name=required_django_group_name).exists()
 
         custom_urls = [
             path(

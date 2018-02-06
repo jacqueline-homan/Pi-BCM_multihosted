@@ -16,7 +16,9 @@ from products.models import Product
 from . import go_views
 
 
-required_django_group, is_created = Group.objects.get_or_create(name='GO Admins')
+def get_required_django_group():
+    required_django_group, is_created = Group.objects.get_or_create(name='GO Admins')
+    return required_django_group
 
 
 # {app_label: <list-of-mo-admin-views-for-required-models>}
@@ -49,8 +51,7 @@ apps_config = OrderedDict([
     ]),
 ])
 
-
 config = {
-    'required_django_group': required_django_group,
+    'required_django_group_name': 'GO Admins',
     'apps_config': apps_config,
 }

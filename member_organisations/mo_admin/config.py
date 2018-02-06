@@ -12,8 +12,6 @@ from products.models import Product
 from . import mo_views
 
 
-required_django_group, is_created = Group.objects.get_or_create(name='MO Admins')
-
 # {app_label: <list-of-mo-admin-views-for-required-models>}
 apps_config = OrderedDict([
     ('audit', [
@@ -35,6 +33,6 @@ apps_config = OrderedDict([
 ])
 
 config = {
-    'required_django_group': required_django_group,
+    'required_django_group_name': 'MO Admins',
     'apps_config': apps_config,
 }

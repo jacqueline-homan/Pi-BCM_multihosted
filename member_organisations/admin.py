@@ -14,6 +14,7 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
     list_display = ('organization_user', 'organization')
 
     def get_urls(self):
+
         urls = super().get_urls()
         custom_urls = [
             path('mo_admin/', self.mo_admin_index, name='mo_admin'),
@@ -28,7 +29,7 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         return custom_urls + urls  # urls order matters!
 
     @classmethod
-    def get_custom_urls_for_config(cls, apps_config, required_django_group):
+    def get_custom_urls_for_config(cls, apps_config, required_django_group_name):
         """
         Retrieving custom urls for all apps and all required models go admin
         """
@@ -36,7 +37,7 @@ class MemberOrganisationOwnerAdmin(admin.ModelAdmin):
         custom_urls = list()
         for app_label, admin_views in apps_config.items():
             for admin_view in admin_views:
-                custom_urls += admin_view.get_custom_urls(required_django_group)
+                custom_urls += admin_view.get_custom_urls(required_django_group_name)
 
         return custom_urls
 

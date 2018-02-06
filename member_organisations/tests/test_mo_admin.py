@@ -9,6 +9,7 @@ class PrefixesTestCase(TestCase):
 
     fixtures = (
         'fixtures/countries.json',
+        'fixtures/groups.json',
     )
 
     def setUp(self):

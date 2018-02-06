@@ -287,11 +287,12 @@ def add_product_base_details(request):
         # _add_field_descriptions(form)
         #form.process()
 
-    context['form'] = form
     #form.bar_placement.data = session.get('bar_placement')
     #form.package_level_id.data = session.get('package_level')
     #form.package_type_id.data = session.get('package_type')
     #form.image.data = session.get('image', settings.NO_IMAGE)
+    form.set_target_markets()
+    context['form'] = form
     return render(request, 'products/product_details_form.html', context=context)
 
 

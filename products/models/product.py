@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from company_organisations.models import CompanyOrganisation
 from member_organisations.models import MemberOrganisation
-#from uam.models import Organisation
+from .target_market import TargetMarket
 
 
 class ServiceManager(models.Manager):
@@ -41,6 +41,8 @@ class Product(models.Model):
     variant = models.CharField(max_length=75, null=True)  # info
 
     website_url = models.CharField(max_length=256, null=True)
+
+    target_market = models.ForeignKey(TargetMarket, null=True, on_delete=models.PROTECT )
 
     # Dimensions
     #height = models.DecimalField(max_digits=8, decimal_places=2, null=True)

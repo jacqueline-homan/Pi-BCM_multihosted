@@ -1,0 +1,1930 @@
+[
+  {
+    "fields": {
+      "code": "004",
+      "market": "AFGHANISTAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "code": "008",
+      "market": "ALBANIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "code": "012",
+      "market": "ALGERIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "code": "016",
+      "market": "AMERICAN SAMOA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "code": "020",
+      "market": "ANDORRA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "code": "024",
+      "market": "ANGOLA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "code": "660",
+      "market": "ANGUILLA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "code": "010",
+      "market": "ANTARCTICA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "code": "028",
+      "market": "ANTIGUA AND BARBUDA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "code": "032",
+      "market": "ARGENTINA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "code": "051",
+      "market": "ARMENIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "code": "533",
+      "market": "ARUBA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "code": "036",
+      "market": "AUSTRALIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "code": "040",
+      "market": "AUSTRIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "code": "031",
+      "market": "AZERBAIJAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "code": "044",
+      "market": "BAHAMAS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "code": "048",
+      "market": "BAHRAIN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "code": "050",
+      "market": "BANGLADESH"
+    },
+    "model": "products.TargetMarket",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "code": "052",
+      "market": "BARBADOS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "code": "112",
+      "market": "BELARUS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "code": "056",
+      "market": "BELGIUM"
+    },
+    "model": "products.TargetMarket",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "code": "084",
+      "market": "BELIZE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "code": "204",
+      "market": "BENIN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "code": "060",
+      "market": "BERMUDA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "code": "064",
+      "market": "BHUTAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "code": "068",
+      "market": "BOLIVIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 26
+  },
+  {
+    "fields": {
+      "code": "070",
+      "market": "BOSNIA AND HERZEGOVINA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "code": "072",
+      "market": "BOTSWANA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "code": "074",
+      "market": "BOUVET ISLAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 29
+  },
+  {
+    "fields": {
+      "code": "076",
+      "market": "BRAZIL"
+    },
+    "model": "products.TargetMarket",
+    "pk": 30
+  },
+  {
+    "fields": {
+      "code": "086",
+      "market": "BRITISH INDIAN OCEAN TERRITORY"
+    },
+    "model": "products.TargetMarket",
+    "pk": 31
+  },
+  {
+    "fields": {
+      "code": "096",
+      "market": "BRUNEI DARUSSALAM"
+    },
+    "model": "products.TargetMarket",
+    "pk": 32
+  },
+  {
+    "fields": {
+      "code": "100",
+      "market": "BULGARIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 33
+  },
+  {
+    "fields": {
+      "code": "854",
+      "market": "BURKINA FASO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 34
+  },
+  {
+    "fields": {
+      "code": "108",
+      "market": "BURUNDI"
+    },
+    "model": "products.TargetMarket",
+    "pk": 35
+  },
+  {
+    "fields": {
+      "code": "116",
+      "market": "CAMBODIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 36
+  },
+  {
+    "fields": {
+      "code": "120",
+      "market": "CAMEROON"
+    },
+    "model": "products.TargetMarket",
+    "pk": 37
+  },
+  {
+    "fields": {
+      "code": "124",
+      "market": "CANADA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 38
+  },
+  {
+    "fields": {
+      "code": "132",
+      "market": "CAPE VERDE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 39
+  },
+  {
+    "fields": {
+      "code": "136",
+      "market": "CAYMAN ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 40
+  },
+  {
+    "fields": {
+      "code": "140",
+      "market": "CENTRAL AFRICAN REPUBLIC"
+    },
+    "model": "products.TargetMarket",
+    "pk": 41
+  },
+  {
+    "fields": {
+      "code": "148",
+      "market": "CHAD"
+    },
+    "model": "products.TargetMarket",
+    "pk": 42
+  },
+  {
+    "fields": {
+      "code": "152",
+      "market": "CHILE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 43
+  },
+  {
+    "fields": {
+      "code": "156",
+      "market": "CHINA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 44
+  },
+  {
+    "fields": {
+      "code": "162",
+      "market": "CHRISTMAS ISLAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 45
+  },
+  {
+    "fields": {
+      "code": "166",
+      "market": "COCOS (KEELING) ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 46
+  },
+  {
+    "fields": {
+      "code": "170",
+      "market": "COLOMBIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 47
+  },
+  {
+    "fields": {
+      "code": "174",
+      "market": "COMOROS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 48
+  },
+  {
+    "fields": {
+      "code": "178",
+      "market": "CONGO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 49
+  },
+  {
+    "fields": {
+      "code": "184",
+      "market": "COOK ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 50
+  },
+  {
+    "fields": {
+      "code": "188",
+      "market": "COSTA RICA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 51
+  },
+  {
+    "fields": {
+      "code": "384",
+      "market": "COTE D'IVOIRE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 52
+  },
+  {
+    "fields": {
+      "code": "191",
+      "market": "CROATIA (local market: Hrvatska)"
+    },
+    "model": "products.TargetMarket",
+    "pk": 53
+  },
+  {
+    "fields": {
+      "code": "192",
+      "market": "CUBA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 54
+  },
+  {
+    "fields": {
+      "code": "196",
+      "market": "CYPRUS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 55
+  },
+  {
+    "fields": {
+      "code": "203",
+      "market": "CZECH REPUBLIC"
+    },
+    "model": "products.TargetMarket",
+    "pk": 56
+  },
+  {
+    "fields": {
+      "code": "208",
+      "market": "DENMARK"
+    },
+    "model": "products.TargetMarket",
+    "pk": 57
+  },
+  {
+    "fields": {
+      "code": "262",
+      "market": "DJIBOUTI"
+    },
+    "model": "products.TargetMarket",
+    "pk": 58
+  },
+  {
+    "fields": {
+      "code": "212",
+      "market": "DOMINICA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 59
+  },
+  {
+    "fields": {
+      "code": "214",
+      "market": "DOMINICAN REPUBLIC"
+    },
+    "model": "products.TargetMarket",
+    "pk": 60
+  },
+  {
+    "fields": {
+      "code": "626",
+      "market": "EAST TIMOR"
+    },
+    "model": "products.TargetMarket",
+    "pk": 61
+  },
+  {
+    "fields": {
+      "code": "218",
+      "market": "ECUADOR"
+    },
+    "model": "products.TargetMarket",
+    "pk": 62
+  },
+  {
+    "fields": {
+      "code": "818",
+      "market": "EGYPT"
+    },
+    "model": "products.TargetMarket",
+    "pk": 63
+  },
+  {
+    "fields": {
+      "code": "222",
+      "market": "EL SALVADOR"
+    },
+    "model": "products.TargetMarket",
+    "pk": 64
+  },
+  {
+    "fields": {
+      "code": "226",
+      "market": "EQUATORIAL GUINEA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 65
+  },
+  {
+    "fields": {
+      "code": "232",
+      "market": "ERITREA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 66
+  },
+  {
+    "fields": {
+      "code": "233",
+      "market": "ESTONIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 67
+  },
+  {
+    "fields": {
+      "code": "231",
+      "market": "ETHIOPIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 68
+  },
+  {
+    "fields": {
+      "code": "097",
+      "market": "EUROPEAN UNION"
+    },
+    "model": "products.TargetMarket",
+    "pk": 69
+  },
+  {
+    "fields": {
+      "code": "238",
+      "market": "FALKLAND ISLANDS (MALVINAS)"
+    },
+    "model": "products.TargetMarket",
+    "pk": 70
+  },
+  {
+    "fields": {
+      "code": "234",
+      "market": "FAROE ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 71
+  },
+  {
+    "fields": {
+      "code": "242",
+      "market": "FIJI"
+    },
+    "model": "products.TargetMarket",
+    "pk": 72
+  },
+  {
+    "fields": {
+      "code": "246",
+      "market": "FINLAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 73
+  },
+  {
+    "fields": {
+      "code": "250",
+      "market": "FRANCE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 74
+  },
+  {
+    "fields": {
+      "code": "254",
+      "market": "FRENCH GUIANA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 75
+  },
+  {
+    "fields": {
+      "code": "258",
+      "market": "FRENCH POLYNESIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 76
+  },
+  {
+    "fields": {
+      "code": "260",
+      "market": "FRENCH SOUTHERN TERRITORIES"
+    },
+    "model": "products.TargetMarket",
+    "pk": 77
+  },
+  {
+    "fields": {
+      "code": "266",
+      "market": "GABON"
+    },
+    "model": "products.TargetMarket",
+    "pk": 78
+  },
+  {
+    "fields": {
+      "code": "270",
+      "market": "GAMBIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 79
+  },
+  {
+    "fields": {
+      "code": "268",
+      "market": "GEORGIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 80
+  },
+  {
+    "fields": {
+      "code": "276",
+      "market": "GERMANY"
+    },
+    "model": "products.TargetMarket",
+    "pk": 81
+  },
+  {
+    "fields": {
+      "code": "288",
+      "market": "GHANA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 82
+  },
+  {
+    "fields": {
+      "code": "292",
+      "market": "GIBRALTAR"
+    },
+    "model": "products.TargetMarket",
+    "pk": 83
+  },
+  {
+    "fields": {
+      "code": "300",
+      "market": "GREECE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 84
+  },
+  {
+    "fields": {
+      "code": "304",
+      "market": "GREENLAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 85
+  },
+  {
+    "fields": {
+      "code": "308",
+      "market": "GRENADA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 86
+  },
+  {
+    "fields": {
+      "code": "312",
+      "market": "GUADELOUPE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 87
+  },
+  {
+    "fields": {
+      "code": "316",
+      "market": "GUAM"
+    },
+    "model": "products.TargetMarket",
+    "pk": 88
+  },
+  {
+    "fields": {
+      "code": "320",
+      "market": "GUATEMALA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 89
+  },
+  {
+    "fields": {
+      "code": "324",
+      "market": "GUINEA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 90
+  },
+  {
+    "fields": {
+      "code": "624",
+      "market": "GUINEA-BISSAU"
+    },
+    "model": "products.TargetMarket",
+    "pk": 91
+  },
+  {
+    "fields": {
+      "code": "328",
+      "market": "GUYANA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 92
+  },
+  {
+    "fields": {
+      "code": "332",
+      "market": "HAITI"
+    },
+    "model": "products.TargetMarket",
+    "pk": 93
+  },
+  {
+    "fields": {
+      "code": "334",
+      "market": "HEARD AND MC DONALD ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 94
+  },
+  {
+    "fields": {
+      "code": "340",
+      "market": "HONDURAS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 95
+  },
+  {
+    "fields": {
+      "code": "344",
+      "market": "HONG KONG"
+    },
+    "model": "products.TargetMarket",
+    "pk": 96
+  },
+  {
+    "fields": {
+      "code": "348",
+      "market": "HUNGARY"
+    },
+    "model": "products.TargetMarket",
+    "pk": 97
+  },
+  {
+    "fields": {
+      "code": "352",
+      "market": "ICELAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 98
+  },
+  {
+    "fields": {
+      "code": "356",
+      "market": "INDIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 99
+  },
+  {
+    "fields": {
+      "code": "360",
+      "market": "INDONESIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 100
+  },
+  {
+    "fields": {
+      "code": "364",
+      "market": "IRAN (ISLAMIC REPUBLIC OF)"
+    },
+    "model": "products.TargetMarket",
+    "pk": 101
+  },
+  {
+    "fields": {
+      "code": "368",
+      "market": "IRAQ"
+    },
+    "model": "products.TargetMarket",
+    "pk": 102
+  },
+  {
+    "fields": {
+      "code": "372",
+      "market": "IRELAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 103
+  },
+  {
+    "fields": {
+      "code": "376",
+      "market": "ISRAEL"
+    },
+    "model": "products.TargetMarket",
+    "pk": 104
+  },
+  {
+    "fields": {
+      "code": "380",
+      "market": "ITALY"
+    },
+    "model": "products.TargetMarket",
+    "pk": 105
+  },
+  {
+    "fields": {
+      "code": "388",
+      "market": "JAMAICA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 106
+  },
+  {
+    "fields": {
+      "code": "392",
+      "market": "JAPAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 107
+  },
+  {
+    "fields": {
+      "code": "400",
+      "market": "JORDAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 108
+  },
+  {
+    "fields": {
+      "code": "398",
+      "market": "KAZAKHSTAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 109
+  },
+  {
+    "fields": {
+      "code": "404",
+      "market": "KENYA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 110
+  },
+  {
+    "fields": {
+      "code": "296",
+      "market": "KIRIBATI"
+    },
+    "model": "products.TargetMarket",
+    "pk": 111
+  },
+  {
+    "fields": {
+      "code": "408",
+      "market": "KOREA, DEMOCRATIC PEOPLE'S REPUBLIC OF"
+    },
+    "model": "products.TargetMarket",
+    "pk": 112
+  },
+  {
+    "fields": {
+      "code": "410",
+      "market": "KOREA, REPUBLIC OF"
+    },
+    "model": "products.TargetMarket",
+    "pk": 113
+  },
+  {
+    "fields": {
+      "code": "414",
+      "market": "KUWAIT"
+    },
+    "model": "products.TargetMarket",
+    "pk": 114
+  },
+  {
+    "fields": {
+      "code": "417",
+      "market": "KYRGYZSTAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 115
+  },
+  {
+    "fields": {
+      "code": "418",
+      "market": "LAO PEOPLE'S DEMOCRATIC REPUBLIC"
+    },
+    "model": "products.TargetMarket",
+    "pk": 116
+  },
+  {
+    "fields": {
+      "code": "428",
+      "market": "LATVIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 117
+  },
+  {
+    "fields": {
+      "code": "422",
+      "market": "LEBANON"
+    },
+    "model": "products.TargetMarket",
+    "pk": 118
+  },
+  {
+    "fields": {
+      "code": "426",
+      "market": "LESOTHO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 119
+  },
+  {
+    "fields": {
+      "code": "430",
+      "market": "LIBERIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 120
+  },
+  {
+    "fields": {
+      "code": "434",
+      "market": "LIBYAN ARAB JAMAHIRIYA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 121
+  },
+  {
+    "fields": {
+      "code": "438",
+      "market": "LIECHTENSTEIN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 122
+  },
+  {
+    "fields": {
+      "code": "440",
+      "market": "LITHUANIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 123
+  },
+  {
+    "fields": {
+      "code": "442",
+      "market": "LUXEMBOURG"
+    },
+    "model": "products.TargetMarket",
+    "pk": 124
+  },
+  {
+    "fields": {
+      "code": "446",
+      "market": "MACAU"
+    },
+    "model": "products.TargetMarket",
+    "pk": 125
+  },
+  {
+    "fields": {
+      "code": "807",
+      "market": "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF"
+    },
+    "model": "products.TargetMarket",
+    "pk": 126
+  },
+  {
+    "fields": {
+      "code": "450",
+      "market": "MADAGASCAR"
+    },
+    "model": "products.TargetMarket",
+    "pk": 127
+  },
+  {
+    "fields": {
+      "code": "454",
+      "market": "MALAWI"
+    },
+    "model": "products.TargetMarket",
+    "pk": 128
+  },
+  {
+    "fields": {
+      "code": "458",
+      "market": "MALAYSIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 129
+  },
+  {
+    "fields": {
+      "code": "462",
+      "market": "MALDIVES"
+    },
+    "model": "products.TargetMarket",
+    "pk": 130
+  },
+  {
+    "fields": {
+      "code": "466",
+      "market": "MALI"
+    },
+    "model": "products.TargetMarket",
+    "pk": 131
+  },
+  {
+    "fields": {
+      "code": "470",
+      "market": "MALTA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 132
+  },
+  {
+    "fields": {
+      "code": "584",
+      "market": "MARSHALL ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 133
+  },
+  {
+    "fields": {
+      "code": "474",
+      "market": "MARTINIQUE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 134
+  },
+  {
+    "fields": {
+      "code": "478",
+      "market": "MAURITANIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 135
+  },
+  {
+    "fields": {
+      "code": "480",
+      "market": "MAURITIUS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 136
+  },
+  {
+    "fields": {
+      "code": "175",
+      "market": "MAYOTTE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 137
+  },
+  {
+    "fields": {
+      "code": "484",
+      "market": "MEXICO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 138
+  },
+  {
+    "fields": {
+      "code": "583",
+      "market": "MICRONESIA (Federated States Of)"
+    },
+    "model": "products.TargetMarket",
+    "pk": 139
+  },
+  {
+    "fields": {
+      "code": "498",
+      "market": "MOLDOVA, REPUBLIC OF"
+    },
+    "model": "products.TargetMarket",
+    "pk": 140
+  },
+  {
+    "fields": {
+      "code": "492",
+      "market": "MONACO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 141
+  },
+  {
+    "fields": {
+      "code": "496",
+      "market": "MONGOLIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 142
+  },
+  {
+    "fields": {
+      "code": "500",
+      "market": "MONTSERRAT"
+    },
+    "model": "products.TargetMarket",
+    "pk": 143
+  },
+  {
+    "fields": {
+      "code": "504",
+      "market": "MOROCCO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 144
+  },
+  {
+    "fields": {
+      "code": "508",
+      "market": "MOZAMBIQUE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 145
+  },
+  {
+    "fields": {
+      "code": "104",
+      "market": "MYANMAR"
+    },
+    "model": "products.TargetMarket",
+    "pk": 146
+  },
+  {
+    "fields": {
+      "code": "516",
+      "market": "NAMIBIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 147
+  },
+  {
+    "fields": {
+      "code": "520",
+      "market": "NAURU"
+    },
+    "model": "products.TargetMarket",
+    "pk": 148
+  },
+  {
+    "fields": {
+      "code": "524",
+      "market": "NEPAL"
+    },
+    "model": "products.TargetMarket",
+    "pk": 149
+  },
+  {
+    "fields": {
+      "code": "528",
+      "market": "NETHERLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 150
+  },
+  {
+    "fields": {
+      "code": "530",
+      "market": "NETHERLANDS ANTILLES"
+    },
+    "model": "products.TargetMarket",
+    "pk": 151
+  },
+  {
+    "fields": {
+      "code": "540",
+      "market": "NEW CALEDONIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 152
+  },
+  {
+    "fields": {
+      "code": "554",
+      "market": "NEW ZEALAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 153
+  },
+  {
+    "fields": {
+      "code": "558",
+      "market": "NICARAGUA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 154
+  },
+  {
+    "fields": {
+      "code": "562",
+      "market": "NIGER"
+    },
+    "model": "products.TargetMarket",
+    "pk": 155
+  },
+  {
+    "fields": {
+      "code": "566",
+      "market": "NIGERIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 156
+  },
+  {
+    "fields": {
+      "code": "570",
+      "market": "NIUE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 157
+  },
+  {
+    "fields": {
+      "code": "574",
+      "market": "NORFOLK ISLAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 158
+  },
+  {
+    "fields": {
+      "code": "580",
+      "market": "NORTHERN MARIANA ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 159
+  },
+  {
+    "fields": {
+      "code": "578",
+      "market": "NORWAY"
+    },
+    "model": "products.TargetMarket",
+    "pk": 160
+  },
+  {
+    "fields": {
+      "code": "512",
+      "market": "OMAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 161
+  },
+  {
+    "fields": {
+      "code": "586",
+      "market": "PAKISTAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 162
+  },
+  {
+    "fields": {
+      "code": "585",
+      "market": "PALAU"
+    },
+    "model": "products.TargetMarket",
+    "pk": 163
+  },
+  {
+    "fields": {
+      "code": "591",
+      "market": "PANAMA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 164
+  },
+  {
+    "fields": {
+      "code": "598",
+      "market": "PAPUA NEW GUINEA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 165
+  },
+  {
+    "fields": {
+      "code": "600",
+      "market": "PARAGUAY"
+    },
+    "model": "products.TargetMarket",
+    "pk": 166
+  },
+  {
+    "fields": {
+      "code": "604",
+      "market": "PERU"
+    },
+    "model": "products.TargetMarket",
+    "pk": 167
+  },
+  {
+    "fields": {
+      "code": "608",
+      "market": "PHILIPPINES"
+    },
+    "model": "products.TargetMarket",
+    "pk": 168
+  },
+  {
+    "fields": {
+      "code": "612",
+      "market": "PITCAIRN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 169
+  },
+  {
+    "fields": {
+      "code": "616",
+      "market": "POLAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 170
+  },
+  {
+    "fields": {
+      "code": "620",
+      "market": "PORTUGAL"
+    },
+    "model": "products.TargetMarket",
+    "pk": 171
+  },
+  {
+    "fields": {
+      "code": "630",
+      "market": "PUERTO RICO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 172
+  },
+  {
+    "fields": {
+      "code": "634",
+      "market": "QATAR"
+    },
+    "model": "products.TargetMarket",
+    "pk": 173
+  },
+  {
+    "fields": {
+      "code": "499",
+      "market": "REPUBLIC_OF_MONTENEGRO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 174
+  },
+  {
+    "fields": {
+      "code": "638",
+      "market": "REUNION"
+    },
+    "model": "products.TargetMarket",
+    "pk": 175
+  },
+  {
+    "fields": {
+      "code": "642",
+      "market": "ROMANIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 176
+  },
+  {
+    "fields": {
+      "code": "643",
+      "market": "RUSSIAN FEDERATION"
+    },
+    "model": "products.TargetMarket",
+    "pk": 177
+  },
+  {
+    "fields": {
+      "code": "646",
+      "market": "RWANDA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 178
+  },
+  {
+    "fields": {
+      "code": "659",
+      "market": "SAINT KITTS AND NEVIS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 179
+  },
+  {
+    "fields": {
+      "code": "662",
+      "market": "SAINT LUCIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 180
+  },
+  {
+    "fields": {
+      "code": "670",
+      "market": "SAINT VINCENT AND THE GRENADINES"
+    },
+    "model": "products.TargetMarket",
+    "pk": 181
+  },
+  {
+    "fields": {
+      "code": "652",
+      "market": "SAINT_BARTHELEMY"
+    },
+    "model": "products.TargetMarket",
+    "pk": 182
+  },
+  {
+    "fields": {
+      "code": "882",
+      "market": "SAMOA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 183
+  },
+  {
+    "fields": {
+      "code": "674",
+      "market": "SAN MARINO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 184
+  },
+  {
+    "fields": {
+      "code": "678",
+      "market": "SAO TOME AND PRINCIPE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 185
+  },
+  {
+    "fields": {
+      "code": "682",
+      "market": "SAUDI ARABIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 186
+  },
+  {
+    "fields": {
+      "code": "686",
+      "market": "SENEGAL"
+    },
+    "model": "products.TargetMarket",
+    "pk": 187
+  },
+  {
+    "fields": {
+      "code": "688",
+      "market": "SERBIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 188
+  },
+  {
+    "fields": {
+      "code": "690",
+      "market": "SEYCHELLES"
+    },
+    "model": "products.TargetMarket",
+    "pk": 189
+  },
+  {
+    "fields": {
+      "code": "694",
+      "market": "SIERRA LEONE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 190
+  },
+  {
+    "fields": {
+      "code": "702",
+      "market": "SINGAPORE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 191
+  },
+  {
+    "fields": {
+      "code": "703",
+      "market": "SLOVAKIA (Slovak Republic)"
+    },
+    "model": "products.TargetMarket",
+    "pk": 192
+  },
+  {
+    "fields": {
+      "code": "705",
+      "market": "SLOVENIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 193
+  },
+  {
+    "fields": {
+      "code": "090",
+      "market": "SOLOMON ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 194
+  },
+  {
+    "fields": {
+      "code": "706",
+      "market": "SOMALIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 195
+  },
+  {
+    "fields": {
+      "code": "710",
+      "market": "SOUTH AFRICA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 196
+  },
+  {
+    "fields": {
+      "code": "239",
+      "market": "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 197
+  },
+  {
+    "fields": {
+      "code": "724",
+      "market": "SPAIN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 198
+  },
+  {
+    "fields": {
+      "code": "144",
+      "market": "SRI LANKA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 199
+  },
+  {
+    "fields": {
+      "code": "654",
+      "market": "ST. HELENA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 200
+  },
+  {
+    "fields": {
+      "code": "666",
+      "market": "ST. PIERRE AND MIQUELON"
+    },
+    "model": "products.TargetMarket",
+    "pk": 201
+  },
+  {
+    "fields": {
+      "code": "736",
+      "market": "SUDAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 202
+  },
+  {
+    "fields": {
+      "code": "740",
+      "market": "SURINAME"
+    },
+    "model": "products.TargetMarket",
+    "pk": 203
+  },
+  {
+    "fields": {
+      "code": "744",
+      "market": "SVALBARD AND JAN MAYEN ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 204
+  },
+  {
+    "fields": {
+      "code": "748",
+      "market": "SWAZILAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 205
+  },
+  {
+    "fields": {
+      "code": "752",
+      "market": "SWEDEN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 206
+  },
+  {
+    "fields": {
+      "code": "756",
+      "market": "SWITZERLAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 207
+  },
+  {
+    "fields": {
+      "code": "760",
+      "market": "SYRIAN ARAB REPUBLIC"
+    },
+    "model": "products.TargetMarket",
+    "pk": 208
+  },
+  {
+    "fields": {
+      "code": "158",
+      "market": "TAIWAN, Province Of China"
+    },
+    "model": "products.TargetMarket",
+    "pk": 209
+  },
+  {
+    "fields": {
+      "code": "762",
+      "market": "TAJIKISTAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 210
+  },
+  {
+    "fields": {
+      "code": "834",
+      "market": "TANZANIA, UNITED REPUBLIC OF"
+    },
+    "model": "products.TargetMarket",
+    "pk": 211
+  },
+  {
+    "fields": {
+      "code": "764",
+      "market": "THAILAND"
+    },
+    "model": "products.TargetMarket",
+    "pk": 212
+  },
+  {
+    "fields": {
+      "code": "768",
+      "market": "TOGO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 213
+  },
+  {
+    "fields": {
+      "code": "772",
+      "market": "TOKELAU"
+    },
+    "model": "products.TargetMarket",
+    "pk": 214
+  },
+  {
+    "fields": {
+      "code": "776",
+      "market": "TONGA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 215
+  },
+  {
+    "fields": {
+      "code": "780",
+      "market": "TRINIDAD AND TOBAGO"
+    },
+    "model": "products.TargetMarket",
+    "pk": 216
+  },
+  {
+    "fields": {
+      "code": "788",
+      "market": "TUNISIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 217
+  },
+  {
+    "fields": {
+      "code": "792",
+      "market": "TURKEY"
+    },
+    "model": "products.TargetMarket",
+    "pk": 218
+  },
+  {
+    "fields": {
+      "code": "795",
+      "market": "TURKMENISTAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 219
+  },
+  {
+    "fields": {
+      "code": "796",
+      "market": "TURKS AND CAICOS ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 220
+  },
+  {
+    "fields": {
+      "code": "798",
+      "market": "TUVALU"
+    },
+    "model": "products.TargetMarket",
+    "pk": 221
+  },
+  {
+    "fields": {
+      "code": "800",
+      "market": "UGANDA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 222
+  },
+  {
+    "fields": {
+      "code": "804",
+      "market": "UKRAINE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 223
+  },
+  {
+    "fields": {
+      "code": "784",
+      "market": "UNITED ARAB EMIRATES"
+    },
+    "model": "products.TargetMarket",
+    "pk": 224
+  },
+  {
+    "fields": {
+      "code": "826",
+      "market": "UNITED KINGDOM"
+    },
+    "model": "products.TargetMarket",
+    "pk": 225
+  },
+  {
+    "fields": {
+      "code": "840",
+      "market": "UNITED STATES"
+    },
+    "model": "products.TargetMarket",
+    "pk": 226
+  },
+  {
+    "fields": {
+      "code": "581",
+      "market": "UNITED STATES MINOR OUTLYING ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 227
+  },
+  {
+    "fields": {
+      "code": "858",
+      "market": "URUGUAY"
+    },
+    "model": "products.TargetMarket",
+    "pk": 228
+  },
+  {
+    "fields": {
+      "code": "860",
+      "market": "UZBEKISTAN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 229
+  },
+  {
+    "fields": {
+      "code": "548",
+      "market": "VANUATU"
+    },
+    "model": "products.TargetMarket",
+    "pk": 230
+  },
+  {
+    "fields": {
+      "code": "336",
+      "market": "VATICAN CITY STATE (HOLY SEE)"
+    },
+    "model": "products.TargetMarket",
+    "pk": 231
+  },
+  {
+    "fields": {
+      "code": "862",
+      "market": "VENEZUELA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 232
+  },
+  {
+    "fields": {
+      "code": "704",
+      "market": "VIET NAM"
+    },
+    "model": "products.TargetMarket",
+    "pk": 233
+  },
+  {
+    "fields": {
+      "code": "092",
+      "market": "VIRGIN ISLANDS (BRITISH)"
+    },
+    "model": "products.TargetMarket",
+    "pk": 234
+  },
+  {
+    "fields": {
+      "code": "850",
+      "market": "VIRGIN ISLANDS (U.S.)"
+    },
+    "model": "products.TargetMarket",
+    "pk": 235
+  },
+  {
+    "fields": {
+      "code": "876",
+      "market": "WALLIS AND FUTUNA ISLANDS"
+    },
+    "model": "products.TargetMarket",
+    "pk": 236
+  },
+  {
+    "fields": {
+      "code": "732",
+      "market": "WESTERN SAHARA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 237
+  },
+  {
+    "fields": {
+      "code": "887",
+      "market": "YEMEN"
+    },
+    "model": "products.TargetMarket",
+    "pk": 238
+  },
+  {
+    "fields": {
+      "code": "180",
+      "market": "ZAIRE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 239
+  },
+  {
+    "fields": {
+      "code": "894",
+      "market": "ZAMBIA"
+    },
+    "model": "products.TargetMarket",
+    "pk": 240
+  },
+  {
+    "fields": {
+      "code": "716",
+      "market": "ZIMBABWE"
+    },
+    "model": "products.TargetMarket",
+    "pk": 241
+  }
+]

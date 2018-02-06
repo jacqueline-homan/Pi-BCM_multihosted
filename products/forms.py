@@ -1,4 +1,5 @@
 from django import forms
+from .models.target_market import TargetMarket
 
 
 # used in /products/add or /products/<id>/edit
@@ -107,3 +108,20 @@ class ProductDetailForm(forms.Form):
         # Clean empty values from formfields
 
         return True
+
+    def set_countries_of_origin(self):
+        pass
+
+    def set_target_markets(self):
+        rows = TargetMarket.objects.order_by('market').all()
+        for row in rows:
+            self.fields['target_market'].choices = [(str(row.code), row.market) for row in rows]
+
+    def set_languages(self):
+        pass
+
+    def set_weight_units(self):
+        pass
+
+    def set_dimension_units(self):
+        pass

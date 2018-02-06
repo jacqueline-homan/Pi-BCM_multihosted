@@ -1,0 +1,56 @@
+[
+  {
+    "model": "products.WeightUOM",
+    "pk": 1,
+    "fields": {
+      "uom": "Ounces",
+      "abbr": "oz",
+      "code": "ONZ"
+    }
+  },
+  {
+    "model": "products.WeightUOM",
+    "pk": 2,
+    "fields": {
+      "uom": "Pounds",
+      "abbr": "lb",
+      "code": "LBR"
+    }
+  },
+  {
+    "model": "products.WeightUOM",
+    "pk": 3,
+    "fields": {
+      "uom": "Grams",
+      "abbr": "gr",
+      "code": "GRM"
+    }
+  },
+  {
+    "model": "products.WeightUOM",
+    "pk": 4,
+    "fields": {
+      "uom": "Kilograms",
+      "abbr": "Kgr",
+      "code": "KGM"
+    }
+  },
+  {
+    "model": "products.WeightUOM",
+    "pk": 5,
+    "fields": {
+      "uom": "Milligrams",
+      "abbr": "mgr",
+      "code": "MGM"
+    }
+  },
+  {
+    "model": "products.WeightUOM",
+    "pk": 6,
+    "fields": {
+      "uom": "Actual Ton",
+      "abbr": "ton",
+      "code": "TNE"
+    }
+  }
+]

@@ -292,6 +292,7 @@ def add_product_base_details(request):
     form.set_countries_of_origin()
     form.set_target_markets()
     form.set_languages()
+    form.set_weight_units()
     form.set_dimension_units()
     context['form'] = form
     return render(request, 'products/product_details_form.html', context=context)

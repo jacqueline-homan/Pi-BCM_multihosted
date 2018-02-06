@@ -6,6 +6,7 @@ from .target_market import TargetMarket
 from .country_of_origin import CountryOfOrigin
 from .language import Language
 from .dimension_uom import DimensionUOM
+from .weight_uom import WeightUOM
 
 
 class ServiceManager(models.Manager):
@@ -58,9 +59,9 @@ class Product(models.Model):
     # net_content = models.CharField(max_length=10)
     # net_content_uom = models.ForeignKey("NetContentUOM")
     gross_weight = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    # gross_weight_uom = models.ForeignKey("WeightUOM")
+    gross_weight_uom = models.ForeignKey(WeightUOM, null=True, on_delete=models.CASCADE, related_name='products_grossweight')
     net_weight = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    # net_weight_uom = models.ForeignKey("WeightUOM")
+    net_weight_uom = models.ForeignKey(WeightUOM, null=True, on_delete=models.CASCADE, related_name='products_netweight')
 
     # Company details
     company = models.CharField(max_length=100, null=True)

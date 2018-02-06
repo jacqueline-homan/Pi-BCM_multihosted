@@ -3,6 +3,7 @@ from .models.target_market import TargetMarket
 from .models.country_of_origin import CountryOfOrigin
 from .models.language import Language
 from .models.dimension_uom import DimensionUOM
+from .models.weight_uom import WeightUOM
 
 
 # used in /products/add or /products/<id>/edit
@@ -125,7 +126,9 @@ class ProductDetailForm(forms.Form):
         self.fields['language'].choices = [(row.slug, row.name) for row in rows]
 
     def set_weight_units(self):
-        pass
+        rows = WeightUOM.objects.order_by('pk').all()
+        self.fields['gross_weight_uom'].choices = [(row.code, row.uom) for row in rows]
+        self.fields['net_weight_uom'].choices = [(row.code, row.uom) for row in rows]
 
     def set_dimension_units(self):
         rows = DimensionUOM.objects.order_by('uom').all()

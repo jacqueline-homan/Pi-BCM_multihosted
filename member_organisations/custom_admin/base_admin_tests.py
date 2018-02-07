@@ -21,7 +21,7 @@ class BaseAdminTestCase(object):
     group = None
 
     fixtures = (
-        'fixtures/countries.json',
+        'fixtures/bcm.json',
         'fixtures/groups.json',
     )
 
@@ -56,6 +56,14 @@ class BaseAdminTestCase(object):
                 url_names.append(reverse(f'admin:{url.name}'))
 
         return url_names
+
+    def get_url_for_model_instance(self, model_instance, action):
+        app_label = model_instance._meta.model._meta.app_label
+        model_name = model_instance._meta.model._meta.model_name
+
+        return (reverse(
+                f'admin:{self.url_prefix}_{app_label}_{model_name}_{action}',
+                args=(model_instance.pk,)))
 
     def test_changelist_add_urls_non_authorized_user(self):
         """

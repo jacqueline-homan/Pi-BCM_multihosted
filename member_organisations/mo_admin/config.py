@@ -1,7 +1,6 @@
 from collections import OrderedDict
 
 from django.contrib import admin
-from django.contrib.auth.models import Group
 
 from audit.models import Log
 from company_organisations.models import (

@@ -1,5 +1,9 @@
+from django.contrib.admin import AdminSite
 from django.test import TestCase
+from django.urls import reverse
+
 from member_organisations.custom_admin.base_admin_tests import BaseAdminTestCase
+from member_organisations.mo_admin.mo_views import CompanyOrganisationCustomAdmin
 
 from member_organisations.models import (
     MemberOrganisation, MemberOrganisationUser, MemberOrganisationOwner
@@ -75,7 +79,7 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
         """
 
         login_result = self.client.login(**self.user_credentials)
-        self.assertTrue(login_result, 'Can\'t login to with test user credentials')
+        self.assertTrue(login_result, 'Can\'t login with test user credentials')
 
         co_url = self.get_url_for_model(
             CompanyOrganisation, 'change', self.model_instances['co1'].pk
@@ -111,7 +115,7 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
         # co_form.save()
 
         login_result = self.client.login(**self.user_credentials)
-        self.assertTrue(login_result, 'Can\'t login to with test user credentials')
+        self.assertTrue(login_result, 'Can\'t login with test user credentials')
 
         co_fields = self.get_force_random_fields_for_mixer(
             CompanyOrganisation,
@@ -164,7 +168,7 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
         """
 
         login_result = self.client.login(**self.user_credentials)
-        self.assertTrue(login_result, 'Can\'t login to with test user credentials')
+        self.assertTrue(login_result, 'Can\'t login with test user credentials')
 
         test_co = self.model_instances['co1']
         post_data = self.model_instance_to_post_data(test_co)
@@ -201,7 +205,7 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
         """
 
         login_result = self.client.login(**self.user_credentials)
-        self.assertTrue(login_result, 'Can\'t login to with test user credentials')
+        self.assertTrue(login_result, 'Can\'t login with test user credentials')
 
         test_co = self.model_instances['co1']
         post_data = {'post': 'yes'}
@@ -238,3 +242,34 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
             ).exists(),
             f'CompanyOrganisation "{test_co}" must be removed here already'
         )
+
+    def test_co_allowed_related_models(self):
+        login_result = self.client.login(**self.user_credentials)
+        self.assertTrue(login_result, 'Can\'t login with test user credentials')
+
+        # alternative WRONG way to test without TestClient requests
+        # This case django admin will use DEFAULT DATABASE (NOT A TEST ONE)
+        request = self.request_factory.get(reverse('admin:mo_admin'))
+        request.user = self.user
+        co_mo_admin_view = CompanyOrganisationCustomAdmin(CompanyOrganisation, AdminSite())
+        co_form_class = co_mo_admin_view.get_form(request)
+
+        co_form = co_form_class(data=None)
+        pass
+        # co_form.is_valid()
+        # co_form.save()
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        

@@ -30,46 +30,87 @@ class ProductDetailForm(forms.Form):
     package_type_id = forms.HiddenInput()
 
     # Company Name
-    company = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class':'form-control'}))
+    company = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=False
+    )
 
     # Label Description
-    label_description = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'})) #'Label Description', [Required("Label Description: This field is required.")])
+    label_description = forms.CharField( # 'Label Description', [Required("Label Description: This field is required.")])
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=True
+    )
+
 
     # Brand
-    brand = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'brand'}))     # 'Brand', [Required("Brand: This field is required.")])
+    brand = forms.CharField( # 'Brand', [Required("Brand: This field is required.")])
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'brand'}),
+        required=True
+    )
+
 
     # Sub brand
-    sub_brand = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'sub_brand'}))
+    sub_brand = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'sub_brand'}),
+        required=False
+    )
 
     # Product Type/Functional Name
-    functional_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'functional_name'}))   # TextField('Product Type/Functional Name:', [Required("Product Type/Functional Name: This field is required.")])
+    functional_name = forms.CharField( # TextField('Product Type/Functional Name:', [Required("Product Type/Functional Name: This field is required.")])
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'functional_name'}),
+        required=True
+    )
 
-    # Sub brand
-    variant = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'variant'}))
+    # Variant
+    variant = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'variant'}),
+        required=False
+    )
 
     # Product/Trade Item Description
-    description = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'description'})) # 'Product/Trade Item Description', [Required("Product/Trade Item Description: This field is required.")])
+    description = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'description'}),
+        required=True
+    )
 
     # Global Product Classification
-    category = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'})) # [Required("GPC: This field is required."), Regexp('^[0-9]{8}$', message="Should be 8 digits."), check_category])
+    category = forms.CharField( # [Required("GPC: This field is required."), Regexp('^[0-9]{8}$', message="Should be 8 digits."), check_category])
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=True
+    )
 
     # Company/Internal Product Code or SKU
-    sku = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    sku = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=False
+    )
 
     # Country Of Origin
-    country_of_origin = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control', 'id':'country_of_origin'}))
+    country_of_origin = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'country_of_origin'})
+    )
 
     # Target Market
-    target_market = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control', 'id':'target_market'}))
+    target_market = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'target_market'})
+    )
 
     # Language
-    language = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control', 'id':'language'}))
+    language = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'language'})
+    )
 
     # GLN of Information provider
-    gln_of_information_provider = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'gln_of_information_provider'})) #'', [Regexp('^[0-9]{13}$', message="Should be 13 digits."), check_gln])
+    gln_of_information_provider = forms.CharField( #'', [Regexp('^[0-9]{13}$', message="Should be 13 digits."), check_gln])
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'gln_of_information_provider'}),
+        required=True
+    )
 
     # The item is a Base Unit
-    is_bunit = forms.BooleanField(widget=forms.CheckboxInput(attrs={'id':'is_bunit'}))
+    is_bunit = forms.BooleanField(
+        widget=forms.CheckboxInput(attrs={'id': 'is_bunit'})
+    )
 
     is_cunit = forms.BooleanField()     # The item is a Consumer Unit
     is_dunit = forms.BooleanField()     # The item is a Dispatch Unit
@@ -78,27 +119,55 @@ class ProductDetailForm(forms.Form):
     is_ounit = forms.BooleanField()     # The item is an Orderable Unit
 
     # Gross Weight
-    gross_weight = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'gross_weight'}))
-    gross_weight_uom = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control', 'id':'gross_weight_uom'}))
+    gross_weight = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'gross_weight'}),
+        required=False
+    )
+    gross_weight_uom = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'gross_weight_uom'})
+    )
 
     # Net Weight
-    net_weight = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'net_weight'}))
-    net_weight_uom = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control', 'id':'net_weight_uom'}))
+    net_weight = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'net_weight'}),
+        required=False
+    )
+    net_weight_uom = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'net_weight_uom'})
+    )
 
     # Depth
-    depth = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'depth'}))
-    depth_uom = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control', 'id':'depth_uom'}))
+    depth = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'depth'}),
+        required=False
+    )
+    depth_uom = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'depth_uom'})
+    )
 
     # Width
-    width = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'width'}))
-    width_uom = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control', 'id':'width_uom'}))
+    width = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'width'}),
+        required=False
+    )
+    width_uom = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'width_uom'})
+    )
 
     # Height
-    height = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'id':'height'}))
-    height_uom = forms.ChoiceField(widget=forms.Select(attrs={'class':'form-control', 'id':'height_uom'}))
+    height = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'height'}),
+        required=False
+    )
+    height_uom = forms.ChoiceField(
+        widget=forms.Select(attrs={'class': 'form-control', 'id': 'height_uom'})
+    )
 
     # External image URL (if hosted)
-    website_url = forms.URLField(widget=forms.TextInput(attrs={'class':'form-control'}))   # URLField('', [Optional(), URL(require_tld=True, message=u'Invalid URL.')])
+    website_url = forms.URLField( # URLField('', [Optional(), URL(require_tld=True, message=u'Invalid URL.')])
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        required=False
+    )
 
     def is_valid(self):
         '''

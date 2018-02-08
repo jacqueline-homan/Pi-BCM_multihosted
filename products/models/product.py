@@ -14,7 +14,30 @@ class ServiceManager(models.Manager):
         return super().get_queryset()
 
     def create(self, **kwargs):
-        pass
+        fields_data = {}
+        for field in Product._meta.get_fields():
+            if field.name == 'depth_uom':
+                continue
+            if field.name == 'width_uom':
+                continue
+            if field.name == 'height_uom':
+                continue
+            if field.name == 'gross_weight_uom':
+                continue
+            if field.name == 'net_weight_uom':
+                continue
+            if field.name == 'country_of_origin':
+                continue
+            if field.name == 'target_market':
+                continue
+            if field.name == 'language':
+                continue
+            if field.name in kwargs.keys():
+                fields_data[field.name] = kwargs[field.name]
+
+        product = Product(**fields_data)
+        product.save()
+        return product
 
 
 class Product(models.Model):

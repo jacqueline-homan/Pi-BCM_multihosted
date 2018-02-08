@@ -194,14 +194,22 @@ def add_product_base_details(request):
         form = ProductDetailForm(request.POST)
         if form.is_valid():
             form_data = {}
-            for formfield in form.fields:
+            for formfield in form.data:
                 try:
+                    if formfield == 'csrfmiddlewaretoken':
+                        continue
                     if form.data[formfield] != '':
                         form_data[formfield] = form.data[formfield]
                     else:
-                        form_data[formfield] = None
+                        pass
+                        # form_data[formfield] = None
                 except Exception as e:
-                    print('Field error: %s' % e)
+                    pass
+                #except Exception as e:
+                #    if form[formfield] is forms.BooleanField:
+                #        form_data[formfield] = False
+                #    else:
+                #        form_data[formfield] = None
 
             # gtin = form.data['gtin']
             gtin = '0' + gtin
@@ -210,48 +218,8 @@ def add_product_base_details(request):
                 return render(request, template_name, form=form, **context)
             try:
                 ### PRODUCT CREATE UI
-                product = Product(                gtin = gtin,
-                                                 owner = request.user,
-                                               company = form.data['company'],
-                                   # label_description = form.data['label_description'],
-                                                 brand = form.data['brand'],
-                                             sub_brand = form.data['sub_brand'],
-                                       functional_name = form.data['functional_name'],
-                                               variant = form.data['variant'],
-                                           description = form.data['description'],
-                                              category = form.data['category'],
-                                                 # sku = form.data['sku'],
-                                   # country_of_origin = form.data['country_of_origin'],
-                                       # target_market = form.data['target_market'],
-                                            # language = form.data['language'],
-                           gln_of_information_provider = form.data['gln_of_information_provider'],
-                                            # is_bunit = form.data['is_bunit'],
-                                            # is_cunit = form.data['is_cunit'],
-                                            # is_dunit = form.data['is_dunit'],
-                                            # is_vunit = form.data['is_vunit'],
-                                            # is_iunit = form.data['is_iunit'],
-                                            # is_ounit = form.data['is_ounit'],
-                                        # gross_weight = form.data['gross_weights'],
-                                    # gross_weight_uom = form.data['gross_weight_uom'],
-                                          # net_weight = form.data['net_weight'],
-                                      # net_weight_uom = form.data['net_weight_uom'],
-                                               # depth = form.data['depth'],
-                                           # depth_uom = form.data['depth_uom'],
-                                               # width = form.data['width'],
-                                           # width_uom = form.data['width_uom'],
-                                              # height = form.data['height'],
-                                          # height_uom = form.data['height_uom'],
-                                           website_url = form.data['website_url'],
-                                    gs1_company_prefix = prefix.prefix,
-                                       gs1_cloud_state = 'INACTIVE',
-                                    # package_level_id = form.data['package_level_id'],
-                                     # package_type_id = int(package_type),
-                                     #     net_content = form.net_content.data,
-                                     # net_content_uom = form.net_content_uom.data,
-                )
-                product.save()
+                Product.service.create( owner = request.user, **form_data )
             except Exception as e:
-                print('Database field error: %s' % e)
                 flash(request, str(e), 'danger')
                 return render(template_name, form=form, **context)
             '''
@@ -285,10 +253,10 @@ def add_product_base_details(request):
         # _add_field_descriptions(form)
         #form.process()
 
-    #form.bar_placement.data = session.get('bar_placement')
-    #form.package_level_id.data = session.get('package_level')
-    #form.package_type_id.data = session.get('package_type')
-    #form.image.data = session.get('image', settings.NO_IMAGE)
+    form.initial['bar_placement'] = session.get('bar_placement')
+    form.initial['package_level_id'] = session.get('package_level')
+    form.initial['package_type_id'] = session.get('package_type')
+    form.initial['image'] = session.get('image', settings.NO_IMAGE)
     form.set_countries_of_origin()
     form.set_target_markets()
     form.set_languages()

@@ -1,16 +1,5 @@
-import json
-
-from mixer.backend.django import mixer
-
-from django.contrib.auth.models import Group, User
-from django.contrib.admin.sites import AdminSite
-from django.contrib import admin
 from django.test import TestCase
-from django.urls import reverse
-
-from member_organisations.admin import MemberOrganisationOwnerAdmin
 from member_organisations.custom_admin.base_admin_tests import BaseAdminTestCase
-from member_organisations.mo_admin.mo_views import CompanyOrganisationCustomAdmin
 
 from member_organisations.models import (
     MemberOrganisation, MemberOrganisationUser, MemberOrganisationOwner
@@ -154,6 +143,12 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
             response.status_code, 302, 'Should be a redirect after an instance submitting'
         )
 
+        self.assertEqual(
+            response.url,
+            self.get_url_for_model(CompanyOrganisation, 'changelist'),
+            f'Wrong redirect url after an instace adding'
+        )
+
         self.assertTrue(
             CompanyOrganisation.objects.filter(
                 company=co_fields['company'],
@@ -184,6 +179,12 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
             response.status_code, 302, 'Should be a redirect after an instance submitting'
         )
 
+        self.assertEqual(
+            response.url,
+            self.get_url_for_model(CompanyOrganisation, 'changelist'),
+            f'Wrong redirect url after an instace updating'
+        )
+
         self.assertTrue(
             CompanyOrganisation.objects.filter(
                 company=test_co.company,
@@ -192,4 +193,48 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
                 country=self.model_instances['mo1'].country
             ).exists(),
             f'CompanyOrganisation "{test_co}" must have updated phone number'
+        )
+
+    def test_delete_co_for_mo_admin(self):
+        """
+        mo_user1 should be able to change companies with his MOs
+        """
+
+        login_result = self.client.login(**self.user_credentials)
+        self.assertTrue(login_result, 'Can\'t login to with test user credentials')
+
+        test_co = self.model_instances['co1']
+        post_data = {'post': 'yes'}
+
+        self.assertTrue(
+            CompanyOrganisation.objects.filter(
+                company=test_co.company,
+                member_organisation=test_co.member_organisation,
+                country=test_co.country
+            ).exists(),
+            f'CompanyOrganisation "{test_co}" must be in the test database before deleting'
+        )
+
+        co_url = self.get_url_for_model(CompanyOrganisation, 'delete', test_co.pk)
+
+        # instance creating is here
+        response = self.client.post(co_url, data=post_data)
+
+        self.assertEqual(
+            response.status_code, 302, 'Should be a redirect after an instance submitting'
+        )
+
+        self.assertEqual(
+            response.url,
+            self.get_url_for_model(CompanyOrganisation, 'changelist'),
+            f'Wrong redirect url after an instace removing'
+        )
+
+        self.assertFalse(
+            CompanyOrganisation.objects.filter(
+                company=test_co.company,
+                member_organisation=test_co.member_organisation,
+                country=test_co.country
+            ).exists(),
+            f'CompanyOrganisation "{test_co}" must be removed here already'
         )

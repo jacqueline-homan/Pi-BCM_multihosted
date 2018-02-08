@@ -204,7 +204,7 @@ class ModifiedMethodsModelAdmin(admin.ModelAdmin):
                 post_url
             )
         else:
-            post_url = reverse('admin:mo_admin', current_app=self.admin_site.name)
+            post_url = reverse(f'admin:{self.url_prefix}', current_app=self.admin_site.name)
         return HttpResponseRedirect(post_url)
 
     def response_delete(self, request, obj_display, obj_id):
@@ -245,7 +245,26 @@ class ModifiedMethodsModelAdmin(admin.ModelAdmin):
                 {'preserved_filters': preserved_filters, 'opts': opts}, post_url
             )
         else:
-            post_url = reverse('admin:mo_admin', current_app=self.admin_site.name)
+            post_url = reverse(f'admin:{self.url_prefix}', current_app=self.admin_site.name)
         return HttpResponseRedirect(post_url)
+
+    def response_post_save_change(self, request, obj):
+        """
+        Figure out where to redirect after the 'Save' button has been pressed
+        when editing an existing object.
+        """
+        opts = self.model._meta
+
+        if self.has_change_permission(request, None):
+            post_url = reverse(
+                'admin:%s_%s_%s_changelist' % (self.url_prefix, opts.app_label, opts.model_name),
+                current_app=self.admin_site.name,
+            )
+            preserved_filters = self.get_preserved_filters(request)
+            post_url = add_preserved_filters({'preserved_filters': preserved_filters, 'opts': opts}, post_url)
+        else:
+            post_url = reverse(f'admin:{self.url_prefix}', current_app=self.admin_site.name)
+        return HttpResponseRedirect(post_url)
+
 
     # redirects section end <--

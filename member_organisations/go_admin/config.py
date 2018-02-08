@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from django.contrib import admin
+from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import Group
 
 from audit.models import Log
@@ -26,28 +27,28 @@ apps_config = OrderedDict([
     ('audit', [
         # we could override admin.site with a custom instance, it would bring standard urls
         # like add_url, but for now it's easier to adjust templates and replace urls there
-        go_views.AuditLogCustomAdmin(Log, admin.site),
+        go_views.AuditLogCustomAdmin(Log, AdminSite()),
     ]),
     ('BCM', [
-        go_views.CountryCustomAdmin(Country, admin.site),
-        go_views.LanguageCustomAdmin(Language, admin.site),
-        go_views.LanguageByCountryCustomAdmin(LanguageByCountry, admin.site),
+        go_views.CountryCustomAdmin(Country, AdminSite()),
+        go_views.LanguageCustomAdmin(Language, AdminSite()),
+        go_views.LanguageByCountryCustomAdmin(LanguageByCountry, AdminSite()),
     ]),
     ('member_organisations', [
-        go_views.MemberOrganisationCustomAdmin(MemberOrganisation, admin.site),
-        go_views.MemberOrganisationUserCustomAdmin(MemberOrganisationUser, admin.site),
-        go_views.MemberOrganisationOwnerCustomAdmin(MemberOrganisationOwner, admin.site),
+        go_views.MemberOrganisationCustomAdmin(MemberOrganisation, AdminSite()),
+        go_views.MemberOrganisationUserCustomAdmin(MemberOrganisationUser, AdminSite()),
+        go_views.MemberOrganisationOwnerCustomAdmin(MemberOrganisationOwner, AdminSite()),
     ]),
     ('company_organisations', [
-        go_views.CompanyOrganisationCustomAdmin(CompanyOrganisation, admin.site),
-        go_views.CompanyOrganisationOwnerCustomAdmin(CompanyOrganisationOwner, admin.site),
-        go_views.CompanyOrganisationUserCustomAdmin(CompanyOrganisationUser, admin.site),
+        go_views.CompanyOrganisationCustomAdmin(CompanyOrganisation, AdminSite()),
+        go_views.CompanyOrganisationOwnerCustomAdmin(CompanyOrganisationOwner, AdminSite()),
+        go_views.CompanyOrganisationUserCustomAdmin(CompanyOrganisationUser, AdminSite()),
     ]),
     ('prefixes', [
-        go_views.PrefixCustomAdmin(Prefix, admin.site)
+        go_views.PrefixCustomAdmin(Prefix, AdminSite())
     ]),
     ('products', [
-        go_views.ProductCustomAdmin(Product, admin.site)
+        go_views.ProductCustomAdmin(Product, AdminSite())
     ]),
 ])
 

@@ -1,7 +1,12 @@
+import json
+
+from mixer.backend.django import Mixer
 from django.contrib.auth.models import Group, User
+from django.contrib.admin.sites import AdminSite
 from django.contrib import admin
-from django.test import TestCase
+from django.test import RequestFactory
 from django.urls import reverse
+from django.core import serializers
 
 from company_organisations.models import CompanyOrganisationOwner
 from member_organisations.admin import MemberOrganisationOwnerAdmin
@@ -19,6 +24,8 @@ class BaseAdminTestCase(object):
     user_credentials = None
     user = None
     group = None
+    request_factory = None
+    mixer = None
 
     fixtures = (
         'fixtures/bcm.json',
@@ -28,7 +35,7 @@ class BaseAdminTestCase(object):
     def setUp(self):
         super().setUp()
         self.mo_admin_instance = MemberOrganisationOwnerAdmin(
-            CompanyOrganisationOwner, admin.site
+            CompanyOrganisationOwner, AdminSite()
         )
         self.user_credentials = {
             'username': 'moadmin',
@@ -39,6 +46,36 @@ class BaseAdminTestCase(object):
         self.user.save()
         self.group = Group.objects.get(name=self.group_name)
         self.user.groups.add(self.group)
+        self.request_factory = RequestFactory()
+        self.mixer = Mixer(locale='en')
+
+    def get_force_random_fields_for_mixer(self, model_class, excluded_fields=('id',), **kwargs):
+        """
+        Mixer sets default values from model,
+        but it raises errors when blank=False and default='' at the same time,
+        so we have to force fields to be set by random values
+
+        :param model_class:
+        :param excluded_fields: ('id', )  # prevent to randomize some fields
+        :param kwargs: field_name=instance or value  # predefined field values
+        :return: dict of field_names: random/predefined values
+        """
+
+        co_fields = {
+            field.name: self.mixer.RANDOM
+            for field in model_class._meta.fields if field.name not in excluded_fields
+        }
+
+        for field_name, field_value in kwargs.items():
+            co_fields[field_name] = field_value
+
+        return co_fields
+
+    @classmethod
+    def model_instance_to_post_data(cls, instance):
+        data = serializers.serialize('json', [instance, ])
+        struct = json.loads(data)
+        return struct[0]['fields']
 
     def get_urls_by_types(self, url_types):
         """
@@ -57,13 +94,14 @@ class BaseAdminTestCase(object):
 
         return url_names
 
-    def get_url_for_model_instance(self, model_instance, action):
-        app_label = model_instance._meta.model._meta.app_label
-        model_name = model_instance._meta.model._meta.model_name
+    def get_url_for_model(self, model_class, action, pk=None):
+        app_label = model_class._meta.app_label
+        model_name = model_class._meta.model_name
 
-        return (reverse(
+        return (
+            reverse(
                 f'admin:{self.url_prefix}_{app_label}_{model_name}_{action}',
-                args=(model_instance.pk,)))
+                args=(pk,) if pk else None))
 
     def test_changelist_add_urls_non_authorized_user(self):
         """

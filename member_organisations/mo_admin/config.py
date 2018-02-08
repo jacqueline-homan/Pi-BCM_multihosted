@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from django.contrib import admin
+from django.contrib.admin import AdminSite
 
 from audit.models import Log
 from company_organisations.models import (
@@ -16,18 +16,18 @@ apps_config = OrderedDict([
     ('audit', [
         # we could override admin.site with a custom instance, it would bring standard urls
         # like add_url, but for now it's easier to adjust templates and replace urls there
-        mo_views.AuditLogCustomAdmin(Log, admin.site),
+        mo_views.AuditLogCustomAdmin(Log, AdminSite()),
     ]),
     ('company_organisations', [
-        mo_views.CompanyOrganisationCustomAdmin(CompanyOrganisation, admin.site),
-        mo_views.CompanyOrganisationOwnerCustomAdmin(CompanyOrganisationOwner, admin.site),
-        mo_views.CompanyOrganisationUserCustomAdmin(CompanyOrganisationUser, admin.site),
+        mo_views.CompanyOrganisationCustomAdmin(CompanyOrganisation, AdminSite()),
+        mo_views.CompanyOrganisationOwnerCustomAdmin(CompanyOrganisationOwner, AdminSite()),
+        mo_views.CompanyOrganisationUserCustomAdmin(CompanyOrganisationUser, AdminSite()),
     ]),
     ('prefixes', [
-        mo_views.PrefixCustomAdmin(Prefix, admin.site)
+        mo_views.PrefixCustomAdmin(Prefix, AdminSite())
     ]),
     ('products', [
-        mo_views.ProductCustomAdmin(Product, admin.site)
+        mo_views.ProductCustomAdmin(Product, AdminSite())
     ]),
 ])
 

@@ -7,7 +7,7 @@ from company_organisations.models import (
     CompanyOrganisation, CompanyOrganisationOwner, CompanyOrganisationUser
 )
 from prefixes.models import Prefix
-from products.models import Product
+from products.models.product import Product
 from . import mo_views
 
 

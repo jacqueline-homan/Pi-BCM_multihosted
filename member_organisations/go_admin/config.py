@@ -13,7 +13,7 @@ from company_organisations.models import (
 )
 from BCM.models import Country, Language, LanguageByCountry
 from prefixes.models import Prefix
-from products.models import Product
+from products.models.product import Product
 from . import go_views
 
 

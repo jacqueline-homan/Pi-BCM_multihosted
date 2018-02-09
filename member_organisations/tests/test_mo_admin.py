@@ -26,9 +26,13 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
 
     def setUp(self):
         super().setUp()
-        self.model_instances = self.create_member_organizations()
+        self.model_instances = self.create_required_instances()
 
-    def create_member_organizations(self):
+    def create_required_instances(self):
+        user11 = self.create_django_user(self.main_user_credentials)
+        user12 = self.create_django_user()
+        user21 = self.create_django_user()
+
         mo1 = self.mixer.blend(
             MemberOrganisation,
             name='GS1 France',
@@ -40,14 +44,15 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
             country=Country.objects.get(name='Belgium')
         )
 
-        mo_user1 = self.mixer.blend(MemberOrganisationUser, organization=mo1, user=self.user)
-        mo_user2 = self.mixer.blend(MemberOrganisationUser, organization=mo2)
+        mo1_user1 = self.mixer.blend(MemberOrganisationUser, organization=mo1, user=user11)
+        mo1_user2 = self.mixer.blend(MemberOrganisationUser, organization=mo1, user=user12)
+        mo2_user1 = self.mixer.blend(MemberOrganisationUser, organization=mo2, user=user21)
 
         mo_owner1 = self.mixer.blend(
-            MemberOrganisationOwner, organization_user=mo_user1, organization=mo1
+            MemberOrganisationOwner, organization_user=mo1_user1, organization=mo1
         )
         mo_owner2 = self.mixer.blend(
-            MemberOrganisationOwner, organization_user=mo_user2, organization=mo2
+            MemberOrganisationOwner, organization_user=mo2_user1, organization=mo2
         )
 
         co_fields = self.get_force_random_fields_for_mixer(
@@ -68,6 +73,16 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
         )
         co2 = self.mixer.blend(CompanyOrganisation, **co_fields)
 
+        co1_user1 = self.mixer.blend(
+            CompanyOrganisationUser,
+            user=user11, organization=co1, is_admin=True,
+        )
+
+        co2_user1 = self.mixer.blend(
+            CompanyOrganisationUser,
+            user=user21, organization=co2, is_admin=True,
+        )
+
         return {
             key: value for key, value in locals().items()
             if key[-1].isdigit()
@@ -75,10 +90,10 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
 
     def test_access_for_mo_admin_co(self):
         """
-        mo_user1 should be able to view companies in his MOs
+        mo1_user1 should be able to view companies in his MOs
         """
 
-        login_result = self.client.login(**self.user_credentials)
+        login_result = self.client.login(**self.main_user_credentials)
         self.assertTrue(login_result, 'Can\'t login with test user credentials')
 
         co_url = self.get_url_for_model(
@@ -99,75 +114,12 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
             f'URL "{co_url}" should be denied for mo1 user'
         )
 
-    def test_add_co_for_mo_admin(self):
-        """
-        mo_user1 should be able to add companies with his MOs
-        """
-
-        # alternative WRONG way to test without TestClient requuests
-        # This case django admin will use DEFAULT DATABASE (NOT A TEST ONE)
-        # request = self.request_factory.get(reverse('admin:mo_admin'))
-        # request.user = self.user
-        # co_mo_admin_view = CompanyOrganisationCustomAdmin(CompanyOrganisation, AdminSite())
-        # co_form_class = co_mo_admin_view.get_form(request)
-        # co_form = co_form_class(data=post_data)
-        # co_form.is_valid()
-        # co_form.save()
-
-        login_result = self.client.login(**self.user_credentials)
-        self.assertTrue(login_result, 'Can\'t login with test user credentials')
-
-        co_fields = self.get_force_random_fields_for_mixer(
-            CompanyOrganisation,
-            company='New test company',
-            member_organisation=self.model_instances['mo1'],
-            country=self.model_instances['mo1'].country,
-            active=True
-        )
-
-        new_co1 = self.mixer.blend(CompanyOrganisation, **co_fields)
-        new_co1.delete()  # it seems mixer doesn't care about his commit=False
-        post_data = self.model_instance_to_post_data(new_co1)
-
-        co_url = self.get_url_for_model(CompanyOrganisation, 'add')
-
-        self.assertFalse(
-            CompanyOrganisation.objects.filter(
-                company=co_fields['company'],
-                member_organisation=self.model_instances['mo1'],
-                country=self.model_instances['mo1'].country
-            ).exists(),
-            f'CompanyOrganisation "{new_co1}" must not be in the test database before submitting'
-        )
-
-        # instance creating is here
-        response = self.client.post(co_url, data=post_data)
-
-        self.assertEqual(
-            response.status_code, 302, 'Should be a redirect after an instance submitting'
-        )
-
-        self.assertEqual(
-            response.url,
-            self.get_url_for_model(CompanyOrganisation, 'changelist'),
-            f'Wrong redirect url after an instace adding'
-        )
-
-        self.assertTrue(
-            CompanyOrganisation.objects.filter(
-                company=co_fields['company'],
-                member_organisation=self.model_instances['mo1'],
-                country=self.model_instances['mo1'].country
-            ).exists(),
-            f'CompanyOrganisation "{new_co1}" must be in the test database after submitting'
-        )
-
     def test_change_co_for_mo_admin(self):
         """
-        mo_user1 should be able to change companies with his MOs
+        mo1_user1 should be able to change companies with his MOs
         """
 
-        login_result = self.client.login(**self.user_credentials)
+        login_result = self.client.login(**self.main_user_credentials)
         self.assertTrue(login_result, 'Can\'t login with test user credentials')
 
         test_co = self.model_instances['co1']
@@ -201,10 +153,10 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
 
     def test_delete_co_for_mo_admin(self):
         """
-        mo_user1 should be able to change companies with his MOs
+        mo1_user1 should be able to change companies with his MOs
         """
 
-        login_result = self.client.login(**self.user_credentials)
+        login_result = self.client.login(**self.main_user_credentials)
         self.assertTrue(login_result, 'Can\'t login with test user credentials')
 
         test_co = self.model_instances['co1']
@@ -243,33 +195,102 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
             f'CompanyOrganisation "{test_co}" must be removed here already'
         )
 
-    def test_co_allowed_related_models(self):
-        login_result = self.client.login(**self.user_credentials)
+    def test_add_models_for_mo_admin(self):
+        """
+        Test all models for adding instances
+        :return:
+        """
+
+        login_result = self.client.login(**self.main_user_credentials)
         self.assertTrue(login_result, 'Can\'t login with test user credentials')
+
+        models = {
+            CompanyOrganisation: {
+                'predefined_fields': {
+                    'company': 'New test company',
+                    'member_organisation': self.model_instances['mo1'],
+                    'country': self.model_instances['mo1'].country,
+                    'active': True
+                }
+            },
+            CompanyOrganisationOwner: {
+                'predefined_fields': {
+                    'organization': self.model_instances['co1'],
+                    'organization_user': self.model_instances['co1_user1'],
+                }
+            },
+            CompanyOrganisationUser: {
+                'predefined_fields': {
+                    'user': self.model_instances['user12'],
+                    'organization': self.model_instances['co1'],
+                }
+            },
+            Prefix: {
+                'predefined_fields': {
+                    'company_organisation': self.model_instances['co1'],
+                    'member_organisation': self.model_instances['mo1'],
+                }
+            },
+            Product: None,  # too many new relations without description, skipped for now
+            Log: {
+                'predefined_fields': {}
+            }
+        }
 
         # alternative WRONG way to test without TestClient requests
         # This case django admin will use DEFAULT DATABASE (NOT A TEST ONE)
-        request = self.request_factory.get(reverse('admin:mo_admin'))
-        request.user = self.user
-        co_mo_admin_view = CompanyOrganisationCustomAdmin(CompanyOrganisation, AdminSite())
-        co_form_class = co_mo_admin_view.get_form(request)
-
-        co_form = co_form_class(data=None)
-        pass
+        # request = self.request_factory.get(reverse('admin:mo_admin'))
+        # request.user = self.user
+        # co_mo_admin_view = CompanyOrganisationCustomAdmin(CompanyOrganisation, AdminSite())
+        # co_form_class = co_mo_admin_view.get_form(request)
+        # co_form = co_form_class(data=post_data)
         # co_form.is_valid()
         # co_form.save()
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        for model_class, model_conf in models.items():
+            if not model_conf:
+                continue
+
+            predefined_fields = model_conf.get('predefined_fields', {})
+
+            model_fields = self.get_force_random_fields_for_mixer(model_class, **predefined_fields)
+            model_instance = self.mixer.blend(model_class, **model_fields)
+            model_instance.delete()  # it seems mixer doesn't care about his commit=False
+            post_data = self.model_instance_to_post_data(model_instance)
+
+            self.assertFalse(
+                model_class.objects.filter(**predefined_fields).exists(),
+                f'CompanyOrganisation "{model_instance}" mustn\'t be '
+                f'in the test database before submitting'
+            )
+
+            # instance creating is here
+            model_add_url = self.get_url_for_model(model_class, 'add')
+            response = self.client.post(model_add_url, data=post_data)
+
+            self.assertEqual(
+                response.status_code, 302, 'Should be a redirect after an instance submitting'
+            )
+
+            self.assertEqual(
+                response.url,
+                self.get_url_for_model(model_class, 'changelist'),
+                f'Wrong redirect url after an instace adding'
+            )
+
+            self.assertTrue(
+                model_class.objects.filter(**predefined_fields).exists(),
+                f'CompanyOrganisation "{model_instance}" must be '
+                f'in the test database after submitting'
+            )
+
+
+
+
+
+
+
+
+
+
+

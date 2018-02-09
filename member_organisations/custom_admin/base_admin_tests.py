@@ -1,5 +1,7 @@
 import json
 
+from django.db.models import DateTimeField
+from django.utils.dateparse import parse_datetime
 from mixer.backend.django import Mixer
 from django.contrib.auth.models import Group, User
 from django.contrib.admin.sites import AdminSite
@@ -21,8 +23,7 @@ class BaseAdminTestCase(object):
     url_prefix = None  # 'mo_admin' / 'go_admin'
     group_name = None  # 'MO Admins' / 'GO Admins'
     mo_admin_instance = None
-    user_credentials = None
-    user = None
+    main_user_credentials = None
     group = None
     request_factory = None
     mixer = None
@@ -37,17 +38,26 @@ class BaseAdminTestCase(object):
         self.mo_admin_instance = MemberOrganisationOwnerAdmin(
             CompanyOrganisationOwner, AdminSite()
         )
-        self.user_credentials = {
+        self.main_user_credentials = {
             'username': 'moadmin',
             'password': '1234',
         }
-        self.user = User(**self.user_credentials)
-        self.user.set_password(self.user_credentials['password'])
-        self.user.save()
         self.group = Group.objects.get(name=self.group_name)
-        self.user.groups.add(self.group)
         self.request_factory = RequestFactory()
         self.mixer = Mixer(locale='en')
+
+    def create_django_user(self, user_credentials=None, add_to_group=True):
+
+        if user_credentials:
+            user = User(**user_credentials)
+            user.set_password(self.main_user_credentials['password'])
+            user.save()
+        else:
+            user = self.mixer.blend(User)
+
+        if add_to_group:
+            user.groups.add(self.group)
+        return user
 
     def get_force_random_fields_for_mixer(self, model_class, excluded_fields=('id',), **kwargs):
         """
@@ -75,7 +85,17 @@ class BaseAdminTestCase(object):
     def model_instance_to_post_data(cls, instance):
         data = serializers.serialize('json', [instance, ])
         struct = json.loads(data)
-        return struct[0]['fields']
+        post_data = struct[0]['fields']
+
+        for field in instance._meta.fields:
+            # splitting date and time for admin forms
+            if isinstance(field, DateTimeField):
+                field_datetime = parse_datetime(post_data[field.name])
+                post_data[f'{field.name}_0'] = str(field_datetime.date())
+                post_data[f'{field.name}_1'] = str(field_datetime.time())
+                del post_data[field.name]
+
+        return post_data
 
     def get_urls_by_types(self, url_types):
         """
@@ -122,7 +142,7 @@ class BaseAdminTestCase(object):
         Authorized and authenticated users must receive 200 http response
         """
 
-        login_result = self.client.login(**self.user_credentials)
+        login_result = self.client.login(**self.main_user_credentials)
         self.assertTrue(login_result, 'Can\'t login to with test user credentials')
 
         url_names = self.get_urls_by_types(['changelist', 'add'])

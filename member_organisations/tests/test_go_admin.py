@@ -9,3 +9,9 @@ class GOAdminTestCase(BaseAdminTestCase, TestCase):
 
     def setUp(self):
         super().setUp()
+        self.model_instances = self.create_required_instances()
+
+    def create_required_instances(self):
+        user11 = self.create_django_user(self.main_user_credentials)
+        user12 = self.create_django_user()
+        user21 = self.create_django_user()

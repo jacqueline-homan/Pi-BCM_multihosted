@@ -1,7 +1,10 @@
-from member_organisations.models import MemberOrganisationOwner
+from member_organisations.models import MemberOrganisationOwner, MemberOrganisation
 
 
 def get_allowed_mo_for_mo_admin(user):
+    if user.is_superuser:
+        return MemberOrganisation.objects.all()
+
     member_organization_admin_ids = (  # mo where the current user is admin
         user.member_organisations_memberorganisationuser
         .filter(is_admin=True)

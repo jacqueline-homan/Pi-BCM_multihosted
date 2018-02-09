@@ -162,3 +162,40 @@ class ProductCustomAdmin(BaseCustomAdminMethods):
             member_organisations_memberorganisation__in=allowed_organizations
         )
         return queryset
+
+    @classmethod
+    def get_member_organisations__memberorganisation_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(pk__in=allowed_organizations)
+        return queryset
+
+    @classmethod
+    def get_company_organisations__companyorganisation_queryset(cls, request, queryset):
+        allowed_organizations = get_allowed_mo_for_mo_admin(request.user)
+        queryset = queryset.filter(member_organisation__in=allowed_organizations)
+        return queryset
+
+    @classmethod
+    def get_products__dimensionuom_queryset(cls, request, queryset):
+        # todo: check this queryset
+        return queryset
+
+    @classmethod
+    def get_products__weightuom_queryset(cls, request, queryset):
+        # todo: check this queryset
+        return queryset
+
+    @classmethod
+    def get_products__countryoforigin_queryset(cls, request, queryset):
+        # todo: check this queryset
+        return queryset
+
+    @classmethod
+    def get_products__targetmarket_queryset(cls, request, queryset):
+        # todo: check this queryset
+        return queryset
+
+    @classmethod
+    def get_products__language_queryset(cls, request, queryset):
+        # todo: check this queryset
+        return queryset

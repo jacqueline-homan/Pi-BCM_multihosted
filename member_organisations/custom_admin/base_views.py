@@ -95,6 +95,9 @@ class BaseCustomAdminMethods(ModifiedMethodsModelAdmin):
         model_name = self.model_name
 
         def check_permissions(user):
+            if user.is_superuser:
+                # django superuser is allowed always
+                return True
             # user must have a required group for admin sections ("MO Admins", "GO Admins")
             return user.groups.filter(name=required_django_group_name).exists()
 

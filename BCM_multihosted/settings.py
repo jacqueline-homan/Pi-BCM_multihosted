@@ -32,17 +32,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'gs1ie.apps.Gs1IeConfig',
-    'users.apps.UsersConfig',
-    'prefixes.apps.PrefixesConfig',
-    'audit.apps.AuditConfig',
-    'products.apps.ProductsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'gs1ie.apps.Gs1IeConfig',
+    'users.apps.UsersConfig',
+    'prefixes.apps.PrefixesConfig',
+    'audit.apps.AuditConfig',
+    'products.apps.ProductsConfig',
     'BCM.apps.BcmConfig',
     'member_organisations.apps.MemberOrganisationsConfig',
     'company_organisations.apps.CompanyOrganisationsConfig',
